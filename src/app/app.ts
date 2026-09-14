@@ -7,4 +7,24 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.css']
 })
 export class App {
+
+  darkMode = true;
+
+  language = 'es';
+
+  toggleTheme() {
+    this.darkMode = !this.darkMode;
+
+    const host = document.querySelector('app-root');
+
+    if (this.darkMode) {
+      host?.classList.remove('light-theme');
+    } else {
+      host?.classList.add('light-theme');
+    }
+  }
+
+  changeLanguage(lang: string) {
+    this.language = lang;
+  }
 }

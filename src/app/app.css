@@ -48,6 +48,295 @@ html {
     sans-serif;
 }
 
+/*cambiar de claro a oscuro*/
+.theme-toggle {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid #d7b66c;
+  background: transparent;
+  color: #d7b66c;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+  background: #d7b66c;
+  color: #090806;
+}
+
+body.light-mode {
+  background: #eee4d0;
+  color: #17130e;
+}
+
+body.light-mode .navbar {
+  background: rgba(208, 238, 221, 0.95);
+}
+
+body.light-mode .nav-menu a {
+  color: #e6a85d;
+}
+
+body.light-mode .nav-menu a:hover {
+  color: #9c7934;
+}
+
+/* =========================================================
+   MODO CLARO
+   ========================================================= */
+
+/* Fondo general */
+:host {
+  --bg-main: #d6bc87;
+  --bg-secondary: #100e0b;
+  --bg-card: #15120e;
+  --bg-card-hover: #1b1711;
+
+  --text-main: #dac08c;
+  --text-secondary: #b8ad9b;
+  --text-muted: #d1cfcd;
+
+  --gold: #d7b66c;
+  --gold-dark: #c7a45b;
+
+  --border: rgba(255, 255, 255, 0.18);
+}
+
+/* =========================================================
+   VARIABLES DEL MODO CLARO
+   ========================================================= */
+
+:host(.light-theme) {
+  --bg-main: #cfb788;
+  --bg-secondary: #ebe3d3;
+  --bg-card: #fffaf0;
+  --bg-card-hover: #f7f0e3;
+
+  --text-main: #0a0908;
+  --text-secondary: #5d5549;
+  --text-muted: #7c7263;
+
+  --gold: #a47b32;
+  --gold-dark: #8c6829;
+
+  --border: rgba(120, 88, 35, 0.22);
+}
+
+
+/* =========================================================
+   FONDO GENERAL
+   ========================================================= */
+
+:host {
+  display: block;
+  background: var(--bg-main);
+  color: var(--text-main);
+  transition:
+    background-color 0.35s ease,
+    color 0.35s ease;
+}
+
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+
+:host(.light-theme) .navbar {
+  background: rgba(172, 138, 100, 0.96);
+  border-bottom-color: rgba(78, 55, 17, 0.18);
+}
+
+:host(.light-theme) .nav-menu a,
+:host(.light-theme) .nav-links a {
+  color: #51483b;
+}
+
+:host(.light-theme) .nav-menu a:hover,
+:host(.light-theme) .nav-links a:hover {
+  color: var(--gold);
+}
+
+:host(.light-theme) .nav-menu a.active,
+:host(.light-theme) .nav-links a.active {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+
+
+/* =========================================================
+   SECCIONES
+   ========================================================= */
+
+:host(.light-theme) section,
+:host(.light-theme) .section {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+}
+
+
+/* =========================================================
+   TEXTOS
+   ========================================================= */
+
+:host(.light-theme) h1,
+:host(.light-theme) h2,
+:host(.light-theme) h3,
+:host(.light-theme) h4,
+:host(.light-theme) h5,
+:host(.light-theme) h6 {
+  color: #886d46;
+}
+
+:host(.light-theme) p {
+  color: #5d5549;
+}
+
+:host(.light-theme) small {
+  color: #756b5c;
+}
+
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+
+:host(.light-theme) .card,
+:host(.light-theme) .product-card,
+:host(.light-theme) .profile-card,
+:host(.light-theme) .util-card,
+:host(.light-theme) .catering-card,
+:host(.light-theme) .contact-card,
+:host(.light-theme) .info-card {
+  background: var(--bg-card);
+  border-color: var(--border);
+  color: var(--text-main);
+  box-shadow: 0 12px 35px rgba(64, 48, 25, 0.08);
+}
+
+:host(.light-theme) .card:hover,
+:host(.light-theme) .product-card:hover,
+:host(.light-theme) .profile-card:hover,
+:host(.light-theme) .util-card:hover {
+  background: var(--bg-card-hover);
+}
+
+
+/* =========================================================
+   BOTONES
+   ========================================================= */
+
+:host(.light-theme) button,
+:host(.light-theme) .btn {
+  color: #fffaf0;
+  background: #8f692d;
+  border-color: #8f692d;
+}
+
+:host(.light-theme) button:hover,
+:host(.light-theme) .btn:hover {
+  background: #ecc580;
+  border-color: #a47b32;
+}
+
+
+/* =========================================================
+   BOTÓN DE TEMA
+   ========================================================= */
+
+:host(.light-theme) .theme-toggle {
+  color: #8f692d;
+  background: transparent;
+  border: 1px solid rgba(143, 105, 45, 0.35);
+}
+
+:host(.light-theme) .theme-toggle:hover {
+  color: #fffaf0;
+  background: #8f692d;
+}
+
+
+/* =========================================================
+   PRECIOS
+   ========================================================= */
+
+:host(.light-theme) .price,
+:host(.light-theme) .product-price {
+  color: #8f692d;
+}
+
+
+/* =========================================================
+   ETIQUETAS / BADGES
+   ========================================================= */
+
+:host(.light-theme) .tag,
+:host(.light-theme) .badge {
+  color: #8f692d;
+  border-color: rgba(143, 105, 45, 0.35);
+  background: rgba(143, 105, 45, 0.08);
+}
+
+
+/* =========================================================
+   LÍNEAS DECORATIVAS
+   ========================================================= */
+
+:host(.light-theme) hr {
+  border-color: rgba(120, 88, 35, 0.18);
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+:host(.light-theme) footer {
+  background: #927d58;
+  color: #40382d;
+  border-top-color: rgba(120, 88, 35, 0.18);
+}
+
+:host(.light-theme) footer p,
+:host(.light-theme) footer span {
+  color: #0f0e0b;
+}
+
+:host(.light-theme) footer a {
+  color: #110f0c;
+}
+
+:host(.light-theme) footer a:hover {
+  color: #a47b32;
+}
+
+
+/* =========================================================
+   TRANSICIONES
+   ========================================================= */
+
+:host(.light-theme) .navbar,
+:host(.light-theme) section,
+:host(.light-theme) .card,
+:host(.light-theme) .product-card,
+:host(.light-theme) .profile-card,
+:host(.light-theme) .util-card,
+:host(.light-theme) .catering-card,
+:host(.light-theme) .contact-card,
+:host(.light-theme) footer {
+  transition:
+    background-color 0.35s ease,
+    color 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
 
 /* =========================================================
    GENERAL

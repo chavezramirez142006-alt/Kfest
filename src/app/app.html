@@ -4,13 +4,14 @@
        NAVBAR
   ========================== -->
   <header class="navbar">
+    
     <div class="nav-inner">
 
       <a href="#inicio" class="brand">
         <div class="brand-mark">Kfest</div>
         <div class="brand-copy">
           <strong>KFEST</strong>
-          <span>GRAND CRU · FUNDO SANTA TERESITA</span>
+          <span>{{ language === 'es' ? 'GRAND CRU · FUNDO SANTA TERESITA' : 'GRAND CRU · SANTA TERESITA FARM' }}</span>
         </div>
       </a>
 
@@ -21,16 +22,40 @@
         <span></span>
         <span></span>
       </label>
+      
+      <button
+        class="theme-toggle"
+        (click)="toggleTheme()"
+        [attr.aria-label]="darkMode ? (language === 'es' ? 'Cambiar a modo claro' : 'Switch to light mode') : (language === 'es' ? 'Cambiar a modo oscuro' : 'Switch to dark mode')">
+
+        {{ darkMode ? '☀' : '☾' }}
+
+      </button>
 
       <nav class="nav-links">
-        <a href="#inicio" class="active">INICIO</a>
-        <a href="#coleccion">COLECCIÓN<br>GRAND CRU</a>
-        <a href="#herencia">NUESTRA<br>HERENCIA</a>
-        <a href="#cata">PERFILES DE<br>CATA</a>
+        <a href="#inicio" class="active">{{ language === 'es' ? 'INICIO' : 'HOME' }}</a>
+        <a href="#coleccion">{{ language === 'es' ? 'COLECCIÓN' : 'GRAND CRU' }}<br>{{ language === 'es' ? 'GRAND CRU' : 'COLLECTION' }}</a>
+        <a href="#herencia">{{ language === 'es' ? 'NUESTRA' : 'OUR' }}<br>{{ language === 'es' ? 'HERENCIA' : 'HERITAGE' }}</a>
+        <a href="#cata">{{ language === 'es' ? 'PERFILES DE' : 'TASTING' }}<br>{{ language === 'es' ? 'CATA' : 'PROFILES' }}</a>
         <a href="#utilkfest">ÚTILKFEST</a>
         <a href="#catering">CONCIERGE<br>KFESTCAR</a>
-        <a href="#contacto">CONTACTO</a>
+        <a href="#contacto">{{ language === 'es' ? 'CONTACTO' : 'CONTACT' }}</a>
       </nav>
+      <div class="language-switch">
+        <button
+          [class.active]="language === 'es'"
+          (click)="changeLanguage('es')">
+          ES
+        </button>
+
+        <span>|</span>
+
+        <button
+          [class.active]="language === 'en'"
+          (click)="changeLanguage('en')">
+          EN
+        </button>
+      </div>
 
     </div>
   </header>
@@ -51,11 +76,11 @@
 
           <div class="hero-badges">
             <span>
-              ◉ COSECHA SELECCIONADA 2025 · FUNDO SANTA TERESITA
+              ◉ {{ language === 'es' ? 'COSECHA SELECCIONADA 2025 · FUNDO SANTA TERESITA' : 'SELECTED HARVEST 2025 · SANTA TERESITA FARM' }}
             </span>
 
             <span>
-              ◉ 1,300 – 1,800 MSNM · JUNÍN, SELVA CENTRAL
+              ◉ {{ language === 'es' ? '1,300 – 1,800 MSNM · JUNÍN, SELVA CENTRAL' : '1,300 – 1,800 MASL · JUNÍN, CENTRAL JUNGLE' }}
             </span>
           </div>
 
@@ -64,30 +89,24 @@
           </p>
 
           <h1>
-            De la Chacra
-            <br>
-            <em>a tu Taza</em>
-            <span> — </span>
-            Grand Cru.
-          </h1>
+  {{ language === 'es'
+      ? 'De la Chacra a tu Taza'
+      : 'From the Farm to Your Cup' }}
+</h1>
 
           <div class="hero-description">
-            Nacido en el microclima sagrado del distrito de Perené,
-            Chanchamayo. Cosecha selectiva de altura en laderas
-            andino-amazónicas, tueste artesanal en pequeños lotes y
-            puntuación excepcional de
-            <strong>81 a 84 puntos SCA</strong>
-            con exquisitas notas a cacao puro, panela de oro y frutos
-            del bosque.
+            {{ language === 'es' ? 'Nacido en el microclima sagrado del distrito de Perené, Chanchamayo. Cosecha selectiva de altura en laderas andino-amazónicas, tueste artesanal en pequeños lotes y puntuación excepcional de' : 'Born in the sacred microclimate of the Perené district, Chanchamayo. Selective high-altitude harvesting on Andean-Amazonian slopes, small-batch artisan roasting, and an exceptional score of' }}
+            <strong>{{ language === 'es' ? '81 a 84 puntos SCA' : '81 to 84 SCA points' }}</strong>
+            {{ language === 'es' ? 'con exquisitas notas a cacao puro, panela de oro y frutos del bosque.' : 'with exquisite notes of pure cacao, golden panela, and forest fruits.' }}
           </div>
 
           <div class="hero-actions">
             <a href="#contacto" class="btn btn-gold">
-              ▣ &nbsp; PEDIR RESERVA POR WHATSAPP
+              ▣ &nbsp; {{ language === 'es' ? 'PEDIR RESERVA POR WHATSAPP' : 'REQUEST A RESERVATION VIA WHATSAPP' }}
             </a>
 
             <a href="#herencia" class="btn btn-outline">
-              ▣ &nbsp; CONOCER NUESTRO LEGADO
+              ▣ &nbsp; {{ language === 'es' ? 'CONOCER NUESTRO LEGADO' : 'DISCOVER OUR LEGACY' }}
             </a>
           </div>
 
@@ -96,7 +115,7 @@
             <div class="mini-feature">
               <span class="feature-icon">◎</span>
               <div>
-                <small>CALIDAD TAZA</small>
+                <small>{{ language === 'es' ? 'CALIDAD TAZA' : 'CUP QUALITY' }}</small>
                 <strong>81–84 Pts SCA</strong>
               </div>
             </div>
@@ -104,16 +123,16 @@
             <div class="mini-feature">
               <span class="feature-icon">▣</span>
               <div>
-                <small>ENTREGA SEGURA</small>
-                <strong>Lima & Provincias</strong>
+                <small>{{ language === 'es' ? 'ENTREGA SEGURA' : 'SECURE DELIVERY' }}</small>
+                <strong>{{ language === 'es' ? 'Lima & Provincias' : 'Lima & Provinces' }}</strong>
               </div>
             </div>
 
             <div class="mini-feature">
               <span class="feature-icon">◷</span>
               <div>
-                <small>TUESTE FRESCO</small>
-                <strong>Lun, Mié & Vie</strong>
+                <small>{{ language === 'es' ? 'TUESTE FRESCO' : 'FRESH ROAST' }}</small>
+                <strong>{{ language === 'es' ? 'Lun, Mié & Vie' : 'Mon, Wed & Fri' }}</strong>
               </div>
             </div>
 
@@ -125,12 +144,12 @@
         <div class="hero-product">
 
           <div class="hero-product-card">
-            <span>LOTE N° 2025</span>
+            <span>{{ language === 'es' ? 'LOTE N° 2025' : 'LOT N° 2025' }}</span>
             <strong>
               Fundo Santa Teresita ·
               Chanchamayo
             </strong>
-            <small>Extracción Óptima</small>
+            <small>{{ language === 'es' ? 'Extracción Óptima' : 'Optimal Extraction' }}</small>
 
             <div class="weight">
               1kg / 72oz
@@ -145,26 +164,26 @@
 
         <div>
           <span>⌁</span>
-          <small>ALTITUD SELECCIONADA</small>
-          <strong>1,300 a 1,800 msnm</strong>
+          <small>{{ language === 'es' ? 'ALTITUD SELECCIONADA' : 'SELECTED ALTITUDE' }}</small>
+          <strong>{{ language === 'es' ? '1,300 a 1,800 msnm' : '1,300 to 1,800 masl' }}</strong>
         </div>
 
         <div>
           <span>◉</span>
-          <small>TERRIOR SAGRADO</small>
-          <strong>Perené · Selva Central</strong>
+          <small>{{ language === 'es' ? 'TERRIOR SAGRADO' : 'SACRED TERRITORY' }}</small>
+          <strong>{{ language === 'es' ? 'Perené · Selva Central' : 'Perené · Central Jungle' }}</strong>
         </div>
 
         <div>
           <span>♙</span>
-          <small>ESTÁNDAR TAZA</small>
-          <strong>81 a 84 Puntos SCA</strong>
+          <small>{{ language === 'es' ? 'ESTÁNDAR TAZA' : 'CUPPING STANDARD' }}</small>
+          <strong>{{ language === 'es' ? '81 a 84 Puntos SCA' : '81 to 84 SCA Points' }}</strong>
         </div>
 
         <div>
           <span>♻</span>
-          <small>COMPROMISO CIRCULAR</small>
-          <strong>Cero Desperdicio · Bio</strong>
+          <small>{{ language === 'es' ? 'COMPROMISO CIRCULAR' : 'CIRCULAR COMMITMENT' }}</small>
+          <strong>{{ language === 'es' ? 'Cero Desperdicio · Bio' : 'Zero Waste · Bio' }}</strong>
         </div>
 
       </div>
@@ -182,26 +201,25 @@
         <div class="heritage-gallery">
 
           <div class="gallery-photo photo-one">
-            <span>FOTOGRAFÍA</span>
+            <span>{{ language === 'es' ? 'FOTOGRAFÍA' : 'PHOTOGRAPHY' }}</span>
           </div>
 
           <div class="gallery-photo photo-two">
-            <span>FOTOGRAFÍA</span>
+            <span>{{ language === 'es' ? 'FOTOGRAFÍA' : 'PHOTOGRAPHY' }}</span>
           </div>
 
           <div class="gallery-photo photo-three">
-            <span>FOTOGRAFÍA</span>
+            <span>{{ language === 'es' ? 'FOTOGRAFÍA' : 'PHOTOGRAPHY' }}</span>
           </div>
 
           <div class="gallery-photo photo-four">
-            <span>FOTOGRAFÍA</span>
+            <span>{{ language === 'es' ? 'FOTOGRAFÍA' : 'PHOTOGRAPHY' }}</span>
           </div>
 
           <div class="impact-card">
-            <strong>✦ IMPACTO ÉTICO</strong>
+            <strong>✦ {{ language === 'es' ? 'IMPACTO ÉTICO' : 'ETHICAL IMPACT' }}</strong>
             <p>
-              Empoderamiento directo y precio justo para las familias
-              caficultoras del Fundo Santa Teresita.
+              {{ language === 'es' ? 'Empoderamiento directo y precio justo para las familias caficultoras del Fundo Santa Teresita.' : 'Direct empowerment and fair pricing for the coffee-growing families of Santa Teresita Farm.' }}
             </p>
           </div>
 
@@ -211,61 +229,51 @@
         <div class="heritage-content">
 
           <p class="eyebrow">
-            ─── &nbsp; LEGADO & TRADICIÓN FAMILIAR
+            ─── &nbsp; {{ language === 'es' ? 'LEGADO & TRADICIÓN FAMILIAR' : 'LEGACY & FAMILY TRADITION' }}
           </p>
 
           <h2>
-            El Recuerdo de la Abuela
+            {{ language === 'es' ? 'El Recuerdo de la Abuela' : 'The Grandmother’s Memory' }}
             <br>
-            que Inspiró una
-            <em>Cédula de Alta Cata</em>
+            {{ language === 'es' ? 'que Inspiró una' : 'that Inspired a' }}
+            <em>{{ language === 'es' ? 'Cédula de Alta Cata' : 'High-Cupping Profile' }}</em>
           </h2>
 
           <blockquote>
-            «Cuando mis abuelos venían a visitarnos nos traían los frutos
-            que da el Fundo Santa Teresita: plátanos de seda, palta,
-            pituca y café.»
+            {{ language === 'es' ? '«Cuando mis abuelos venían a visitarnos nos traían los frutos que da el Fundo Santa Teresita: plátanos de seda, palta, pituca y café.»' : '“When my grandparents came to visit us, they brought us the fruits from Santa Teresita Farm: silk bananas, avocado, pituca, and coffee.”' }}
           </blockquote>
 
           <p>
-            Ellos partieron, y aquellos frutos dejaron de llegar a nuestra
-            mesa. Guiada por la memoria, un buen día retorné a las laderas
-            bendecidas de Chanchamayo, Junín.
+            {{ language === 'es' ? 'Ellos partieron, y aquellos frutos dejaron de llegar a nuestra mesa. Guiada por la memoria, un buen día retorné a las laderas bendecidas de Chanchamayo, Junín.' : 'They passed away, and those fruits stopped reaching our table. Guided by memory, one day I returned to the blessed slopes of Chanchamayo, Junín.' }}
           </p>
 
           <p>
-            Me reencontré con la chacra ancestral: las plantas florecían
-            cargadas de cerezas rojas vivas.
+            {{ language === 'es' ? 'Me reencontré con la chacra ancestral: las plantas florecían cargadas de cerezas rojas vivas.' : 'I reconnected with the ancestral farm: the plants were flourishing, covered with vibrant red cherries.' }}
           </p>
 
           <p>
-            Tras analizar minuciosamente con catadores certificados Q
-            Grader, comprobamos que alcanzaban la distinción de café de
-            especialidad. Con tan solo 10 gramos de esta noble cosecha se
-            obtiene una extracción sublime: limpia, dulce y fragante.
+            {{ language === 'es' ? 'Tras analizar minuciosamente con catadores certificados Q Grader, comprobamos que alcanzaban la distinción de café de especialidad. Con tan solo 10 gramos de esta noble cosecha se obtiene una extracción sublime: limpia, dulce y fragante.' : 'After a meticulous analysis with certified Q Graders, we confirmed that they achieved specialty coffee distinction. With just 10 grams of this noble harvest, a sublime extraction is obtained: clean, sweet, and fragrant.' }}
           </p>
 
           <p class="question">
-            ¿Cómo no compartir esta bendición? Sé que mis abuelos
-            soñaron desde la eternidad viendo llegar su café... de la
-            chacra a tu taza.
+            {{ language === 'es' ? '¿Cómo no compartir esta bendición? Sé que mis abuelos soñaron desde la eternidad viendo llegar su café... de la chacra a tu taza.' : 'How could we not share this blessing? I know my grandparents dreamed from eternity of seeing their coffee arrive... from the farm to your cup.' }}
           </p>
 
           <div class="heritage-stats">
 
             <div>
               <strong>100%</strong>
-              <span>ARÁBICA PURO</span>
+              <span>{{ language === 'es' ? 'ARÁBICA PURO' : 'PURE ARABICA' }}</span>
             </div>
 
             <div>
               <strong>10<small> g</small></strong>
-              <span>EXTRACCIÓN SUBLIME</span>
+              <span>{{ language === 'es' ? 'EXTRACCIÓN SUBLIME' : 'SUBLIME EXTRACTION' }}</span>
             </div>
 
             <div>
               <strong>3<small>+</small></strong>
-              <span>GENERACIONES</span>
+              <span>{{ language === 'es' ? 'GENERACIONES' : 'GENERATIONS' }}</span>
             </div>
 
           </div>
@@ -287,30 +295,28 @@
         <div class="collection-heading">
 
           <div>
-            <p class="eyebrow">TIENDA DE FUNDO</p>
+            <p class="eyebrow">{{ language === 'es' ? 'TIENDA DE FUNDO' : 'FARM SHOP' }}</p>
 
             <h2>
-              Colección Grand Cru
+              {{ language === 'es' ? 'Colección Grand Cru' : 'Grand Cru Collection' }}
               <em>Kfest</em>
             </h2>
 
             <p>
-              Tostado artesanal en pequeños micro lotes para garantizar
-              frescura aromática absoluta.
+              {{ language === 'es' ? 'Tostado artesanal en pequeños micro lotes para garantizar frescura aromática absoluta.' : 'Small-batch artisan roasting to guarantee absolute aromatic freshness.' }}
             </p>
 
             <p>
-              Selecciona tu tipo de molienda y pide directamente a nuestros
-              caficultores por WhatsApp.
+              {{ language === 'es' ? 'Selecciona tu tipo de molienda y pide directamente a nuestros caficultores por WhatsApp.' : 'Select your grind type and order directly from our coffee farmers via WhatsApp.' }}
             </p>
           </div>
 
           <div class="grind-selector">
-            <span>MOLIENDA:</span>
-            <strong>En Grano</strong>
+            <span>{{ language === 'es' ? 'MOLIENDA:' : 'GRIND:' }}</span>
+            <strong>{{ language === 'es' ? 'En Grano' : 'Whole Bean' }}</strong>
             <span>V60 / Filtrado</span>
-            <span>Prensa Francesa</span>
-            <span>Gota a Gota</span>
+            <span>{{ language === 'es' ? 'Prensa Francesa' : 'French Press' }}</span>
+            <span>{{ language === 'es' ? 'Gota a Gota' : 'Drip' }}</span>
           </div>
 
         </div>
@@ -322,34 +328,37 @@
           <article class="product-card">
 
             <div class="product-image">
-              <span class="product-label">250 GRAMOS</span>
+              <span class="product-label">{{ language === 'es' ? '250 GRAMOS' : '250 GRAMS' }}</span>
               <div class="coffee-bag bag-one">
                 KFEST
-                <small>CAFÉ HECHO CON<br>ESFUERZO<br>Y AMOR</small>
+                <small>
+                    {{ language === 'es' ? 'CAFÉ HECHO CON' : 'COFFEE MADE WITH' }}<br>
+                    {{ language === 'es' ? 'ESFUERZO' : 'EFFORT' }}<br>
+                    {{ language === 'es' ? 'Y AMOR' : 'AND LOVE' }}
+                  </small>
               </div>
             </div>
 
-            <p class="product-type">RESERVA PERSONAL</p>
+            <p class="product-type">{{ language === 'es' ? 'RESERVA PERSONAL' : 'PERSONAL RESERVE' }}</p>
 
             <h3>
-              1 Paquete CAFÉ DE
+              {{ language === 'es' ? '1 Paquete CAFÉ DE' : '1 SPECIALTY COFFEE' }}
               <br>
-              ESPECIALIDAD
+              {{ language === 'es' ? 'ESPECIALIDAD' : 'BAG' }}
             </h3>
 
             <p>
-              La medida perfecta para disfrutar semanalmente en casa u
-              oficina. Notas florales intensas y tueste fresco garantizado.
+              {{ language === 'es' ? 'La medida perfecta para disfrutar semanalmente en casa u oficina. Notas florales intensas y tueste fresco garantizado.' : 'The perfect amount to enjoy weekly at home or in the office. Intense floral notes and guaranteed fresh roast.' }}
             </p>
 
             <div class="product-footer">
               <div>
-                <small>PRECIO UNITARIO</small>
+                <small>{{ language === 'es' ? 'PRECIO UNITARIO' : 'UNIT PRICE' }}</small>
                 <strong>S/ 30.00</strong>
               </div>
 
               <a href="#contacto" class="small-btn">
-                ▣ PEDIR POR WHATSAPP
+                ▣ {{ language === 'es' ? 'PEDIR POR WHATSAPP' : 'ORDER VIA WHATSAPP' }}
               </a>
             </div>
 
@@ -360,47 +369,53 @@
           <article class="product-card featured">
 
             <div class="popular">
-              ◉ MÁS SOLICITADO
+              ◉ {{ language === 'es' ? 'MÁS SOLICITADO' : 'MOST REQUESTED' }}
             </div>
 
             <div class="product-image">
-              <span class="product-label">500 GRAMOS TOTAL</span>
+              <span class="product-label">{{ language === 'es' ? '500 GRAMOS TOTAL' : '500 GRAMS TOTAL' }}</span>
 
               <div class="coffee-bags">
                 <div class="coffee-bag">
                   KFEST
-                  <small>CAFÉ HECHO CON<br>ESFUERZO<br>Y AMOR</small>
+                  <small>
+                    {{ language === 'es' ? 'CAFÉ HECHO CON' : 'COFFEE MADE WITH' }}<br>
+                    {{ language === 'es' ? 'ESFUERZO' : 'EFFORT' }}<br>
+                    {{ language === 'es' ? 'Y AMOR' : 'AND LOVE' }}
+                  </small>
                 </div>
 
                 <div class="coffee-bag">
                   KFEST
-                  <small>CAFÉ HECHO CON<br>ESFUERZO<br>Y AMOR</small>
+                  <small>
+                    {{ language === 'es' ? 'CAFÉ HECHO CON' : 'COFFEE MADE WITH' }}<br>
+                    {{ language === 'es' ? 'ESFUERZO' : 'EFFORT' }}<br>
+                    {{ language === 'es' ? 'Y AMOR' : 'AND LOVE' }}
+                  </small>
                 </div>
               </div>
             </div>
 
-            <p class="product-type">DÚO ESENCIAL RESERVA</p>
+            <p class="product-type">{{ language === 'es' ? 'DÚO ESENCIAL RESERVA' : 'ESSENTIAL RESERVE DUO' }}</p>
 
             <h3>
-              2 Paquetes CAFÉ DE
+              {{ language === 'es' ? '2 Paquetes CAFÉ DE' : '2 SPECIALTY COFFEE' }}
               <br>
-              ESPECIALIDAD
+              {{ language === 'es' ? 'ESPECIALIDAD' : 'BAG' }}
             </h3>
 
             <p>
-              Nuestra presentación insignia predilecta por familias
-              cafeteras. Disfruta un perfil aromático intenso y balance
-              perfecto.
+              {{ language === 'es' ? 'Nuestra presentación insignia predilecta por familias cafeteras. Disfruta un perfil aromático intenso y balance perfecto.' : 'Our signature presentation, a favorite among coffee-loving families. Enjoy an intense aromatic profile and perfect balance.' }}
             </p>
 
             <div class="product-footer">
               <div>
-                <small>PRECIO DÚO</small>
+                <small>{{ language === 'es' ? 'PRECIO DÚO' : 'DUO PRICE' }}</small>
                 <strong>S/ 56.00</strong>
               </div>
 
               <a href="#contacto" class="small-btn gold">
-                ▣ PEDIR POR WHATSAPP
+                ▣ {{ language === 'es' ? 'PEDIR POR WHATSAPP' : 'ORDER VIA WHATSAPP' }}
               </a>
             </div>
 
@@ -411,7 +426,7 @@
           <article class="product-card">
 
             <div class="product-image">
-              <span class="product-label">1 KILOGRAMO TOTAL</span>
+              <span class="product-label">{{ language === 'es' ? '1 KILOGRAMO TOTAL' : '1 KILOGRAM TOTAL' }}</span>
 
               <div class="coffee-bags many">
                 <div class="coffee-bag">KFEST</div>
@@ -421,29 +436,27 @@
             </div>
 
             <p class="product-type">
-              COFRE DEGUSTACIÓN · AHORRA S/ 20
+              {{ language === 'es' ? 'COFRE DEGUSTACIÓN · AHORRA S/ 20' : 'TASTING CHEST · SAVE S/ 20' }}
             </p>
 
             <h3>
-              4 Paquetes CAFÉ DE
+              {{ language === 'es' ? '4 Paquetes CAFÉ DE' : '4 SPECIALTY COFFEE' }}
               <br>
-              ESPECIALIDAD
+              {{ language === 'es' ? 'ESPECIALIDAD' : 'BAG' }}
             </h3>
 
             <p>
-              Pack maestro de 1 kg distribuido en 4 bolsas herméticas
-              independientes con válvula desgasificadora para preservar
-              cada aroma.
+              {{ language === 'es' ? 'Pack maestro de 1 kg distribuido en 4 bolsas herméticas independientes con válvula desgasificadora para preservar cada aroma.' : 'Master 1 kg pack divided into 4 independent airtight bags with degassing valves to preserve every aroma.' }}
             </p>
 
             <div class="product-footer">
               <div>
-                <small>PRECIO PACK 1KG</small>
+                <small>{{ language === 'es' ? 'PRECIO PACK 1KG' : '1KG PACK PRICE' }}</small>
                 <strong>S/ 100.00</strong>
               </div>
 
               <a href="#contacto" class="small-btn">
-                ▣ PEDIR POR WHATSAPP
+                ▣ {{ language === 'es' ? 'PEDIR POR WHATSAPP' : 'ORDER VIA WHATSAPP' }}
               </a>
             </div>
 
@@ -466,15 +479,14 @@
         <div class="delivery-icon">▣</div>
 
         <div>
-          <h3>Cronograma de Envíos de Tueste Reciente</h3>
+          <h3>{{ language === 'es' ? 'Cronograma de Envíos de Tueste Reciente' : 'Recent Roast Shipping Schedule' }}</h3>
           <p>
-            Despachos organizados los días Lunes, Miércoles y Viernes para
-            garantizar frescura óptima en su mesa.
+            {{ language === 'es' ? 'Despachos organizados los días Lunes, Miércoles y Viernes para garantizar frescura óptima en su mesa.' : 'Shipments scheduled on Mondays, Wednesdays, and Fridays to guarantee optimal freshness at your table.' }}
           </p>
         </div>
 
         <a href="#contacto" class="small-btn">
-          ▣ COORDINAR ENTREGA
+          ▣ {{ language === 'es' ? 'COORDINAR ENTREGA' : 'ARRANGE DELIVERY' }}
         </a>
 
       </div>
@@ -492,18 +504,15 @@
         <div class="tasting-header">
 
           <div>
-            <p class="eyebrow">SALÓN DE DEGUSTACIÓN</p>
+            <p class="eyebrow">{{ language === 'es' ? 'SALÓN DE DEGUSTACIÓN' : 'TASTING ROOM' }}</p>
 
             <h2>
-              Perfiles de Cata
+              {{ language === 'es' ? 'Perfiles de Cata' : 'Tasting Profiles' }}
               <em>Fundo Santa Teresita</em>
             </h2>
 
             <p>
-              Cuatro interpretaciones sensoriales bautizadas con virtudes
-              que honran a nuestros caficultores: su fe comunitaria,
-              su paciencia en la recolección manual y el respeto por
-              los dones de Dios y la tierra.
+              {{ language === 'es' ? 'Cuatro interpretaciones sensoriales bautizadas con virtudes que honran a nuestros caficultores: su fe comunitaria, su paciencia en la recolección manual y el respeto por los dones de Dios y la tierra.' : 'Four sensory interpretations named after virtues that honor our coffee farmers: their community faith, patience in hand-picking, and respect for the gifts of God and the earth.' }}
             </p>
           </div>
 
@@ -524,27 +533,25 @@
               <small>1,600 msnm</small>
             </div>
 
-            <h3>Perfil Fe</h3>
+            <h3>{{ language === 'es' ? 'Perfil Fe' : 'Faith Profile' }}</h3>
 
             <p>
-              Inspirado en la mujer caficultora del Fundo Cruz del Sur,
-              trabajadora incansable con devota a su comunidad.
+              {{ language === 'es' ? 'Inspirado en la mujer caficultora del Fundo Cruz del Sur, trabajadora incansable con devota a su comunidad.' : 'Inspired by the coffee-growing woman of Fundo Cruz del Sur, a tireless worker devoted to her community.' }}
             </p>
 
             <div class="sensory">
-              <small>NOTAS SENSORIALES</small>
+              <small>{{ language === 'es' ? 'NOTAS SENSORIALES' : 'SENSORY NOTES' }}</small>
               <strong>
-                Frutal lima dulce, toffee acaramelado, canela aromática
-                y vainilla bourbon.
+                {{ language === 'es' ? 'Frutal lima dulce, toffee acaramelado, canela aromática y vainilla bourbon.' : 'Sweet lime fruit, caramelized toffee, aromatic cinnamon, and bourbon vanilla.' }}
               </strong>
 
               <div>
-                <span>Acidez: Suave</span>
-                <span>Cuerpo: Sedoso</span>
+                <span>{{ language === 'es' ? 'Acidez: Suave' : 'Acidity: Mild' }}</span>
+                <span>{{ language === 'es' ? 'Cuerpo: Sedoso' : 'Body: Silky' }}</span>
               </div>
             </div>
 
-            <a href="#contacto">▣ PEDIR PERFIL FE</a>
+            <a href="#contacto">▣ {{ language === 'es' ? 'PEDIR PERFIL FE' : 'ORDER FAITH PROFILE' }}</a>
 
           </article>
 
@@ -556,27 +563,25 @@
               <small>1,600 msnm</small>
             </div>
 
-            <h3>Perfil Paciencia</h3>
+            <h3>{{ language === 'es' ? 'Perfil Paciencia' : 'Patience Profile' }}</h3>
 
             <p>
-              En honor al mayor de los Rodríguez, perseverante hasta
-              recuperar las tierras sagradas de la familia.
+              {{ language === 'es' ? 'En honor al mayor de los Rodríguez, perseverante hasta recuperar las tierras sagradas de la familia.' : 'In honor of the eldest Rodríguez, who persevered until the family’s sacred lands were recovered.' }}
             </p>
 
             <div class="sensory">
-              <small>NOTAS SENSORIALES</small>
+              <small>{{ language === 'es' ? 'NOTAS SENSORIALES' : 'SENSORY NOTES' }}</small>
               <strong>
-                Herbal complejo, fondo a nuez moscada tostada y
-                consistencia oleosa.
+                {{ language === 'es' ? 'Herbal complejo, fondo a nuez moscada tostada y consistencia oleosa.' : 'Complex herbal notes, a toasted nutmeg finish, and an oily consistency.' }}
               </strong>
 
               <div>
-                <span>Acidez: Serena</span>
-                <span>Taza: Persistente</span>
+                <span>{{ language === 'es' ? 'Acidez: Serena' : 'Acidity: Serene' }}</span>
+                <span>{{ language === 'es' ? 'Taza: Persistente' : 'Cup: Persistent' }}</span>
               </div>
             </div>
 
-            <a href="#contacto">▣ PEDIR PACIENCIA</a>
+            <a href="#contacto">▣ {{ language === 'es' ? 'PEDIR PACIENCIA' : 'ORDER PATIENCE' }}</a>
 
           </article>
 
@@ -584,31 +589,29 @@
           <article class="profile profile-tolerancia">
 
             <div class="profile-top">
-              <span>BLEND DE ALTURA</span>
-              <small>Multivarietal</small>
+              <span>{{ language === 'es' ? 'BLEND DE ALTURA' : 'HIGH-ALTITUDE BLEND' }}</span>
+              <small>{{ language === 'es' ? 'Multivarietal' : 'Multi-varietal' }}</small>
             </div>
 
-            <h3>Perfil Tolerancia</h3>
+            <h3>{{ language === 'es' ? 'Perfil Tolerancia' : 'Tolerance Profile' }}</h3>
 
             <p>
-              La armonía perfecta entre diversos micro-lotes para lograr
-              una taza de espresso redonda, suave y envolvente.
+              {{ language === 'es' ? 'La armonía perfecta entre diversos micro-lotes para lograr una taza de espresso redonda, suave y envolvente.' : 'The perfect harmony between diverse micro-lots to create a round, smooth, and enveloping espresso cup.' }}
             </p>
 
             <div class="sensory">
-              <small>NOTAS SENSORIALES</small>
+              <small>{{ language === 'es' ? 'NOTAS SENSORIALES' : 'SENSORY NOTES' }}</small>
               <strong>
-                Expreso aterciopelado, caramelo rubio, balance y retrogusto
-                prolongado.
+                {{ language === 'es' ? 'Expreso aterciopelado, caramelo rubio, balance y retrogusto prolongado.' : 'Velvety espresso, blonde caramel, balance, and a lingering finish.' }}
               </strong>
 
               <div>
-                <span>Acidez: Balanceada</span>
-                <span>Taza: Limpia</span>
+                <span>{{ language === 'es' ? 'Acidez: Balanceada' : 'Acidity: Balanced' }}</span>
+                <span>{{ language === 'es' ? 'Taza: Limpia' : 'Cup: Clean' }}</span>
               </div>
             </div>
 
-            <a href="#contacto">▣ PEDIR TOLERANCIA</a>
+            <a href="#contacto">▣ {{ language === 'es' ? 'PEDIR TOLERANCIA' : 'ORDER TOLERANCE' }}</a>
 
           </article>
 
@@ -616,31 +619,29 @@
           <article class="profile profile-respeto">
 
             <div class="profile-top">
-              <span>CATURRA PURA</span>
+              <span>{{ language === 'es' ? 'CATURRA PURA' : 'PURE CATURRA' }}</span>
               <small>1,700 msnm</small>
             </div>
 
-            <h3>Perfil Respeto</h3>
+            <h3>{{ language === 'es' ? 'Perfil Respeto' : 'Respect Profile' }}</h3>
 
             <p>
-              Inspirado en el mandamiento de gratitud por la creación.
-              Respeto inquebrantable a los tiempos de la naturaleza.
+              {{ language === 'es' ? 'Inspirado en el mandamiento de gratitud por la creación. Respeto inquebrantable a los tiempos de la naturaleza.' : 'Inspired by the commandment of gratitude for creation. Unwavering respect for nature’s timing.' }}
             </p>
 
             <div class="sensory">
-              <small>NOTAS SENSORIALES</small>
+              <small>{{ language === 'es' ? 'NOTAS SENSORIALES' : 'SENSORY NOTES' }}</small>
               <strong>
-                Manzana confitada, cacao al 70%, nuez cálida y delicada
-                canela dulce.
+                {{ language === 'es' ? 'Manzana confitada, cacao al 70%, nuez cálida y delicada canela dulce.' : 'Candied apple, 70% cacao, warm nut, and delicate sweet cinnamon.' }}
               </strong>
 
               <div>
-                <span>Acidez: Frutal</span>
-                <span>Cuerpo: Terciopelo</span>
+                <span>{{ language === 'es' ? 'Acidez: Frutal' : 'Acidity: Fruity' }}</span>
+                <span>{{ language === 'es' ? 'Cuerpo: Terciopelo' : 'Body: Velvet' }}</span>
               </div>
             </div>
 
-            <a href="#contacto">▣ PEDIR RESPETO</a>
+            <a href="#contacto">▣ {{ language === 'es' ? 'PEDIR RESPETO' : 'ORDER RESPECT' }}</a>
 
           </article>
 
@@ -661,29 +662,25 @@
         <div class="util-content">
 
           <span class="green-label">
-            ◉ ECONOMÍA CIRCULAR · CERO HUELLA
+            ◉ {{ language === 'es' ? 'ECONOMÍA CIRCULAR · CERO HUELLA' : 'CIRCULAR ECONOMY · ZERO FOOTPRINT' }}
           </span>
 
           <h2>
             Útilkfest.
-            <em>Artesanía Viva</em>
-            con Borra de Café
+            <em>{{ language === 'es' ? 'Artesanía Viva' : 'Living Craft' }}</em>
+            {{ language === 'es' ? 'con Borra de Café' : 'with Coffee Grounds' }}
           </h2>
 
           <p>
-            Pioneros en el Perú en transformar el residuo orgánico de café
-            en piezas de diseño de lujo, bio recipientes y artículos
-            funcionales con un sutil e inconfundible aroma a tostado noble.
+            {{ language === 'es' ? 'Pioneros en el Perú en transformar el residuo orgánico de café en piezas de diseño de lujo, bio recipientes y artículos funcionales con un sutil e inconfundible aroma a tostado noble.' : 'Pioneers in Peru in transforming organic coffee waste into luxury design pieces, bio-containers, and functional articles with a subtle, unmistakable noble-roast aroma.' }}
           </p>
 
           <div class="util-note">
-            Cada creación Útilkfest evita que la borra termine en vertederos,
-            devolviendo al ciclo de vida objetos que honran la tierra
-            cafetalera de Chanchamayo.
+            {{ language === 'es' ? 'Cada creación Útilkfest evita que la borra termine en vertederos, devolviendo al ciclo de vida objetos que honran la tierra cafetalera de Chanchamayo.' : 'Every Útilkfest creation keeps coffee grounds out of landfills, returning objects to the life cycle that honor the coffee-growing land of Chanchamayo.' }}
           </div>
 
           <a href="#contacto" class="btn btn-outline">
-            ⚑ &nbsp; CONSULTAR COLECCIÓN ÚTILKFEST POR WHATSAPP
+            ⚑ &nbsp; {{ language === 'es' ? 'CONSULTAR COLECCIÓN ÚTILKFEST POR WHATSAPP' : 'INQUIRE ABOUT THE ÚTILKFEST COLLECTION VIA WHATSAPP' }}
           </a>
 
         </div>
@@ -695,32 +692,32 @@
             <div class="util-image">
               <div class="round-product">KFEST</div>
             </div>
-            <strong>Posavasos Barista</strong>
-            <small>100% BIO-COMUESTO</small>
+            <strong>{{ language === 'es' ? 'Posavasos Barista' : 'Barista Coaster' }}</strong>
+            <small>{{ language === 'es' ? '100% BIO-COMUESTO' : '100% BIO-COMPOSITE' }}</small>
           </article>
 
           <article>
             <div class="util-image">
               <div class="round-product dark-product">KFEST</div>
             </div>
-            <strong>Dosificador de Extracción</strong>
-            <small>TEXTURA AROMÁTICA</small>
+            <strong>{{ language === 'es' ? 'Dosificador de Extracción' : 'Extraction Doser' }}</strong>
+            <small>{{ language === 'es' ? 'TEXTURA AROMÁTICA' : 'AROMATIC TEXTURE' }}</small>
           </article>
 
           <article>
             <div class="util-image">
               <div class="round-product cup">☕</div>
             </div>
-            <strong>Vaso Medidor Barista</strong>
-            <small>TERMO-RESISTENTE</small>
+            <strong>{{ language === 'es' ? 'Vaso Medidor Barista' : 'Barista Measuring Cup' }}</strong>
+            <small>{{ language === 'es' ? 'TERMO-RESISTENTE' : 'THERMAL-RESISTANT' }}</small>
           </article>
 
           <article>
             <div class="util-image">
               <div class="round-product seeds">BIO</div>
             </div>
-            <strong>Cofre de Semillas Bio</strong>
-            <small>BIODEGRADABLE 100%</small>
+            <strong>{{ language === 'es' ? 'Cofre de Semillas Bio' : 'Bio Seed Chest' }}</strong>
+            <small>{{ language === 'es' ? 'BIODEGRADABLE 100%' : '100% BIODEGRADABLE' }}</small>
           </article>
 
         </div>
@@ -740,41 +737,38 @@
         <div class="catering-content">
 
           <span class="gold-label">
-            ⚑ BARRA MÓVIL & CONCIERGE PRIVADO
+            ⚑ {{ language === 'es' ? 'BARRA MÓVIL & CONCIERGE PRIVADO' : 'MOBILE BAR & PRIVATE CONCIERGE' }}
           </span>
 
           <h2>
-            Catering de Autor:
+            {{ language === 'es' ? 'Catering de Autor:' : 'Signature Catering:' }}
             <em>El Kfestcar</em>
-            en tu Evento
+            {{ language === 'es' ? 'en tu Evento' : 'at Your Event' }}
           </h2>
 
           <p>
-            Llevamos la mística de las montañas de Chanchamayo a tus
-            celebraciones más exclusivas en Lima y todo el país.
-            Baristas profesionales preparando espressos de campeonato,
-            cappuccinos aterciopelados y métodos artesanales en directo.
+            {{ language === 'es' ? 'Llevamos la mística de las montañas de Chanchamayo a tus celebraciones más exclusivas en Lima y todo el país. Baristas profesionales preparando espressos de campeonato, cappuccinos aterciopelados y métodos artesanales en directo.' : 'We bring the mystique of the Chanchamayo mountains to your most exclusive celebrations in Lima and throughout the country. Professional baristas preparing championship espressos, velvety cappuccinos, and live artisan brewing methods.' }}
           </p>
 
-          <h5>SELECCIONA TIPO DE CELEBRACIÓN:</h5>
+          <h5>{{ language === 'es' ? 'SELECCIONA TIPO DE CELEBRACIÓN:' : 'SELECT CELEBRATION TYPE:' }}</h5>
 
           <div class="event-options">
 
-            <button>♢ Bodas de Gala</button>
-            <button>▣ Corporativos VIP</button>
-            <button>⚑ Ferias Gourmet</button>
-            <button>♙ Aniversarios</button>
-            <button>⚑ Lanzamientos</button>
-            <button>⚐ Eventos Privados</button>
+            <button>♢ {{ language === 'es' ? 'Bodas de Gala' : 'Gala Weddings' }}</button>
+            <button>▣ {{ language === 'es' ? 'Corporativos VIP' : 'VIP Corporate Events' }}</button>
+            <button>⚑ {{ language === 'es' ? 'Ferias Gourmet' : 'Gourmet Fairs' }}</button>
+            <button>♙ {{ language === 'es' ? 'Aniversarios' : 'Anniversaries' }}</button>
+            <button>⚑ {{ language === 'es' ? 'Lanzamientos' : 'Launch Events' }}</button>
+            <button>⚐ {{ language === 'es' ? 'Eventos Privados' : 'Private Events' }}</button>
 
           </div>
 
           <div class="catering-action">
             <a href="#contacto" class="btn btn-gold">
-              ▣ &nbsp; COTIZAR KFESTCAR POR WHATSAPP
+              ▣ &nbsp; {{ language === 'es' ? 'COTIZAR KFESTCAR POR WHATSAPP' : 'GET A KFESTCAR QUOTE VIA WHATSAPP' }}
             </a>
 
-            <small>Evento seleccionado: Bodas de Gala</small>
+            <small>{{ language === 'es' ? 'Evento seleccionado: Bodas de Gala' : 'Selected event: Gala Weddings' }}</small>
           </div>
 
         </div>
@@ -787,8 +781,8 @@
               <div class="car-placeholder">KFESTCAR</div>
             </div>
 
-            <strong>Barra Móvil Kfestcar</strong>
-            <small>ESTACIÓN ESPRESSO ITALIANA</small>
+            <strong>{{ language === 'es' ? 'Barra Móvil Kfestcar' : 'Kfestcar Mobile Bar' }}</strong>
+            <small>{{ language === 'es' ? 'ESTACIÓN ESPRESSO ITALIANA' : 'ITALIAN ESPRESSO STATION' }}</small>
           </article>
 
           <article>
@@ -796,8 +790,8 @@
               <div class="car-placeholder">KFESTCAR</div>
             </div>
 
-            <strong>Cultura & Activación</strong>
-            <small>CATAS Y MÉTODOS EN VIVO</small>
+            <strong>{{ language === 'es' ? 'Cultura & Activación' : 'Culture & Activation' }}</strong>
+            <small>{{ language === 'es' ? 'CATAS Y MÉTODOS EN VIVO' : 'LIVE TASTINGS & BREWING METHODS' }}</small>
           </article>
 
         </div>
@@ -816,27 +810,25 @@
 
         <div class="concierge-main">
 
-          <p class="eyebrow">SERVICIO DE CONCIERGE</p>
+          <p class="eyebrow">{{ language === 'es' ? 'SERVICIO DE CONCIERGE' : 'CONCIERGE SERVICE' }}</p>
 
           <h2>
-            El Café del
+            {{ language === 'es' ? 'El Café del' : 'Coffee from' }}
             <em>Fundo Santa Teresita</em>
-            aguarda por ti
+            {{ language === 'es' ? 'aguarda por ti' : 'Awaits You' }}
           </h2>
 
           <p>
-            Adquiere directamente de los productores de Perené.
-            Atención personalizada inmediata, asesoría de molienda y
-            envíos asegurados a todo el Perú.
+            {{ language === 'es' ? 'Adquiere directamente de los productores de Perené. Atención personalizada inmediata, asesoría de molienda y envíos asegurados a todo el Perú.' : 'Purchase directly from the producers of Perené. Immediate personalized service, grind guidance, and secure shipping throughout Peru.' }}
           </p>
 
           <div class="concierge-action">
 
             <a href="https://wa.me/" class="btn btn-gold">
-              ▣ &nbsp; PEDIR POR WHATSAPP BUSINESS
+              ▣ &nbsp; {{ language === 'es' ? 'PEDIR POR WHATSAPP BUSINESS' : 'ORDER VIA WHATSAPP BUSINESS' }}
             </a>
 
-            <span>Respuesta prioritaria en &lt; 10 min</span>
+            <span>{{ language === 'es' ? 'Respuesta prioritaria en &lt; 10 min' : 'Priority response in &lt; 10 min' }}</span>
 
           </div>
 
@@ -851,7 +843,7 @@
 
         <aside class="official-lines">
 
-          <p>LÍNEAS OFICIALES</p>
+          <p>{{ language === 'es' ? 'LÍNEAS OFICIALES' : 'OFFICIAL LINES' }}</p>
 
           <strong>
             918 422 677
@@ -863,7 +855,7 @@
 
           <hr>
 
-          <p>DESPACHOS & CORREO</p>
+          <p>{{ language === 'es' ? 'DESPACHOS & CORREO' : 'SHIPPING & EMAIL' }}</p>
 
           <strong class="email">
             pedidos@kfest.pe
@@ -872,11 +864,10 @@
           <hr>
 
           <blockquote>
-            «El Señor te dará lluvia para la semilla que siembres
-            en la tierra y la tierra producirá fruto abundante y fértil.»
+            {{ language === 'es' ? '«El Señor te dará lluvia para la semilla que siembres en la tierra y la tierra producirá fruto abundante y fértil.»' : '“The Lord will give you rain for the seed you sow in the ground, and the land will produce abundant and fertile fruit.”' }}
           </blockquote>
 
-          <small>ISAÍAS 30:23</small>
+          <small>{{ language === 'es' ? 'ISAÍAS 30:23' : 'ISAIAH 30:23' }}</small>
 
         </aside>
 
@@ -902,17 +893,13 @@
         </div>
 
         <p>
-          Café de especialidad de origen único cosechado con devoción
-          en el Fundo Santa Teresita, Chanchamayo, Junín, Perú,
-          cultivado y respetado ancestral en cada grano tostado
-          artesanalmente.
+          {{ language === 'es' ? 'Café de especialidad de origen único cosechado con devoción en el Fundo Santa Teresita, Chanchamayo, Junín, Perú, cultivado y respetado ancestral en cada grano tostado artesanalmente.' : 'Single-origin specialty coffee harvested with devotion at Santa Teresita Farm, Chanchamayo, Junín, Peru, ancestrally cultivated and honored in every artisan-roasted bean.' }}
         </p>
 
         <div class="memory">
-          <small>MEMORIA DE FE</small>
+          <small>{{ language === 'es' ? 'MEMORIA DE FE' : 'MEMORY OF FAITH' }}</small>
           <em>
-            «Cuando, y ved que es bueno Jehová; dichoso el hombre que
-            confía en él.»
+            {{ language === 'es' ? '«Cuando, y ved que es bueno Jehová; dichoso el hombre que confía en él.»' : '“Taste and see that the LORD is good; blessed is the one who trusts in him.”' }}
           </em>
           <strong>SALMOS 34:8</strong>
         </div>
@@ -922,37 +909,37 @@
 
       <div class="footer-column">
 
-        <h4>NAVEGACIÓN & CATÁLOGO</h4>
+        <h4>{{ language === 'es' ? 'NAVEGACIÓN & CATÁLOGO' : 'NAVIGATION & CATALOG' }}</h4>
 
-        <a href="#inicio">Inicio</a>
-        <a href="#coleccion">Colección Grand Cru Reserva</a>
-        <a href="#herencia">Nuestra Historia & Fundo</a>
-        <a href="#cata">Perfiles de Cata</a>
-        <a href="#utilkfest">Línea Sostenible Útilkfest</a>
-        <a href="#catering">Concierge Kfestcar</a>
-        <a href="#contacto">Atención al Cliente</a>
+        <a href="#inicio">{{ language === 'es' ? 'Inicio' : 'Home' }}</a>
+        <a href="#coleccion">{{ language === 'es' ? 'Colección Grand Cru Reserva' : 'Grand Cru Reserve Collection' }}</a>
+        <a href="#herencia">{{ language === 'es' ? 'Nuestra Historia & Fundo' : 'Our Story & Farm' }}</a>
+        <a href="#cata">{{ language === 'es' ? 'Perfiles de Cata' : 'Tasting Profiles' }}</a>
+        <a href="#utilkfest">{{ language === 'es' ? 'Línea Sostenible Útilkfest' : 'Útilkfest Sustainable Line' }}</a>
+        <a href="#catering">{{ language === 'es' ? 'Concierge Kfestcar' : 'Kfestcar Concierge' }}</a>
+        <a href="#contacto">{{ language === 'es' ? 'Atención al Cliente' : 'Customer Service' }}</a>
 
       </div>
 
 
       <div class="footer-column">
 
-        <h4>CONTACTO & DESPACHOS</h4>
+        <h4>{{ language === 'es' ? 'CONTACTO & DESPACHOS' : 'CONTACT & SHIPPING' }}</h4>
 
         <span>⌕ &nbsp; 918 422 677 / 987 483 134</span>
         <span>✉ &nbsp; pedidos@kfest.pe</span>
-        <span>⌖ &nbsp; Fundo Santa Teresita, Chanchamayo, Región Junín, Perú</span>
-        <span>◷ &nbsp; Lun - Sáb: 8:00 am - 7:00 pm</span>
+        <span>⌖ &nbsp; {{ language === 'es' ? 'Fundo Santa Teresita, Chanchamayo, Región Junín, Perú' : 'Santa Teresita Farm, Chanchamayo, Junín Region, Peru' }}</span>
+        <span>◷ &nbsp; {{ language === 'es' ? 'Lun - Sáb: 8:00 am - 7:00 pm' : 'Mon - Sat: 8:00 am - 7:00 pm' }}</span>
 
       </div>
 
 
       <div class="footer-column community">
 
-        <h4>COMUNIDAD</h4>
+        <h4>{{ language === 'es' ? 'COMUNIDAD' : 'COMMUNITY' }}</h4>
 
         <p>
-          Sigue las cosechas y tostados en redes:
+          {{ language === 'es' ? 'Sigue las cosechas y tostados en redes:' : 'Follow the harvests and roasts on social media:' }}
         </p>
 
         <div class="socials">
@@ -962,10 +949,9 @@
         </div>
 
         <div class="denomination">
-          <small>DENOMINACIÓN</small>
+          <small>{{ language === 'es' ? 'DENOMINACIÓN' : 'DESIGNATION' }}</small>
           <strong>
-            Café 100% Arábica de
-            Altura · Selva Central
+            {{ language === 'es' ? 'Café 100% Arábica de Altura · Selva Central' : '100% High-Altitude Arabica Coffee · Central Jungle' }}
           </strong>
         </div>
 
@@ -977,14 +963,13 @@
     <div class="container footer-bottom">
 
       <span>
-        © 2025 Kfest · Fundo Santa Teresita, Chanchamayo.
-        Edición Grand Cru Reserva.
+        © 2025 Kfest · {{ language === 'es' ? 'Fundo Santa Teresita, Chanchamayo. Edición Grand Cru Reserva.' : 'Santa Teresita Farm, Chanchamayo. Grand Cru Reserve Edition.' }}
       </span>
 
       <div>
-        <a href="#">Términos & Condiciones</a>
-        <a href="#">Libro de Reclamaciones</a>
-        <a href="#">Política de Privacidad</a>
+        <a href="#">{{ language === 'es' ? 'Términos & Condiciones' : 'Terms & Conditions' }}</a>
+        <a href="#">{{ language === 'es' ? 'Libro de Reclamaciones' : 'Complaints Book' }}</a>
+        <a href="#">{{ language === 'es' ? 'Política de Privacidad' : 'Privacy Policy' }}</a>
       </div>
 
     </div>
