@@ -1,11 +1,83 @@
-html,
-body {
-  margin: 0;
-  padding: 0;
-  min-height: 100%;
-  background: #090806;
+/* =====================================================
+   KFEST — GLOBAL DESIGN SYSTEM
+   Fuentes: Playfair Display · Cormorant Garamond · Inter
+   ===================================================== */
+
+/* --- VARIABLES (MODO OSCURO POR DEFECTO) --- */
+:root {
+  --ff-serif:  'Playfair Display', Georgia, serif;
+  --ff-script: 'Cormorant Garamond', Georgia, serif;
+  --ff-sans:   'Inter', system-ui, sans-serif;
+
+  --bg0: #0d0b09;
+  --bg0-rgb: 13, 11, 9;
+  --bg1: #181410;
+  --bg2: #231e18;
+  --bg3: #2e271f;
+
+  --gold:       #e6ca85;
+  --gold-lt:    #f2e3b6;
+  --gold-dk:    #b88a44;
+  --gold-grad:  linear-gradient(135deg, #f2e3b6 0%, #e6ca85 55%, #b88a44 100%);
+  --gold-bdr:   rgba(230,202,133,.38);
+  --gold-glow:  0 0 32px rgba(230,202,133,.28);
+
+  --text0: #f7f4ee;
+  --text1: #d4c4aa;
+  --text2: #9a8c7a;
+
+  --bdr:  rgba(255,255,255,.12);
+
+  --r-sm: 6px;
+  --r-md: 12px;
+  --r-lg: 18px;
+  --r-xl: 24px;
+
+  --ease: all .28s cubic-bezier(.25,.8,.25,1);
 }
 
-body {
-  background: #090806;
+/* --- TEMA CLARO --- */
+body.light-theme { 
+  --bg0:#faf7f2; 
+  --bg0-rgb: 250, 247, 242;
+  --bg1:#f0e9dc; 
+  --bg2:#ffffff; 
+  --bg3:#f4ede0;
+  --gold:#b88a44; 
+  --gold-lt:#d4a962; 
+  --gold-dk:#7a5a20;
+  --gold-grad:linear-gradient(135deg,#d4a962 0%,#b88a44 55%,#7a5a20 100%);
+  --gold-bdr:rgba(184,138,68,.3); 
+  --gold-glow:0 0 22px rgba(184,138,68,.15);
+  --text0:#1c1813; 
+  --text1:#5c4f3d; 
+  --text2:#9a8a78; 
+  --bdr:rgba(0,0,0,.07); 
 }
+
+/* --- RESET BASE --- */
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+html { 
+  scroll-behavior:smooth; 
+  font-family:var(--ff-sans); 
+  background:var(--bg0); 
+  color:var(--text0); 
+  font-size:16px; 
+}
+html, body {
+  min-height: 100%;
+}
+body { 
+  background:var(--bg0); 
+  color:var(--text0); 
+  overflow-x:hidden; 
+  line-height:1.65; 
+}
+a { color:inherit; text-decoration:none; }
+button { cursor:pointer; border:none; background:none; font-family:inherit; color:inherit; }
+img { display:block; max-width:100%; }
+
+.container { max-width:1260px; margin:0 auto; padding:0 28px; }
+.sec-pad { padding:96px 0; }
+.section-dark  { background:var(--bg0); }
+.section-brown { background:var(--bg1); }
