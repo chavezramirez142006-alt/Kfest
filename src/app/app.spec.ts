@@ -4,11 +4,8 @@ import { App } from './app';
 describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        App
-      ],
-    })
-      .compileComponents();
+      imports: [App],
+    }).compileComponents();
   });
 
   it('should create the app', () => {
@@ -17,10 +14,11 @@ describe('App', () => {
     expect(app).toBeTruthy();
   });
 
-  it('should render title', async () => {
+  it('should render the KFEST brand in the page', () => {
     const fixture = TestBed.createComponent(App);
-    await fixture.whenStable();
+    fixture.detectChanges();
+
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, kfest-web');
+    expect(compiled.querySelector('.brand strong')?.textContent).toContain('KFEST');
   });
 });
