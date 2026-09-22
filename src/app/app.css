@@ -370,6 +370,28 @@
 .delivery-text h4 { font-family:var(--ff-serif); font-size:1.15rem; color:var(--text0); margin-bottom:3px; }
 .delivery-text p { font-size:.88rem; color:var(--text1); }
 
+.gal-large img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+@media (max-width: 650px) {
+  .gal-large {
+    height: auto !important;
+    overflow: hidden;
+  }
+
+  .gal-large img {
+    width: 100%;
+    height: auto !important;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+  }
+}
+
 /* ============================================================
    5. PERFILES DE CATA
    ============================================================ */
@@ -652,6 +674,11 @@
   background: #d7b66c;
   border-color: #d7b66c;
   transform: translateY(-3px);
+}
+
+.btn-gold i {
+  font-size: 18px;
+  vertical-align: middle;
 }
 
 

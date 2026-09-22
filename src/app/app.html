@@ -83,7 +83,7 @@
 
           <div class="hero-btns">
             <a [href]="getWhatsAppLink('hero')" target="_blank" class="btn btn-gold">
-              <span class="btn-sym">▣</span>
+              <span class="btn-sym"><i class="fa-brands fa-whatsapp"></i></span>
               {{ language === 'es' ? 'PEDIR RESERVA POR WHATSAPP' : 'REQUEST RESERVATION VIA WHATSAPP' }}
             </a>
             <a href="#herencia" class="btn btn-outline">
@@ -174,16 +174,16 @@
 
         <div class="gallery-grid">
           <div class="gal-photo gal-large">
-            <img src="images/abuela_stand.png" alt="Abuela en Fundo Santa Teresita" />
+            <img src="images/jefa4.jpg" alt="Abuela en Fundo Santa Teresita" />
           </div>
           <div class="gal-photo">
-            <img src="images/farmers_road.png" alt="Caficultores en Chanchamayo" />
+            <img src="images/equi.jpg" alt="Caficultores en Chanchamayo" />
           </div>
           <div class="gal-photo">
-            <img src="images/farmers_group.png" alt="Familia caficultora" />
+            <img src="images/equipo.jpg" alt="Familia caficultora" />
           </div>
           <div class="gal-photo">
-            <img src="images/woman_machete.png" alt="Cosecha de café" />
+            <img src="images/compañeros.jpg" alt="Cosecha de café" />
           </div>
         </div>
 
@@ -292,7 +292,7 @@
                   <strong>S/ 30.00</strong>
                 </div>
                 <a [href]="getWhatsAppLink('prod_250g')" target="_blank" class="btn-sm">
-                  ▣ {{ language === 'es' ? 'PEDIR POR WHATSAPP' : 'ORDER VIA WHATSAPP' }}
+                  <i class="fa-brands fa-whatsapp"></i> {{ language === 'es' ? 'PEDIR POR WHATSAPP' : 'ORDER VIA WHATSAPP' }}
                 </a>
               </div>
             </div>
@@ -319,7 +319,7 @@
                   <strong class="text-gold">S/ 56.00</strong>
                 </div>
                 <a [href]="getWhatsAppLink('prod_500g')" target="_blank" class="btn-sm btn-sm-gold">
-                  ▣ {{ language === 'es' ? 'PEDIR POR WHATSAPP' : 'ORDER VIA WHATSAPP' }}
+                  <i class="fa-brands fa-whatsapp"></i> {{ language === 'es' ? 'PEDIR POR WHATSAPP' : 'ORDER VIA WHATSAPP' }}
                 </a>
               </div>
             </div>
@@ -345,7 +345,7 @@
                   <strong>S/ 100.00</strong>
                 </div>
                 <a [href]="getWhatsAppLink('prod_1kg')" target="_blank" class="btn-sm">
-                  ▣ {{ language === 'es' ? 'PEDIR POR WHATSAPP' : 'ORDER VIA WHATSAPP' }}
+                  <i class="fa-brands fa-whatsapp"></i> {{ language === 'es' ? 'PEDIR POR WHATSAPP' : 'ORDER VIA WHATSAPP' }}
                 </a>
               </div>
             </div>
@@ -355,13 +355,14 @@
 
         <!-- DELIVERY STRIP -->
         <div class="delivery-strip">
-          <div class="delivery-icon-box">▣</div>
+          <div class="delivery-icon-box"><i class="fa-brands fa-whatsapp"></i></div>
           <div class="delivery-text">
             <h4>{{ language === 'es' ? 'Cronograma de Envíos de Tueste Reciente' : 'Recent Roast Delivery Schedule' }}</h4>
             <p>{{ language === 'es' ? 'Despachos organizados los días Lunes, Miércoles y Viernes para garantizar frescura óptima en su mesa.' : 'Shipments scheduled on Monday, Wednesday, and Friday to guarantee optimal freshness at your table.' }}</p>
           </div>
           <a [href]="getWhatsAppLink('delivery')" target="_blank" class="btn btn-sm-outline">
-            ▣ &nbsp; {{ language === 'es' ? 'COORDINAR ENTREGA' : 'ARRANGE DELIVERY' }}
+            <i class="fa-brands fa-whatsapp"></i>
+             &nbsp; {{ language === 'es' ? 'COORDINAR ENTREGA' : 'ARRANGE DELIVERY' }}
           </a>
         </div>
 
@@ -416,7 +417,7 @@
                 <span>{{ language === 'es' ? 'Cuerpo: Sedoso' : 'Body: Silky' }}</span>
               </div>
             </div>
-            <a [href]="getWhatsAppLink('cata_fe')" target="_blank" class="profile-btn p-btn-fe">▣ {{ language === 'es' ? 'PEDIR PERFIL FE' : 'ORDER FAITH PROFILE' }}</a>
+            <a [href]="getWhatsAppLink('cata_fe')" target="_blank" class="profile-btn p-btn-fe"><i class="fa-brands fa-whatsapp"></i> {{ language === 'es' ? 'PEDIR PERFIL FE' : 'ORDER FAITH PROFILE' }}</a>
           </article>
 
           <article class="profile-card p-paciencia">
@@ -434,7 +435,7 @@
                 <span>{{ language === 'es' ? 'Taza: Persistente' : 'Cup: Persistent' }}</span>
               </div>
             </div>
-            <a [href]="getWhatsAppLink('cata_paciencia')" target="_blank" class="profile-btn p-btn-paciencia">▣ {{ language === 'es' ? 'PEDIR PACIENCIA' : 'ORDER PATIENCE' }}</a>
+            <a [href]="getWhatsAppLink('cata_paciencia')" target="_blank" class="profile-btn p-btn-paciencia"><i class="fa-brands fa-whatsapp"></i> {{ language === 'es' ? 'PEDIR PACIENCIA' : 'ORDER PATIENCE' }}</a>
           </article>
 
           <article class="profile-card p-tolerancia">
@@ -452,7 +453,7 @@
                 <span>{{ language === 'es' ? 'Taza: Limpia' : 'Cup: Clean' }}</span>
               </div>
             </div>
-            <a [href]="getWhatsAppLink('cata_tolerancia')" target="_blank" class="profile-btn p-btn-tolerancia">▣ {{ language === 'es' ? 'PEDIR TOLERANCIA' : 'ORDER TOLERANCE' }}</a>
+            <a [href]="getWhatsAppLink('cata_tolerancia')" target="_blank" class="profile-btn p-btn-tolerancia"><i class="fa-brands fa-whatsapp"></i> {{ language === 'es' ? 'PEDIR TOLERANCIA' : 'ORDER TOLERANCE' }}</a>
           </article>
 
           <article class="profile-card p-respeto">
@@ -470,7 +471,7 @@
                 <span>{{ language === 'es' ? 'Cuerpo: Terciopelo' : 'Body: Velvet' }}</span>
               </div>
             </div>
-            <a [href]="getWhatsAppLink('cata_respeto')" target="_blank" class="profile-btn p-btn-respeto">▣ {{ language === 'es' ? 'PEDIR RESPETO' : 'ORDER RESPECT' }}</a>
+            <a [href]="getWhatsAppLink('cata_respeto')" target="_blank" class="profile-btn p-btn-respeto"><i class="fa-brands fa-whatsapp"></i> {{ language === 'es' ? 'PEDIR RESPETO' : 'ORDER RESPECT' }}</a>
           </article>
 
         </div>
@@ -507,7 +508,7 @@
           </div>
 
           <a [href]="getWhatsAppLink('utilkfest')" target="_blank" class="btn btn-outline">
-            ⚑ &nbsp; {{ language === 'es' ? 'CONSULTAR COLECCIÓN ÚTILKFEST POR WHATSAPP' : 'INQUIRE ABOUT ÚTILKFEST VIA WHATSAPP' }}
+            <i class="fa-brands fa-whatsapp"></i> &nbsp; {{ language === 'es' ? 'CONSULTAR COLECCIÓN ÚTILKFEST POR WHATSAPP' : 'INQUIRE ABOUT ÚTILKFEST VIA WHATSAPP' }}
           </a>
         </div>
 
@@ -571,8 +572,10 @@
           </div>
 
           <div class="catering-action">
-            <a [href]="getWhatsAppLink('catering')" target="_blank" class="btn btn-gold">
-              ▣ &nbsp; {{ language === 'es' ? 'COTIZAR KFESTCAR POR WHATSAPP' : 'GET KFESTCAR QUOTE VIA WHATSAPP' }}
+            <a [href]="getWhatsAppLink('concierge')" target="_blank" class="btn btn-gold">
+              <i class="fa-brands fa-whatsapp"></i>
+              &nbsp;
+              {{ language === 'es' ? 'PEDIR POR WHATSAPP BUSINESS' : 'ORDER VIA WHATSAPP BUSINESS' }}
             </a>
             <small>{{ language === 'es' ? 'Evento seleccionado:' : 'Selected event:' }} <em class="text-gold">{{ getEventName() }}</em></small>
           </div>
@@ -616,7 +619,9 @@
 
           <div class="concierge-cta">
             <a [href]="getWhatsAppLink('concierge')" target="_blank" class="btn btn-gold">
-              ▣ &nbsp; {{ language === 'es' ? 'PEDIR POR WHATSAPP BUSINESS' : 'ORDER VIA WHATSAPP BUSINESS' }}
+              <i class="fa-brands fa-whatsapp"></i>
+              &nbsp;
+              {{ language === 'es' ? 'PEDIR POR WHATSAPP BUSINESS' : 'ORDER VIA WHATSAPP BUSINESS' }}
             </a>
             <span class="resp-tag">{{ language === 'es' ? 'Respuesta prioritaria en &lt; 10 min' : 'Priority response in &lt; 10 min' }}</span>
           </div>
@@ -714,14 +719,24 @@
           </a>
 
           <a
-            href="https://wa.me/51918422677"
+            href="https://www.tiktok.com/@kfest.peru"
             class="soc-btn"
-            aria-label="WhatsApp"
+            aria-label="TikTok"
             target="_blank"
             rel="noopener noreferrer">
-            <i class="fa-brands fa-whatsapp"></i>
+            <i class="fa-brands fa-tiktok"></i>
+          </a>
+
+          <a
+            href="https://www.youtube.com/@kfest-cafedeespecialidad325/videos"
+            class="soc-btn"
+            aria-label="YouTube"
+            target="_blank"
+            rel="noopener noreferrer">
+            <i class="fa-brands fa-youtube"></i>
           </a>
         </div>
+
 
         <div class="denomination">
           <small>{{ language === 'es' ? 'DENOMINACIÓN' : 'DENOMINATION' }}</small>
