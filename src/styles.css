@@ -1,83 +1,165 @@
 /* =====================================================
-   KFEST — GLOBAL DESIGN SYSTEM
+   KFEST — LUXURY GLOBAL DESIGN SYSTEM
    Fuentes: Playfair Display · Cormorant Garamond · Inter
    ===================================================== */
 
-/* --- VARIABLES (MODO OSCURO POR DEFECTO) --- */
 :root {
-  --ff-serif:  'Playfair Display', Georgia, serif;
+  --ff-serif: 'Playfair Display', Georgia, serif;
   --ff-script: 'Cormorant Garamond', Georgia, serif;
-  --ff-sans:   'Inter', system-ui, sans-serif;
+  --ff-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
-  --bg0: #0d0b09;
-  --bg0-rgb: 13, 11, 9;
-  --bg1: #181410;
-  --bg2: #231e18;
-  --bg3: #2e271f;
+  /* Deep Cacao Velvet Backgrounds */
+  --bg0: #090705;
+  --bg0-rgb: 9, 7, 5;
+  --bg1: #120e0a;
+  --bg2: #1a140f;
+  --bg3: #241c14;
+  --bg4: #2f251b;
 
-  --gold:       #e6ca85;
-  --gold-lt:    #f2e3b6;
-  --gold-dk:    #b88a44;
-  --gold-grad:  linear-gradient(135deg, #f2e3b6 0%, #e6ca85 55%, #b88a44 100%);
-  --gold-bdr:   rgba(230,202,133,.38);
-  --gold-glow:  0 0 32px rgba(230,202,133,.28);
+  /* Pure Gold & Metallic Gradients */
+  --gold: #e6ca85;
+  --gold-lt: #faefcf;
+  --gold-dk: #b88a44;
+  --gold-grad: linear-gradient(135deg, #f7e7c4 0%, #e6ca85 45%, #b88a44 100%);
+  --gold-grad-rev: linear-gradient(135deg, #b88a44 0%, #e6ca85 55%, #f7e7c4 100%);
+  --gold-foil: linear-gradient(120deg, #d4a962 0%, #f7e7c4 25%, #b88a44 50%, #fcf4de 75%, #a87930 100%);
+  --gold-bdr: rgba(230, 202, 133, 0.28);
+  --gold-bdr-hi: rgba(230, 202, 133, 0.55);
+  --gold-glow: 0 0 36px rgba(230, 202, 133, 0.28);
+  --gold-glow-lg: 0 0 60px rgba(230, 202, 133, 0.35);
 
-  --text0: #f7f4ee;
-  --text1: #d4c4aa;
-  --text2: #9a8c7a;
+  /* Typography Colors */
+  --text0: #fbf9f5;
+  --text1: #dfd3c0;
+  --text2: #a59784;
+  --text3: #6d6152;
 
-  --bdr:  rgba(255,255,255,.12);
+  /* Borders & Glassmorphism */
+  --bdr: rgba(255, 255, 255, 0.08);
+  --bdr-light: rgba(255, 255, 255, 0.14);
+  --glass-bg: rgba(18, 14, 10, 0.76);
+  --glass-bdr: rgba(230, 202, 133, 0.22);
+  --glass-shd: 0 16px 40px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(230, 202, 133, 0.12) inset;
 
-  --r-sm: 6px;
-  --r-md: 12px;
-  --r-lg: 18px;
-  --r-xl: 24px;
+  /* Radius Tokens */
+  --r-xs: 4px;
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+  --r-full: 9999px;
 
-  --ease: all .28s cubic-bezier(.25,.8,.25,1);
-}
-
-/* --- TEMA CLARO --- */
-body.light-theme { 
-  --bg0:#faf7f2; 
-  --bg0-rgb: 250, 247, 242;
-  --bg1:#f0e9dc; 
-  --bg2:#ffffff; 
-  --bg3:#f4ede0;
-  --gold:#b88a44; 
-  --gold-lt:#d4a962; 
-  --gold-dk:#7a5a20;
-  --gold-grad:linear-gradient(135deg,#d4a962 0%,#b88a44 55%,#7a5a20 100%);
-  --gold-bdr:rgba(184,138,68,.3); 
-  --gold-glow:0 0 22px rgba(184,138,68,.15);
-  --text0:#1c1813; 
-  --text1:#5c4f3d; 
-  --text2:#9a8a78; 
-  --bdr:rgba(0,0,0,.07); 
+  /* Animations & Transitions */
+  --ease: all 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-bounce: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* --- RESET BASE --- */
-*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
-html { 
-  scroll-behavior:smooth; 
-  font-family:var(--ff-sans); 
-  background:var(--bg0); 
-  color:var(--text0); 
-  font-size:16px; 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-html, body {
+
+html {
+  scroll-behavior: smooth;
+  font-family: var(--ff-sans);
+  background: var(--bg0);
+  color: var(--text0);
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body {
   min-height: 100%;
 }
-body { 
-  background:var(--bg0); 
-  color:var(--text0); 
-  overflow-x:hidden; 
-  line-height:1.65; 
-}
-a { color:inherit; text-decoration:none; }
-button { cursor:pointer; border:none; background:none; font-family:inherit; color:inherit; }
-img { display:block; max-width:100%; }
 
-.container { max-width:1260px; margin:0 auto; padding:0 28px; }
-.sec-pad { padding:96px 0; }
-.section-dark  { background:var(--bg0); }
-.section-brown { background:var(--bg1); }
+body {
+  background: var(--bg0);
+  color: var(--text0);
+  overflow-x: hidden;
+  line-height: 1.65;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(230, 202, 133, 0.08), transparent 70%),
+    radial-gradient(circle at 100% 40%, rgba(184, 138, 68, 0.04), transparent 40%),
+    radial-gradient(circle at 0% 80%, rgba(184, 138, 68, 0.04), transparent 40%);
+}
+
+/* Custom Luxury Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg0);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg3);
+  border-radius: var(--r-full);
+  border: 2px solid var(--bg0);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-dk);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.sec-pad {
+  padding: 110px 0;
+  position: relative;
+}
+
+.section-dark {
+  background: var(--bg0);
+  position: relative;
+}
+
+.section-brown {
+  background: linear-gradient(180deg, var(--bg1) 0%, #17110c 100%);
+  position: relative;
+}
+
+/* Ambient glow accents */
+.section-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+.section-glow::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-bdr-hi), transparent);
+}

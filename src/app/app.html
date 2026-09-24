@@ -4,44 +4,31 @@
   <header class="navbar">
     <div class="nav-inner container">
 
-      <a href="#inicio" class="brand">
-        <img src="images/logo.png" alt="Kfest Logo" class="brand-logo-img" />
-        <div class="brand-copy">
-          <strong>KFEST</strong>
-          <span style="font-size: 9.2px;">{{ language === 'es' ? 'FUNDO SANTA TERESITA' : 'SANTA TERESITA FARM'
-            }}</span>
-        </div>
+      <a href="#inicio" class="brand" [attr.aria-label]="language === 'es' ? 'Kfest - Inicio' : 'Kfest - Home'">
+        <img src="images/Logo_Oficial.png" alt="Kfest Logo" class="brand-logo-img" />
       </a>
 
       <nav class="nav-links" [class.open]="mobileMenuOpen">
-        <a href="#inicio" class="nav-link active" (click)="closeMobileMenu()">{{ language === 'es' ? 'INICIO' : 'HOME'
-          }}</a>
-        <a href="#coleccion" class="nav-link" (click)="closeMobileMenu()">{{ language === 'es' ? 'COLECCIÓN' :
-          'COLLECTION' }}</a>
-        <a href="#herencia" class="nav-link" (click)="closeMobileMenu()">{{ language === 'es' ? 'NUESTRA HISTORIA' :
-          'OUR STORY' }}</a>
-        <a href="#cata" class="nav-link" (click)="closeMobileMenu()">{{ language === 'es' ? 'PERFILES DE CATA' :
-          'TASTING PROFILES' }}</a>
-        <a href="#utilkfest" class="nav-link" (click)="closeMobileMenu()">ÚTILKFEST</a>
-        <a href="#catering" class="nav-link" (click)="closeMobileMenu()">CONCIERGE KFESTCAR</a>
-        <a href="#contacto" class="nav-link" (click)="closeMobileMenu()">{{ language === 'es' ? 'CONTACTO' : 'CONTACT'
-          }}</a>
+        <a href="#inicio" class="nav-link active" (click)="closeMobileMenu()">{{ language === 'es' ? 'INICIO' : 'HOME' }}</a>
+        <a href="#coleccion" class="nav-link" (click)="closeMobileMenu()">{{ language === 'es' ? 'COLECCIÓN' : 'COLLECTION' }}</a>
+        <a href="#quiz" class="nav-link" (click)="closeMobileMenu()">{{ language === 'es' ? 'TU CAFÉ IDEAL' : 'IDEAL MATCH' }}</a>
+        <a href="#herencia" class="nav-link" (click)="closeMobileMenu()">{{ language === 'es' ? 'NUESTRA HISTORIA' : 'OUR STORY' }}</a>
+        <a href="#cata" class="nav-link" (click)="closeMobileMenu()">{{ language === 'es' ? 'PERFILES DE CATA' : 'PROFILES' }}</a>
+        <a href="#calculadora" class="nav-link" (click)="closeMobileMenu()">{{ language === 'es' ? 'CALCULADORA BARISTA' : 'BREW GUIDE' }}</a>
+        <a href="#catering" class="nav-link" (click)="closeMobileMenu()">KFESTCAR</a>
+        <a href="#faq" class="nav-link" (click)="closeMobileMenu()">FAQ</a>
+        <a href="#contacto" class="nav-link" (click)="closeMobileMenu()">{{ language === 'es' ? 'CONTACTO' : 'CONTACT' }}</a>
       </nav>
 
       <div class="header-controls">
-        <button class="theme-toggle" (click)="toggleTheme()"
-          [attr.aria-label]="darkMode ? 'Modo claro' : 'Modo oscuro'">
-          <span class="theme-symbol">{{ darkMode ? '◑' : '◐' }}</span>
-        </button>
-
-        <div class="lang-pill">
-          <button [class.lang-active]="language === 'es'" (click)="changeLanguage('es')">ES</button>
-          <span class="lang-sep">|</span>
-          <button [class.lang-active]="language === 'en'" (click)="changeLanguage('en')">EN</button>
+        <div class="lang-pill" role="group" [attr.aria-label]="language === 'es' ? 'Selector de idioma' : 'Language selector'">
+          <button [class.lang-active]="language === 'es'" (click)="changeLanguage('es')" aria-label="Español">ES</button>
+          <span class="lang-sep" aria-hidden="true">|</span>
+          <button [class.lang-active]="language === 'en'" (click)="changeLanguage('en')" aria-label="English">EN</button>
         </div>
 
-        <button class="mobile-toggle" (click)="toggleMobileMenu()" aria-label="Menú">
-          <span class="hamburger-icon">{{ mobileMenuOpen ? '✕' : '☰' }}</span>
+        <button class="mobile-toggle" (click)="toggleMobileMenu()" [attr.aria-expanded]="mobileMenuOpen" [attr.aria-label]="language === 'es' ? 'Abrir o cerrar menú' : 'Toggle navigation menu'">
+          <span class="hamburger-icon" aria-hidden="true">{{ mobileMenuOpen ? '✕' : '☰' }}</span>
         </button>
       </div>
 
@@ -90,7 +77,7 @@
           </div>
 
           <div class="hero-btns">
-            <a [href]="getWhatsAppLink('hero')" target="_blank" class="btn btn-gold">
+            <a [href]="getWhatsAppLink('hero')" target="_blank" rel="noopener noreferrer" class="btn btn-gold">
               <span class="btn-sym"><i class="fa-brands fa-whatsapp"></i></span>
               {{ language === 'es' ? 'PEDIR RESERVA POR WHATSAPP' : 'REQUEST RESERVATION VIA WHATSAPP' }}
             </a>
@@ -98,6 +85,11 @@
               <span class="btn-sym">▣</span>
               {{ language === 'es' ? 'CONOCER NUESTRO LEGADO' : 'DISCOVER OUR LEGACY' }}
             </a>
+          </div>
+
+          <div class="hero-hours-pill">
+            <span class="hours-dot"></span>
+            <span>{{ language === 'es' ? 'Horario de atención: Lun a Sáb de 8:00 AM a 5:00 PM' : 'Business Hours: Mon to Sat from 8:00 AM to 5:00 PM' }}</span>
           </div>
 
           <div class="hero-pills">
@@ -182,16 +174,16 @@
 
         <div class="gallery-grid">
           <div class="gal-photo gal-large">
-            <img src="images/jefa4.jpg" alt="Abuela en Fundo Santa Teresita" />
+            <img src="images/nosotros_main.png" alt="Nosotros en Fundo Santa Teresita" />
           </div>
           <div class="gal-photo">
-            <img src="images/equi.jpg" alt="Caficultores en Chanchamayo" />
+            <img src="images/fundo_1.png" alt="Fundo Santa Teresita" />
           </div>
           <div class="gal-photo">
-            <img src="images/equipo.jpg" alt="Familia caficultora" />
+            <img src="images/fundo_2.png" alt="Caficultores Fundo Santa Teresita" />
           </div>
           <div class="gal-photo">
-            <img src="images/compañeros.jpg" alt="Cosecha de café" />
+            <img src="images/fundo_3.png" alt="Cosecha en Fundo Santa Teresita" />
           </div>
         </div>
 
@@ -262,6 +254,189 @@
     </section>
 
 
+    <!-- ========================= PASAPORTE DE TRAZABILIDAD (FEATURE C) ========================= -->
+    <section id="trazabilidad" class="section-dark sec-pad trace-section">
+      <div class="container">
+
+        <div class="trace-header">
+          <div class="trace-pill">
+            <i class="fa-solid fa-certificate"></i>
+            <span>{{ language === 'es' ? 'CERTIFICACIÓN DE ORIGEN & COSECHA' : 'ORIGIN & HARVEST CERTIFICATE' }}</span>
+          </div>
+          <h2 class="sec-title">
+            {{ language === 'es' ? 'Pasaporte de' : 'Traceability' }}
+            <em class="gold-script">{{ language === 'es' ? 'Trazabilidad & Terroir' : 'Passport & Terroir' }}</em>
+          </h2>
+          <p class="sec-sub">
+            {{ language === 'es'
+            ? 'Transparencia absoluta de la semilla a la taza: conoce cada parámetro geográfico, agronómico y de beneficio que forja la personalidad de nuestro lote 2025.'
+            : 'Total transparency from seed to cup: discover every geographic, agronomic, and processing metric shaping our 2025 microlot.' }}
+          </p>
+        </div>
+
+        <div class="trace-card">
+          <!-- Trace Navigation Tabs -->
+          <div class="trace-tabs">
+            <button class="trace-tab" [class.active]="traceabilityTab === 'origen'" (click)="setTraceabilityTab('origen')">
+              <i class="fa-solid fa-mountain-sun"></i> {{ language === 'es' ? 'Origen & Terroir' : 'Terroir & Origin' }}
+            </button>
+            <button class="trace-tab" [class.active]="traceabilityTab === 'proceso'" (click)="setTraceabilityTab('proceso')">
+              <i class="fa-solid fa-seedling"></i> {{ language === 'es' ? 'Cosecha & Beneficio' : 'Harvest & Process' }}
+            </button>
+            <button class="trace-tab" [class.active]="traceabilityTab === 'cata'" (click)="setTraceabilityTab('cata')">
+              <i class="fa-solid fa-award"></i> {{ language === 'es' ? 'Análisis SCA' : 'SCA Analysis' }}
+            </button>
+            <button class="trace-tab" [class.active]="traceabilityTab === 'social'" (click)="setTraceabilityTab('social')">
+              <i class="fa-solid fa-hands-holding-circle"></i> {{ language === 'es' ? 'Compromiso Familiar' : 'Family Commitment' }}
+            </button>
+          </div>
+
+          <!-- Tab 1: Origen & Terroir -->
+          @if (traceabilityTab === 'origen') {
+            <div class="trace-content-grid animate-fade">
+              <div class="trace-metric">
+                <small>{{ language === 'es' ? 'FINCA / ORIGEN' : 'ESTATE / ORIGIN' }}</small>
+                <strong>Fundo Santa Teresita</strong>
+                <span>Sector Bajo Marankiari, Perené</span>
+              </div>
+              <div class="trace-metric">
+                <small>{{ language === 'es' ? 'REGIÓN / VALLE' : 'REGION / VALLEY' }}</small>
+                <strong>Chanchamayo, Junín</strong>
+                <span>Selva Central del Perú</span>
+              </div>
+              <div class="trace-metric">
+                <small>{{ language === 'es' ? 'ALTITUD DE CULTIVO' : 'GROWING ALTITUDE' }}</small>
+                <strong class="text-gold">1,450 – 1,800 msnm</strong>
+                <span>Clima templado andino-amazónico</span>
+              </div>
+              <div class="trace-metric">
+                <small>{{ language === 'es' ? 'VARIEDADES BOTÁNICAS' : 'BOTANICAL VARIETIES' }}</small>
+                <strong>Arábica: Typica, Caturra & Bourbon</strong>
+                <span>100% Variedades nobles de sombra</span>
+              </div>
+              <div class="trace-metric">
+                <small>{{ language === 'es' ? 'SUELO & ENTORNO' : 'SOIL & BIODIVERSITY' }}</small>
+                <strong>Franco-arcilloso rico en materia orgánica</strong>
+                <span>Bajo sombra de plátano, pacae y cedro</span>
+              </div>
+              <div class="trace-metric">
+                <small>{{ language === 'es' ? 'COORDENADAS GPS' : 'GPS COORDINATES' }}</small>
+                <strong>10°56′42″S · 75°14′18″W</strong>
+                <span>Microcuenca del río Perené</span>
+              </div>
+            </div>
+          }
+
+          <!-- Tab 2: Cosecha & Beneficio -->
+          @if (traceabilityTab === 'proceso') {
+            <div class="trace-content-grid animate-fade">
+              <div class="trace-metric">
+                <small>{{ language === 'es' ? 'RECOLECCIÓN' : 'PICKING METHOD' }}</small>
+                <strong>100% Cosecha Selectiva Manual</strong>
+                <span>Solo cerezas en punto óptimo de maduración (grano carmesí)</span>
+              </div>
+              <div class="trace-metric">
+                <small>{{ language === 'es' ? 'BENEFICIO HÚMEDO' : 'WET MILLING' }}</small>
+                <strong>Lavado Tradicional Artesanal</strong>
+                <span>Despulpado el mismo día de cosecha sin demoras</span>
+              </div>
+              <div class="trace-metric">
+                <small>{{ language === 'es' ? 'FERMENTACIÓN' : 'FERMENTATION' }}</small>
+                <strong class="text-gold">32 a 36 Horas Controladas</strong>
+                <span>En tanques de fermentación limpia bajo sombra</span>
+              </div>
+              <div class="trace-metric">
+                <small>{{ language === 'es' ? 'LAVADO DE GRANO' : 'WASHING WATER' }}</small>
+                <strong>Agua de Manantial de Vertiente</strong>
+                <span>Pureza natural sin recirculaciones químicas</span>
+              </div>
+              <div class="trace-metric">
+                <small>{{ language === 'es' ? 'SECADO SOLAR' : 'DRYING METHOD' }}</small>
+                <strong>Tarimas & Camas Africanas Cubiertas</strong>
+                <span>14 a 18 días con removido constante hasta 11.5% humedad</span>
+              </div>
+              <div class="trace-metric">
+                <small>{{ language === 'es' ? 'TUESTE' : 'ROASTING' }}</small>
+                <strong class="text-gold">Tueste Medio Artesanal en Lotes Pequeños</strong>
+                <span>Curva desarrollada para resaltar acidez brillante y aceites dulces</span>
+              </div>
+            </div>
+          }
+
+          <!-- Tab 3: Análisis SCA -->
+          @if (traceabilityTab === 'cata') {
+            <div class="trace-content-grid animate-fade">
+              <div class="trace-metric">
+                <small>{{ language === 'es' ? 'PUNTUACIÓN PROTOCOLO SCA' : 'SCA CUPPING SCORE' }}</small>
+                <strong class="text-gold" style="font-size: 1.6rem;">81 a 84 Pts</strong>
+                <span>Categoría Internacional de Alta Especialidad</span>
+              </div>
+              <div class="trace-metric">
+                <small>{{ language === 'es' ? 'FRAGANCIA & AROMA' : 'FRAGRANCE & AROMA' }}</small>
+                <strong>Panela tostada, Miel de azahar y Cacao</strong>
+                <span>Aromas dulces intensos al abrir y moler</span>
+              </div>
+              <div class="trace-metric">
+                <small>{{ language === 'es' ? 'SABOR & RETROGUSTO' : 'FLAVOR & AFTERTASTE' }}</small>
+                <strong>Cacao 70%, Frutos rojos, Panela dulce</strong>
+                <span>Final prolongado, limpio y persistente</span>
+              </div>
+              <div class="trace-metric">
+                <small>{{ language === 'es' ? 'ACIDEZ' : 'ACIDITY' }}</small>
+                <strong>Málica / Cítrica Brillante</strong>
+                <span>Sensación fresca y vivaz que armoniza con la dulzura</span>
+              </div>
+              <div class="trace-metric">
+                <small>{{ language === 'es' ? 'CUERPO' : 'BODY' }}</small>
+                <strong>Medio Aterciopelado & Sedoso</strong>
+                <span>Gran sensación untuosa y balanceada en boca</span>
+              </div>
+              <div class="trace-metric">
+                <small>{{ language === 'es' ? 'EMPAQUE DE PROTECCIÓN' : 'BARRIER PACKAGING' }}</small>
+                <strong>Bolsa Trilaminada con Válvula Degas</strong>
+                <span>Cierre hermético ziploc para conservar aceites esenciales</span>
+              </div>
+            </div>
+          }
+
+          <!-- Tab 4: Compromiso Familiar -->
+          @if (traceabilityTab === 'social') {
+            <div class="trace-content-grid animate-fade">
+              <div class="trace-metric">
+                <small>{{ language === 'es' ? 'LIDERAZGO FAMILIAR' : 'FAMILY LEADERSHIP' }}</small>
+                <strong>Mujeres Caficultoras de Selva Central</strong>
+                <span>Cuidado meticuloso transmitido por más de 3 generaciones</span>
+              </div>
+              <div class="trace-metric">
+                <small>{{ language === 'es' ? 'COMERCIO DIRECTO' : 'DIRECT TRADE' }}</small>
+                <strong class="text-gold">100% Trato Directo sin Intermediarios</strong>
+                <span>El valor completo retribuye el esfuerzo de los productores</span>
+              </div>
+              <div class="trace-metric">
+                <small>{{ language === 'es' ? 'ECONOMÍA CIRCULAR' : 'CIRCULAR ECONOMY' }}</small>
+                <strong>Iniciativa Útilkfest</strong>
+                <span>Reutilización artesanal de la borra de café en objetos funcionales</span>
+              </div>
+              <div class="trace-metric">
+                <small>{{ language === 'es' ? 'PRESERVACIÓN AMBIENTAL' : 'ENVIRONMENTAL CARE' }}</small>
+                <strong>Agricultura de Conservación de Bosque</strong>
+                <span>Protección de fuentes hídricas y biodiversidad local</span>
+              </div>
+            </div>
+          }
+
+          <div class="trace-footer-row">
+            <span class="trace-verified"><i class="fa-solid fa-shield-halved"></i> {{ language === 'es' ? 'Lote Verificado 2025 · Cosecha Fresca Fundo Santa Teresita' : 'Verified 2025 Lot · Fresh Harvest Santa Teresita Farm' }}</span>
+            <a [href]="getWhatsAppLink('hero')" target="_blank" rel="noopener noreferrer" class="btn btn-sm-gold">
+              <i class="fa-brands fa-whatsapp"></i> {{ language === 'es' ? 'CONSULTAR POR ESTE LOTE' : 'INQUIRE ABOUT THIS LOT' }}
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
     <!-- ========================= COLECCIÓN ========================= -->
     <section id="coleccion" class="section-brown sec-pad">
       <div class="container">
@@ -321,7 +496,7 @@
                   <small>{{ language === 'es' ? 'PRECIO INDIVIDUAL' : 'UNIT PRICE' }}</small>
                   <strong>S/ 30.00</strong>
                 </div>
-                <a [href]="getWhatsAppLink('prod_250g')" target="_blank" class="btn-sm">
+                <a [href]="getWhatsAppLink('prod_250g')" target="_blank" rel="noopener noreferrer" class="btn-sm">
                   <i class="fa-brands fa-whatsapp"></i> {{ language === 'es' ? 'PEDIR POR WHATSAPP' : 'ORDER VIA
                   WHATSAPP' }}
                 </a>
@@ -353,7 +528,7 @@
                   <small>{{ language === 'es' ? 'PRECIO DÚO (500G)' : 'DUO PRICE (500G)' }}</small>
                   <strong class="text-gold">S/ 56.00</strong>
                 </div>
-                <a [href]="getWhatsAppLink('prod_500g')" target="_blank" class="btn-sm btn-sm-gold">
+                <a [href]="getWhatsAppLink('prod_500g')" target="_blank" rel="noopener noreferrer" class="btn-sm btn-sm-gold">
                   <i class="fa-brands fa-whatsapp"></i> {{ language === 'es' ? 'PEDIR POR WHATSAPP' : 'ORDER VIA
                   WHATSAPP' }}
                 </a>
@@ -383,7 +558,7 @@
                   <small>{{ language === 'es' ? 'PRECIO PACK 1KG' : '1KG PACK PRICE' }}</small>
                   <strong>S/ 100.00</strong>
                 </div>
-                <a [href]="getWhatsAppLink('prod_1kg')" target="_blank" class="btn-sm">
+                <a [href]="getWhatsAppLink('prod_1kg')" target="_blank" rel="noopener noreferrer" class="btn-sm">
                   <i class="fa-brands fa-whatsapp"></i> {{ language === 'es' ? 'PEDIR POR WHATSAPP' : 'ORDER VIA
                   WHATSAPP' }}
                 </a>
@@ -403,10 +578,223 @@
               frescura óptima en su mesa.' : 'Shipments scheduled on Monday, Wednesday, and Friday to guarantee optimal
               freshness at your table.' }}</p>
           </div>
-          <a [href]="getWhatsAppLink('delivery')" target="_blank" class="btn btn-sm-outline">
+          <a [href]="getWhatsAppLink('delivery')" target="_blank" rel="noopener noreferrer" class="btn btn-sm-outline">
             <i class="fa-brands fa-whatsapp"></i>
             &nbsp; {{ language === 'es' ? 'COORDINAR ENTREGA' : 'ARRANGE DELIVERY' }}
           </a>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ========================= DESCUBRE TU CAFÉ IDEAL (FEATURE B) ========================= -->
+    <section id="quiz" class="section-dark sec-pad quiz-section">
+      <div class="container">
+
+        <div class="quiz-header">
+          <div class="quiz-badge">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <span>{{ language === 'es' ? 'ASESORÍA SENSORIAL PERSONALIZADA' : 'PERSONALIZED SENSORY ADVISOR' }}</span>
+          </div>
+          <h2 class="sec-title">
+            {{ language === 'es' ? 'Encuentra tu' : 'Find Your' }}
+            <em class="gold-script">{{ language === 'es' ? 'Café Ideal' : 'Ideal Coffee' }}</em>
+          </h2>
+          <p class="sec-sub">
+            {{ language === 'es'
+            ? 'Responde 3 preguntas breves sobre tus hábitos y gustos. Nuestro sommelier digital seleccionará el microlote y la molienda exacta para ti.'
+            : 'Answer 3 quick questions about your taste and brewing routine. Our digital sommelier will match your perfect roast and grind.' }}
+          </p>
+
+          <!-- Step Indicators -->
+          @if (quizStep <= 3) {
+            <div class="quiz-stepper">
+              <div class="step-pill" [class.step-active]="quizStep === 1" [class.step-done]="quizStep > 1">
+                <span>1</span> {{ language === 'es' ? 'Tu Método' : 'Your Brewer' }}
+              </div>
+              <div class="step-sep">──</div>
+              <div class="step-pill" [class.step-active]="quizStep === 2" [class.step-done]="quizStep > 2">
+                <span>2</span> {{ language === 'es' ? 'Tus Aromas' : 'Flavor Notes' }}
+              </div>
+              <div class="step-sep">──</div>
+              <div class="step-pill" [class.step-active]="quizStep === 3">
+                <span>3</span> {{ language === 'es' ? 'Tu Consumo' : 'Consumption' }}
+              </div>
+            </div>
+          }
+        </div>
+
+        <div class="quiz-card">
+
+          <!-- STEP 1: Método de preparación -->
+          @if (quizStep === 1) {
+            <div class="quiz-step-view animate-fade">
+              <h3 class="quiz-question">{{ language === 'es' ? '1. ¿En qué cafetera sueles preparar tu café?' : '1. Which brewing device do you use?' }}</h3>
+              <p class="quiz-hint">{{ language === 'es' ? 'Esto nos permite calibrar la molienda exacta para que no quede ni amargo ni aguado.' : 'This allows us to calibrate the exact grind so it extracts sweet and balanced.' }}</p>
+
+              <div class="quiz-options-grid">
+                <button class="quiz-opt" (click)="setQuizAnswer(1, 'v60')">
+                  <span class="opt-icon"><i class="fa-solid fa-filter"></i></span>
+                  <div class="opt-body">
+                    <strong>{{ language === 'es' ? 'Filtrado / Gota a Gota' : 'Pour Over / Drip' }}</strong>
+                    <small>{{ language === 'es' ? 'V60, Cafetera eléctrica de filtro, Chemex' : 'V60, Chemex, standard drip maker' }}</small>
+                  </div>
+                </button>
+
+                <button class="quiz-opt" (click)="setQuizAnswer(1, 'prensa')">
+                  <span class="opt-icon"><i class="fa-solid fa-mug-hot"></i></span>
+                  <div class="opt-body">
+                    <strong>{{ language === 'es' ? 'Inmersión / Prensa Francesa' : 'French Press / Immersion' }}</strong>
+                    <small>{{ language === 'es' ? 'Prensa francesa, émbolo o cafetera de infusión' : 'French press, plunger or cold immersion' }}</small>
+                  </div>
+                </button>
+
+                <button class="quiz-opt" (click)="setQuizAnswer(1, 'moka')">
+                  <span class="opt-icon"><i class="fa-solid fa-fire-burner"></i></span>
+                  <div class="opt-body">
+                    <strong>{{ language === 'es' ? 'Moka Italiana o Espresso' : 'Moka Pot or Espresso Machine' }}</strong>
+                    <small>{{ language === 'es' ? 'Cafetera italiana de hornilla o máquina espresso' : 'Stovetop moka pot or home espresso machine' }}</small>
+                  </div>
+                </button>
+
+                <button class="quiz-opt" (click)="setQuizAnswer(1, 'grano')">
+                  <span class="opt-icon"><i class="fa-solid fa-seedling"></i></span>
+                  <div class="opt-body">
+                    <strong>{{ language === 'es' ? 'Tengo Molino Propio (En Grano)' : 'I Have a Grinder (Whole Bean)' }}</strong>
+                    <small>{{ language === 'es' ? 'Prefiero molerlo en casa justo antes de preparar' : 'I grind fresh at home right before brewing' }}</small>
+                  </div>
+                </button>
+              </div>
+            </div>
+          }
+
+          <!-- STEP 2: Perfil aromático -->
+          @if (quizStep === 2) {
+            <div class="quiz-step-view animate-fade">
+              <h3 class="quiz-question">{{ language === 'es' ? '2. ¿Qué sensaciones aromáticas prefieres en taza?' : '2. What flavor profile do you crave most?' }}</h3>
+              <p class="quiz-hint">{{ language === 'es' ? 'Todos nuestros cafés son 100% arábica de altura sin aditivos ni azúcares.' : 'All our coffees are 100% high-altitude shade arabica with zero additives.' }}</p>
+
+              <div class="quiz-options-grid">
+                <button class="quiz-opt" (click)="setQuizAnswer(2, 'dulce')">
+                  <span class="opt-icon"><i class="fa-solid fa-jar-wheat"></i></span>
+                  <div class="opt-body">
+                    <strong>{{ language === 'es' ? 'Dulce & Meloso' : 'Sweet & Honeyed' }}</strong>
+                    <small>{{ language === 'es' ? 'Notas a panela de oro, miel silvestre y toque cítrico suave' : 'Golden panela, wildflower honey, and soft citrus' }}</small>
+                  </div>
+                </button>
+
+                <button class="quiz-opt" (click)="setQuizAnswer(2, 'intenso')">
+                  <span class="opt-icon"><i class="fa-solid fa-cubes-stacked"></i></span>
+                  <div class="opt-body">
+                    <strong>{{ language === 'es' ? 'Chocolatoso & Profundo' : 'Dark Chocolate & Deep' }}</strong>
+                    <small>{{ language === 'es' ? 'Cacao fino al 70%, nueces tostadas y caramelo oscuro' : '70% dark cacao, toasted hazelnuts, and deep caramel' }}</small>
+                  </div>
+                </button>
+
+                <button class="quiz-opt" (click)="setQuizAnswer(2, 'afrutado')">
+                  <span class="opt-icon"><i class="fa-solid fa-wine-glass"></i></span>
+                  <div class="opt-body">
+                    <strong>{{ language === 'es' ? 'Frutos Rojos & Floral' : 'Red Berries & Floral' }}</strong>
+                    <small>{{ language === 'es' ? 'Cereza madura, ciruela dulce y acidez brillante balanceada' : 'Ripe cherry, plum, and bright elegant acidity' }}</small>
+                  </div>
+                </button>
+              </div>
+
+              <div class="quiz-nav-row">
+                <button class="btn-quiz-back" (click)="quizStep = 1">
+                  <i class="fa-solid fa-arrow-left"></i> {{ language === 'es' ? 'Atrás' : 'Back' }}
+                </button>
+              </div>
+            </div>
+          }
+
+          <!-- STEP 3: Volumen / Consumo -->
+          @if (quizStep === 3) {
+            <div class="quiz-step-view animate-fade">
+              <h3 class="quiz-question">{{ language === 'es' ? '3. ¿Para quién y cuántas tazas preparan al día?' : '3. How many cups are brewed daily?' }}</h3>
+              <p class="quiz-hint">{{ language === 'es' ? 'Así te recomendamos el tamaño ideal para que nunca tomes café oxidado o viejo.' : 'This ensures you receive fresh small-batch coffee without losing aromatic oils.' }}</p>
+
+              <div class="quiz-options-grid">
+                <button class="quiz-opt" (click)="setQuizAnswer(3, 'personal')">
+                  <span class="opt-icon"><i class="fa-solid fa-user"></i></span>
+                  <div class="opt-body">
+                    <strong>{{ language === 'es' ? 'Para Mí Solo (1 a 2 tazas al día)' : 'Just for Me (1 to 2 cups daily)' }}</strong>
+                    <small>{{ language === 'es' ? 'Bolsa de 250g: fresco y en su punto por 2 a 3 semanas' : '250g bag: stays peak fresh for 2-3 weeks' }}</small>
+                  </div>
+                </button>
+
+                <button class="quiz-opt" (click)="setQuizAnswer(3, 'pareja')">
+                  <span class="opt-icon"><i class="fa-solid fa-user-group"></i></span>
+                  <div class="opt-body">
+                    <strong>{{ language === 'es' ? 'En Pareja o Familia (2 a 4 tazas diarias)' : 'Couple or Family (2 to 4 cups daily)' }}</strong>
+                    <small>{{ language === 'es' ? 'Dúo de 500g (2x250g): abres una bolsa y la otra queda sellada' : '500g Duo (2x250g): one opened, one hermetically sealed' }}</small>
+                  </div>
+                </button>
+
+                <button class="quiz-opt" (click)="setQuizAnswer(3, 'familia')">
+                  <span class="opt-icon"><i class="fa-solid fa-people-group"></i></span>
+                  <div class="opt-body">
+                    <strong>{{ language === 'es' ? 'Amantes del Café u Oficina (4+ tazas diarias)' : 'Coffee Lovers / Office (4+ cups daily)' }}</strong>
+                    <small>{{ language === 'es' ? 'Cofre de 1kg (4x250g): máximo rendimiento al mejor precio' : '1kg Pack (4x250g): best value with 4 individual packs' }}</small>
+                  </div>
+                </button>
+              </div>
+
+              <div class="quiz-nav-row">
+                <button class="btn-quiz-back" (click)="quizStep = 2">
+                  <i class="fa-solid fa-arrow-left"></i> {{ language === 'es' ? 'Atrás' : 'Back' }}
+                </button>
+              </div>
+            </div>
+          }
+
+          <!-- STEP 4: RESULTADO PERSONALIZADO -->
+          @if (quizStep === 4) {
+            <div class="quiz-result-view animate-fade">
+              <div class="result-badge">
+                <i class="fa-solid fa-circle-check"></i>
+                <span>{{ language === 'es' ? 'TU MATCH PERFECTO SELECCIONADO' : 'YOUR PERFECT MATCH SELECTED' }}</span>
+              </div>
+
+              <div class="result-layout">
+                <div class="result-img-box">
+                  <img [src]="getQuizRecommendation().img" [alt]="getQuizRecommendation().title[language]" />
+                </div>
+
+                <div class="result-info">
+                  <h3 class="result-title">{{ getQuizRecommendation().title[language] }}</h3>
+                  <div class="result-price">{{ getQuizRecommendation().price }}</div>
+
+                  <div class="result-pill-row">
+                    <span class="result-pill">
+                      <i class="fa-solid fa-box-open"></i> {{ getQuizRecommendation().package[language] }}
+                    </span>
+                    <span class="result-pill pill-gold">
+                      <i class="fa-solid fa-gear"></i> {{ getQuizRecommendation().grind[language] }}
+                    </span>
+                  </div>
+
+                  <p class="result-reason">{{ getQuizRecommendation().reason[language] }}</p>
+
+                  <div class="result-notes-box">
+                    <small>{{ language === 'es' ? 'NOTAS SENSORIALES' : 'TASTING NOTES' }}</small>
+                    <strong>{{ getQuizRecommendation().notes[language] }}</strong>
+                  </div>
+
+                  <div class="result-actions">
+                    <a [href]="getQuizWhatsAppLink()" target="_blank" rel="noopener noreferrer" class="btn btn-gold btn-result-cta">
+                      <i class="fa-brands fa-whatsapp"></i> {{ language === 'es' ? 'PEDIR ESTE CAFÉ POR WHATSAPP' : 'ORDER THIS COFFEE VIA WHATSAPP' }}
+                    </a>
+                    <button class="btn-quiz-retry" (click)="resetQuiz()">
+                      <i class="fa-solid fa-rotate-right"></i> {{ language === 'es' ? 'Hacer el test de nuevo' : 'Retake Test' }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+
         </div>
 
       </div>
@@ -466,7 +854,7 @@
                 <span>{{ language === 'es' ? 'Cuerpo: Sedoso' : 'Body: Silky' }}</span>
               </div>
             </div>
-            <a [href]="getWhatsAppLink('cata_fe')" target="_blank" class="profile-btn p-btn-fe"><i
+            <a [href]="getWhatsAppLink('cata_fe')" target="_blank" rel="noopener noreferrer" class="profile-btn p-btn-fe"><i
                 class="fa-brands fa-whatsapp"></i> {{ language === 'es' ? 'PEDIR PERFIL FE' : 'ORDER FAITH PROFILE'
               }}</a>
           </article>
@@ -489,7 +877,7 @@
                 <span>{{ language === 'es' ? 'Taza: Persistente' : 'Cup: Persistent' }}</span>
               </div>
             </div>
-            <a [href]="getWhatsAppLink('cata_paciencia')" target="_blank" class="profile-btn p-btn-paciencia"><i
+            <a [href]="getWhatsAppLink('cata_paciencia')" target="_blank" rel="noopener noreferrer" class="profile-btn p-btn-paciencia"><i
                 class="fa-brands fa-whatsapp"></i> {{ language === 'es' ? 'PEDIR PACIENCIA' : 'ORDER PATIENCE' }}</a>
           </article>
 
@@ -511,7 +899,7 @@
                 <span>{{ language === 'es' ? 'Taza: Limpia' : 'Cup: Clean' }}</span>
               </div>
             </div>
-            <a [href]="getWhatsAppLink('cata_tolerancia')" target="_blank" class="profile-btn p-btn-tolerancia"><i
+            <a [href]="getWhatsAppLink('cata_tolerancia')" target="_blank" rel="noopener noreferrer" class="profile-btn p-btn-tolerancia"><i
                 class="fa-brands fa-whatsapp"></i> {{ language === 'es' ? 'PEDIR TOLERANCIA' : 'ORDER TOLERANCE' }}</a>
           </article>
 
@@ -533,11 +921,115 @@
                 <span>{{ language === 'es' ? 'Cuerpo: Aterciopelado' : 'Body: Velvet' }}</span>
               </div>
             </div>
-            <a [href]="getWhatsAppLink('cata_respeto')" target="_blank" class="profile-btn p-btn-respeto"><i
+            <a [href]="getWhatsAppLink('cata_respeto')" target="_blank" rel="noopener noreferrer" class="profile-btn p-btn-respeto"><i
                 class="fa-brands fa-whatsapp"></i> {{ language === 'es' ? 'PEDIR RESPETO' : 'ORDER RESPECT' }}</a>
           </article>
 
         </div>
+      </div>
+    </section>
+
+
+    <!-- ========================= CALCULADORA BARISTA (FEATURE A) ========================= -->
+    <section id="calculadora" class="section-dark sec-pad brew-section">
+      <div class="container">
+
+        <div class="brew-header">
+          <div class="brew-badge">
+            <i class="fa-solid fa-calculator"></i>
+            <span>{{ language === 'es' ? 'ALTA CATA & CIENCIA DE EXTRACCIÓN' : 'BREWING SCIENCE & EXTRACTION' }}</span>
+          </div>
+          <h2 class="sec-title">
+            {{ language === 'es' ? 'Calculadora' : 'Barista' }}
+            <em class="gold-script">{{ language === 'es' ? 'Barista en Casa' : 'Brew Calculator' }}</em>
+          </h2>
+          <p class="sec-sub">
+            {{ language === 'es'
+            ? 'Selecciona tu cafetera favorita y el número de tazas. Calibramos en tiempo real la dosis exacta de café, agua, temperatura y molienda para una taza magistral.'
+            : 'Select your brew method and cup count. We compute the exact coffee dose, water volume, temperature, and grind for a master cup.' }}
+          </p>
+        </div>
+
+        <div class="brew-card">
+
+          <!-- Method Selector Buttons -->
+          <div class="brew-methods-grid">
+            @for (method of brewMethodsList; track method) {
+              <button class="brew-method-btn" [class.active]="selectedBrewMethod === method" (click)="setBrewMethod(method)">
+                <span class="bm-icon"><i [class]="currentBrewConfig.icon"></i></span>
+                <span class="bm-name">{{ method === 'v60' ? 'V60 / Cono' : method === 'prensa' ? 'Prensa Francesa' : method === 'moka' ? 'Moka Italiana' : method === 'espresso' ? 'Espresso' : method === 'chemex' ? 'Chemex' : 'Gota a Gota' }}</span>
+              </button>
+            }
+          </div>
+
+          <!-- Cup Quantity Selector -->
+          <div class="brew-cups-control">
+            <span class="cups-lbl">{{ language === 'es' ? '¿Cuántas tazas deseas preparar?' : 'How many cups to brew?' }}</span>
+            <div class="cups-stepper">
+              <button class="cup-btn" (click)="setBrewCups(brewCups - 1)" [disabled]="brewCups <= 1" aria-label="Menos tazas">−</button>
+              <span class="cup-display">{{ brewCups }} {{ brewCups === 1 ? (language === 'es' ? 'taza' : 'cup') : (language === 'es' ? 'tazas' : 'cups') }}</span>
+              <button class="cup-btn" (click)="setBrewCups(brewCups + 1)" [disabled]="brewCups >= 8" aria-label="Más tazas">+</button>
+            </div>
+          </div>
+
+          <!-- Extraction Results Display -->
+          <div class="brew-results-grid">
+            <div class="brew-metric-card highlight-gold">
+              <div class="metric-top">
+                <i class="fa-solid fa-weight-scale"></i>
+                <small>{{ language === 'es' ? 'DOSIS DE CAFÉ KFEST' : 'COFFEE DOSE' }}</small>
+              </div>
+              <strong class="metric-val">{{ calculatedCoffeeGrams }} <span class="metric-unit">g</span></strong>
+              <span class="metric-sub">{{ language === 'es' ? 'Proporción 1:' + currentBrewConfig.ratio : 'Ratio 1:' + currentBrewConfig.ratio }}</span>
+            </div>
+
+            <div class="brew-metric-card">
+              <div class="metric-top">
+                <i class="fa-solid fa-glass-water"></i>
+                <small>{{ language === 'es' ? 'AGUA CALIENTE' : 'HOT WATER' }}</small>
+              </div>
+              <strong class="metric-val">{{ calculatedWater }} <span class="metric-unit">ml</span></strong>
+              <span class="metric-sub">{{ currentBrewConfig.temp }} °C ({{ language === 'es' ? 'Agua sin hervir' : 'Below boiling' }})</span>
+            </div>
+
+            <div class="brew-metric-card">
+              <div class="metric-top">
+                <i class="fa-solid fa-stopwatch"></i>
+                <small>{{ language === 'es' ? 'TIEMPO DE EXTRACCIÓN' : 'BREW TIME' }}</small>
+              </div>
+              <strong class="metric-val" style="font-size: 1.6rem;">{{ currentBrewConfig.time }}</strong>
+              <span class="metric-sub">{{ language === 'es' ? 'Contacto agua-grano' : 'Contact duration' }}</span>
+            </div>
+
+            <div class="brew-metric-card">
+              <div class="metric-top">
+                <i class="fa-solid fa-mortar-pestle"></i>
+                <small>{{ language === 'es' ? 'MOLIENDA IDEAL' : 'IDEAL GRIND' }}</small>
+              </div>
+              <strong class="metric-val" style="font-size: 1.15rem; line-height: 1.3;">{{ currentBrewConfig.grind[language] }}</strong>
+              <span class="metric-sub">{{ language === 'es' ? 'Calibrada en Fundo' : 'Farm calibrated' }}</span>
+            </div>
+          </div>
+
+          <!-- Barista Tip Card -->
+          <div class="brew-tip-box">
+            <div class="tip-icon"><i class="fa-solid fa-lightbulb"></i></div>
+            <div class="tip-text">
+              <strong>{{ language === 'es' ? 'Consejo del Barista Kfest:' : 'Kfest Barista Tip:' }}</strong>
+              <p>{{ currentBrewConfig.tip[language] }}</p>
+            </div>
+          </div>
+
+          <!-- WhatsApp Order CTA with Precalculated Recipe -->
+          <div class="brew-cta-row">
+            <a [href]="getBrewWhatsAppLink()" target="_blank" rel="noopener noreferrer" class="btn btn-gold btn-brew-cta">
+              <i class="fa-brands fa-whatsapp"></i> &nbsp;
+              {{ language === 'es' ? 'PEDIR ESTA MOLIENDA POR WHATSAPP' : 'ORDER THIS CUSTOM GRIND VIA WHATSAPP' }}
+            </a>
+          </div>
+
+        </div>
+
       </div>
     </section>
 
@@ -574,7 +1066,7 @@
             </p>
           </div>
 
-          <a [href]="getWhatsAppLink('utilkfest')" target="_blank" class="btn btn-outline">
+          <a [href]="getWhatsAppLink('utilkfest')" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
             <i class="fa-brands fa-whatsapp"></i> &nbsp; {{ language === 'es' ? 'CONSULTAR COLECCIÓN ÚTILKFEST POR
             WHATSAPP' : 'INQUIRE ABOUT ÚTILKFEST VIA WHATSAPP' }}
           </a>
@@ -651,7 +1143,7 @@
           </div>
 
           <div class="catering-action">
-            <a [href]="getWhatsAppLink('concierge')" target="_blank" class="btn btn-gold">
+            <a [href]="getWhatsAppLink('concierge')" target="_blank" rel="noopener noreferrer" class="btn btn-gold">
               <i class="fa-brands fa-whatsapp"></i>
               &nbsp;
               {{ language === 'es' ? 'PEDIR POR WHATSAPP BUSINESS' : 'ORDER VIA WHATSAPP BUSINESS' }}
@@ -672,6 +1164,130 @@
             <strong>{{ language === 'es' ? 'Cultura & Activación' : 'Culture & Activation' }}</strong>
             <small>{{ language === 'es' ? 'CATAS Y MÉTODOS EN VIVO' : 'LIVE TASTINGS & BREWING' }}</small>
           </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ========================= RESEÑAS & TESTIMONIOS (FEATURE E) ========================= -->
+    <section id="testimonios" class="section-dark sec-pad test-section">
+      <div class="container">
+
+        <div class="test-header">
+          <div class="test-badge">
+            <i class="fa-solid fa-star text-gold"></i>
+            <span>{{ language === 'es' ? 'EXPERIENCIAS DE CATA & CLIENTES REALES' : 'TASTING EXPERIENCES & VERIFIED PATRONS' }}</span>
+          </div>
+          <h2 class="sec-title">
+            {{ language === 'es' ? 'La Voz de Quienes' : 'Voices of Those Who' }}
+            <em class="gold-script">{{ language === 'es' ? 'Disfrutan Kfest' : 'Savor Kfest' }}</em>
+          </h2>
+          <p class="sec-sub">
+            {{ language === 'es'
+            ? 'Calificación 4.9 / 5.0 basada en más de 1,200 despachos artesanales a hogares, baristas y restaurantes de todo el Perú.'
+            : '4.9 / 5.0 score based on 1,200+ artisan dispatches to homes, baristas, and culinary venues across Peru.' }}
+          </p>
+        </div>
+
+        <!-- Interactive Testimonial Slider Card -->
+        <div class="test-slider-card">
+          <div class="test-card-inner">
+            <div class="test-card-top">
+              <div class="stars-row">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
+              <span class="test-pill">{{ currentTestimonial.badge[language] }}</span>
+            </div>
+
+            <blockquote class="test-quote">
+              «{{ currentTestimonial.quote[language] }}»
+            </blockquote>
+
+            <div class="test-author-row">
+              <div class="author-meta">
+                <strong class="author-name">{{ currentTestimonial.name }}</strong>
+                <span class="author-role">{{ currentTestimonial.role[language] }}</span>
+                <span class="author-city"><i class="fa-solid fa-location-dot"></i> {{ currentTestimonial.city }}</span>
+              </div>
+              <div class="author-favorite">
+                <small>{{ language === 'es' ? 'FAVORITO' : 'TOP PICK' }}</small>
+                <span>{{ currentTestimonial.highlight[language] }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slider Controls -->
+          <div class="test-controls">
+            <button class="test-btn-nav" (click)="prevTestimonial()" aria-label="Testimonio anterior">
+              <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <div class="test-dots">
+              @for (item of testimonialsList; track $index) {
+                <button class="test-dot" [class.active]="$index === activeTestimonialIndex" (click)="setTestimonial($index)" [attr.aria-label]="'Ver reseña ' + ($index + 1)"></button>
+              }
+            </div>
+            <button class="test-btn-nav" (click)="nextTestimonial()" aria-label="Siguiente testimonio">
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ========================= PREGUNTAS FRECUENTES (FEATURE D) ========================= -->
+    <section id="faq" class="section-brown sec-pad faq-section">
+      <div class="container">
+
+        <div class="faq-header">
+          <div class="faq-badge">
+            <i class="fa-solid fa-circle-question"></i>
+            <span>{{ language === 'es' ? 'RESOLVEMOS TUS DUDAS ANTES DE PEDIR' : 'CLEARING YOUR QUESTIONS BEFORE ORDERING' }}</span>
+          </div>
+          <h2 class="sec-title">
+            {{ language === 'es' ? 'Preguntas' : 'Frequently Asked' }}
+            <em class="gold-script">{{ language === 'es' ? 'Frecuentes' : 'Questions' }}</em>
+          </h2>
+          <p class="sec-sub">
+            {{ language === 'es'
+            ? 'Todo sobre nuestros orígenes, moliendas calibradas, tiempos de entrega y conservación para garantizar tu mejor taza.'
+            : 'Everything regarding origin, calibrated grinding, dispatch schedules, and storage for your peak cup.' }}
+          </p>
+        </div>
+
+        <div class="faq-accordion">
+          @for (item of faqList; track $index) {
+            <div class="faq-item" [class.faq-open]="isFaqOpen($index)">
+              <button class="faq-question-btn" (click)="toggleFaq($index)" [attr.aria-expanded]="isFaqOpen($index)">
+                <div class="faq-q-text">
+                  <span class="faq-category">{{ item.category[language] }}</span>
+                  <span class="faq-question">{{ item.q[language] }}</span>
+                </div>
+                <span class="faq-chevron" aria-hidden="true">
+                  <i class="fa-solid fa-chevron-down"></i>
+                </span>
+              </button>
+
+              @if (isFaqOpen($index)) {
+                <div class="faq-answer-panel animate-fade">
+                  <p>{{ item.a[language] }}</p>
+                </div>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="faq-footer-note">
+          <p>{{ language === 'es' ? '¿Tienes otra consulta especial o pedido para empresas?' : 'Have a custom inquiry or corporate order?' }}</p>
+          <a [href]="getWhatsAppLink('concierge')" target="_blank" rel="noopener noreferrer" class="faq-whatsapp-link">
+            <i class="fa-brands fa-whatsapp"></i> {{ language === 'es' ? 'Consultar con nuestro Concierge por WhatsApp' : 'Chat with our Concierge on WhatsApp' }}
+          </a>
         </div>
 
       </div>
@@ -700,7 +1316,7 @@
           </p>
 
           <div class="concierge-cta">
-            <a [href]="getWhatsAppLink('concierge')" target="_blank" class="btn btn-gold">
+            <a [href]="getWhatsAppLink('concierge')" target="_blank" rel="noopener noreferrer" class="btn btn-gold">
               <i class="fa-brands fa-whatsapp"></i>
               &nbsp;
               {{ language === 'es' ? 'PEDIR POR WHATSAPP BUSINESS' : 'ORDER VIA WHATSAPP BUSINESS' }}
@@ -717,6 +1333,10 @@
         </div>
 
         <aside class="official-card">
+          <p class="card-lbl">{{ language === 'es' ? 'HORARIO DE ATENCIÓN' : 'BUSINESS HOURS' }}</p>
+          <strong class="phone-main" style="font-size: 1.25rem; color: var(--gold);">8:00 AM – 5:00 PM</strong>
+          <small style="display:block; color: var(--text2); margin-top: 4px; font-size: 0.8rem; letter-spacing: 0.5px;">{{ language === 'es' ? 'Lunes a Sábado · Atención y pedidos inmediatos' : 'Monday to Saturday · Immediate orders & support' }}</small>
+          <hr class="card-hr" />
           <p class="card-lbl">{{ language === 'es' ? 'LÍNEAS OFICIALES' : 'OFFICIAL LINES' }}</p>
           <strong class="phone-main">918 422 677</strong>
           <strong class="phone-sec">987 483 134</strong>
@@ -746,8 +1366,7 @@
 
       <div class="footer-brand">
         <div class="footer-logo-row">
-          <img src="images/logo.png" alt="Kfest" class="footer-logo" />
-          <span class="footer-brand-name">Kfest</span>
+          <img src="images/Logo_Oficial.png" alt="Kfest - Café del Fundo Santa Teresita" class="footer-logo" />
         </div>
         <p class="footer-desc">
           {{ language === 'es'
@@ -768,11 +1387,12 @@
         <h4>{{ language === 'es' ? 'NAVEGACIÓN & CATÁLOGO' : 'NAVIGATION & CATALOG' }}</h4>
         <a href="#inicio">{{ language === 'es' ? 'Inicio' : 'Home' }}</a>
         <a href="#coleccion">{{ language === 'es' ? 'Colección Reserve' : 'Reserve Collection' }}</a>
-        <a href="#herencia">{{ language === 'es' ? 'Nuestra Historia & Fundo' : 'Our Story & Farm' }}</a>
-        <a href="#cata">{{ language === 'es' ? 'Perfiles de Cata' : 'Cupping Profiles' }}</a>
-        <a href="#utilkfest">{{ language === 'es' ? 'Línea Sostenible Útilkfest' : 'Útilkfest Sustainable Line' }}</a>
-        <a href="#catering">{{ language === 'es' ? 'Concierge Kfestcar' : 'Kfestcar Concierge' }}</a>
-        <a href="#contacto">{{ language === 'es' ? 'Atención al Cliente' : 'Customer Support' }}</a>
+        <a href="#quiz">{{ language === 'es' ? 'Test Café Ideal' : 'Ideal Coffee Quiz' }}</a>
+        <a href="#trazabilidad">{{ language === 'es' ? 'Pasaporte de Trazabilidad' : 'Traceability Passport' }}</a>
+        <a href="#calculadora">{{ language === 'es' ? 'Calculadora Barista' : 'Barista Brew Guide' }}</a>
+        <a href="#testimonios">{{ language === 'es' ? 'Reseñas & Catas' : 'Reviews & Tastings' }}</a>
+        <a href="#faq">{{ language === 'es' ? 'Preguntas Frecuentes' : 'FAQ' }}</a>
+        <a href="#contacto">{{ language === 'es' ? 'Contacto & Concierge' : 'Contact & Concierge' }}</a>
       </div>
 
       <div class="footer-col">
@@ -781,7 +1401,7 @@
         <span>✉ pedidos@kfest.pe</span>
         <span>◉ {{ language === 'es' ? 'Fundo Santa Teresita, Chanchamayo, Región Junín, Perú' : 'Santa Teresita
           Farm, Chanchamayo, Junín Region, Peru' }}</span>
-        <span>◷ {{ language === 'es' ? 'Lun - Sáb: 8:00 am - 7:00 pm' : 'Mon - Sat: 8:00 am - 7:00 pm' }}</span>
+        <span>◷ {{ language === 'es' ? 'Lun - Sáb: 8:00 am - 5:00 pm' : 'Mon - Sat: 8:00 am - 5:00 pm' }}</span>
       </div>
 
       <div class="footer-col">
