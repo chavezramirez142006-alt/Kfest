@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 export type Language = 'es' | 'en';
 export type GrindType = 'grano' | 'v60' | 'prensa' | 'gota';
 export type CataFormat = 'grano' | 'molido';
@@ -281,7 +281,26 @@ const EVENT_NAMES: Record<Language, Record<EventType, string>> = {
 export class App {
   language: Language = 'es';
   mobileMenuOpen = false;
+isDarkMode = true;
+private isBrowser: boolean;
 
+constructor(@Inject(PLATFORM_ID) platformId: object) {
+  this.isBrowser = isPlatformBrowser(platformId);
+
+  if (this.isBrowser) {
+    const savedTheme = localStorage.getItem('kfest-theme');
+    this.isDarkMode = savedTheme !== 'light';
+  }
+}
+
+toggleTheme(): void {
+  this.isDarkMode = !this.isDarkMode;
+
+  if (this.isBrowser) {
+    const theme = this.isDarkMode ? 'dark' : 'light';
+    localStorage.setItem('kfest-theme', theme);
+  }
+}
   // Selected store options
   selectedGrind: GrindType = 'grano';
   selectedCataFormat: CataFormat = 'grano';

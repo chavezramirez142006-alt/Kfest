@@ -1,4 +1,4 @@
-<div class="site">
+<div class="site" [attr.data-theme]="isDarkMode ? 'dark' : 'light'">
 
   <!-- ========================= NAVBAR ========================= -->
   <header class="navbar">
@@ -29,6 +29,21 @@
 
         <button class="mobile-toggle" (click)="toggleMobileMenu()" [attr.aria-expanded]="mobileMenuOpen" [attr.aria-label]="language === 'es' ? 'Abrir o cerrar menú' : 'Toggle navigation menu'">
           <span class="hamburger-icon" aria-hidden="true">{{ mobileMenuOpen ? '✕' : '☰' }}</span>
+        </button>
+
+        <button
+          class="theme-toggle"
+          type="button"
+          (click)="toggleTheme()"
+          [attr.aria-label]="isDarkMode ? 'Activar modo claro' : 'Activar modo oscuro'"
+          [attr.title]="isDarkMode ? 'Modo claro' : 'Modo oscuro'"
+        >
+          <i
+            class="fa-solid"
+            [class.fa-sun]="isDarkMode"
+            [class.fa-moon]="!isDarkMode"
+            aria-hidden="true"
+          ></i>
         </button>
       </div>
 

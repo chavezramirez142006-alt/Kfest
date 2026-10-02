@@ -2773,3 +2773,99 @@
   .faq-question-btn { padding: 18px 18px; }
   .faq-answer-panel { padding: 0 18px 18px 18px; }
 }
+
+
+.theme-toggle {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--bg2);
+  border: 1px solid var(--gold-bdr);
+  color: var(--gold);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--ease);
+  flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+  transform: rotate(15deg) scale(1.08);
+  border-color: var(--gold);
+  box-shadow: 0 0 12px rgba(230, 202, 133, 0.25);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+
+.site[data-theme="light"] {
+  --bg0: #f8f6f1;
+  --bg1: #f0ece4;
+  --bg2: #e8e1d5;
+
+  --text0: #28221b;
+  --text1: #51483e;
+  --text2: #71685d;
+  --text3: #958b7e;
+
+  --glass-bg: rgba(255, 255, 255, 0.78);
+  --glass-bdr: rgba(117, 91, 49, 0.22);
+  --glass-shd: 0 8px 24px rgba(65, 48, 25, 0.08);
+
+  --bdr: rgba(117, 91, 49, 0.2);
+  --bdr-light: rgba(117, 91, 49, 0.28);
+}
+
+.site[data-theme="light"] .section-dark {
+  background: var(--bg0);
+}
+
+.site[data-theme="light"] .section-brown {
+  background: var(--bg1);
+}
+
+.site[data-theme="light"] .navbar {
+  background: rgba(248, 246, 241, 0.94);
+  border-bottom-color: rgba(117, 91, 49, 0.25);
+}
+
+.site[data-theme="light"] .lang-pill,
+.site[data-theme="light"] .mobile-toggle {
+  background: #fff;
+}
+
+.site[data-theme="light"] .prod-card,
+.site[data-theme="light"] .prod-featured {
+  background: #fff;
+  border-color: var(--bdr);
+  box-shadow: 0 8px 24px rgba(65, 48, 25, 0.1);
+}
+
+.site[data-theme="light"] .hero-pill,
+.site[data-theme="light"] .hero-hours-pill {
+  background: rgba(255, 255, 255, 0.88);
+  border-color: var(--bdr);
+}
+
+.site[data-theme="light"] .lot-card {
+  background: linear-gradient(145deg, #fffdf8, #eee7db);
+  box-shadow: 0 12px 35px rgba(65, 48, 25, 0.16);
+}
+
+.site[data-theme="light"] .hero-ribbon {
+  background: #eee7db;
+  box-shadow: 0 5px 20px rgba(65, 48, 25, 0.1);
+}
+
+.site,
+.site * {
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease;
+}
