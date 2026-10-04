@@ -1,26 +1,32 @@
 <div class="site">
 
   <!-- ========================= NAVBAR ========================= -->
-  <header class="navbar">
+  <header class="navbar" [class.nav-scrolled]="isScrolled">
     <div class="nav-inner container">
 
-      <a href="#inicio" class="brand" [attr.aria-label]="language === 'es' ? 'Kfest - Inicio' : 'Kfest - Home'">
-        <img src="images/Logo_Oficial.png" alt="Kfest Logo" class="brand-logo-img" />
+      <a href="#inicio" class="brand" (click)="scrollToSection('inicio', $event)" [attr.aria-label]="language === 'es' ? 'Kfest - Inicio' : 'Kfest - Home'">
+        <img [src]="isLightMode ? 'images/logo_marron.png' : 'images/Logo_Oficial.png'" alt="Kfest Logo" class="brand-logo-img" />
       </a>
 
       <nav class="nav-links" [class.open]="mobileMenuOpen">
-        <a href="#inicio" class="nav-link active" (click)="closeMobileMenu()">{{ language === 'es' ? 'INICIO' : 'HOME' }}</a>
-        <a href="#coleccion" class="nav-link" (click)="closeMobileMenu()">{{ language === 'es' ? 'COLECCIÓN' : 'COLLECTION' }}</a>
-        <a href="#quiz" class="nav-link" (click)="closeMobileMenu()">{{ language === 'es' ? 'TU CAFÉ IDEAL' : 'IDEAL MATCH' }}</a>
-        <a href="#herencia" class="nav-link" (click)="closeMobileMenu()">{{ language === 'es' ? 'NUESTRA HISTORIA' : 'OUR STORY' }}</a>
-        <a href="#cata" class="nav-link" (click)="closeMobileMenu()">{{ language === 'es' ? 'PERFILES DE CATA' : 'PROFILES' }}</a>
-        <a href="#calculadora" class="nav-link" (click)="closeMobileMenu()">{{ language === 'es' ? 'CALCULADORA BARISTA' : 'BREW GUIDE' }}</a>
-        <a href="#catering" class="nav-link" (click)="closeMobileMenu()">KFESTCAR</a>
-        <a href="#faq" class="nav-link" (click)="closeMobileMenu()">FAQ</a>
-        <a href="#contacto" class="nav-link" (click)="closeMobileMenu()">{{ language === 'es' ? 'CONTACTO' : 'CONTACT' }}</a>
+        <a href="#inicio" class="nav-link" [class.active]="activeSection === 'inicio'" (click)="scrollToSection('inicio', $event)">{{ language === 'es' ? 'INICIO' : 'HOME' }}</a>
+        <a href="#herencia" class="nav-link" [class.active]="activeSection === 'herencia'" (click)="scrollToSection('herencia', $event)">{{ language === 'es' ? 'HISTORIA' : 'OUR STORY' }}</a>
+        <a href="#equipo" class="nav-link" [class.active]="activeSection === 'equipo'" (click)="scrollToSection('equipo', $event)">{{ language === 'es' ? 'EQUIPO' : 'OUR TEAM' }}</a>
+        <a href="#coleccion" class="nav-link" [class.active]="activeSection === 'coleccion'" (click)="scrollToSection('coleccion', $event)">{{ language === 'es' ? 'COLECCIÓN' : 'COLLECTION' }}</a>
+        <a href="#quiz" class="nav-link" [class.active]="activeSection === 'quiz'" (click)="scrollToSection('quiz', $event)">{{ language === 'es' ? 'TU CAFÉ IDEAL' : 'IDEAL MATCH' }}</a>
+        <a href="#cata" class="nav-link" [class.active]="activeSection === 'cata'" (click)="scrollToSection('cata', $event)">{{ language === 'es' ? 'CATAS' : 'PROFILES' }}</a>
+        <a href="#calculadora" class="nav-link" [class.active]="activeSection === 'calculadora'" (click)="scrollToSection('calculadora', $event)">BARISTA LAB</a>
+        <a href="#catering" class="nav-link" [class.active]="activeSection === 'catering'" (click)="scrollToSection('catering', $event)">KFESTCAR</a>
+        <a href="#testimonios" class="nav-link" [class.active]="activeSection === 'testimonios'" (click)="scrollToSection('testimonios', $event)">{{ language === 'es' ? 'RESEÑAS' : 'REVIEWS' }}</a>
+        <a href="#faq" class="nav-link" [class.active]="activeSection === 'faq'" (click)="scrollToSection('faq', $event)">FAQ</a>
+        <a href="#contacto" class="nav-link" [class.active]="activeSection === 'contacto'" (click)="scrollToSection('contacto', $event)">{{ language === 'es' ? 'CONTACTO' : 'CONTACT' }}</a>
       </nav>
 
       <div class="header-controls">
+        <button class="theme-toggle-btn" (click)="toggleTheme()" [attr.aria-label]="isLightMode ? (language === 'es' ? 'Cambiar a modo oscuro' : 'Switch to dark mode') : (language === 'es' ? 'Cambiar a modo crema' : 'Switch to cream mode')" [title]="isLightMode ? (language === 'es' ? 'Modo Oscuro' : 'Dark Mode') : (language === 'es' ? 'Modo Crema' : 'Cream Mode')">
+          <i class="fa-solid" [class.fa-sun]="!isLightMode" [class.fa-moon]="isLightMode"></i>
+        </button>
+
         <div class="lang-pill" role="group" [attr.aria-label]="language === 'es' ? 'Selector de idioma' : 'Language selector'">
           <button [class.lang-active]="language === 'es'" (click)="changeLanguage('es')" aria-label="Español">ES</button>
           <span class="lang-sep" aria-hidden="true">|</span>
@@ -41,7 +47,7 @@
     <!-- ========================= HERO ========================= -->
     <section id="inicio" class="hero">
       <div class="hero-bg-wrap">
-        <img src="images/hero_bg.png" alt="" class="hero-bg-img" aria-hidden="true" />
+        <img src="images/New-Hero.jpg" alt="Doña Teresa Chávez - Kfest Café de Especialidad" class="hero-bg-img" aria-hidden="true" />
         <div class="hero-overlay"></div>
       </div>
 
@@ -50,7 +56,7 @@
 
           <div class="badge-capsule">
             <span class="badge-dot">◉</span>
-            <span>{{ language === 'es' ? 'COSECHA SELECCIONADA 2025 · FUNDO SANTA TERESITA' : 'SELECTED HARVEST 2025 ·
+            <span>{{ language === 'es' ? 'COSECHA SELECCIONADA 2026 · FUNDO SANTA TERESITA' : 'SELECTED HARVEST 2026 ·
               SANTA TERESITA FARM' }}</span>
           </div>
 
@@ -122,7 +128,7 @@
           <div class="lot-card">
             <div class="lot-badge">
               <span class="lot-dot"></span>
-              {{ language === 'es' ? 'LOTE EXCLUSIVO 2025' : 'EXCLUSIVE LOT 2025' }}
+              {{ language === 'es' ? 'LOTE EXCLUSIVO 2026' : 'EXCLUSIVE LOT 2026' }}
             </div>
             <h3 class="lot-name">Fundo Santa Teresita ·<br>Chanchamayo</h3>
             <div class="lot-extract">
@@ -172,18 +178,98 @@
     <section id="herencia" class="section-dark sec-pad">
       <div class="container heritage-grid">
 
-        <div class="gallery-grid">
-          <div class="gal-photo gal-large">
-            <img src="images/nosotros_main.png" alt="Nosotros en Fundo Santa Teresita" />
+        <!-- ÁLBUM HISTÓRICO DEL VIAJE — Carrusel horizontal con fotos reales del Drive -->
+        <div class="album-carousel-wrap">
+          <div class="album-eyebrow">
+            <span class="album-badge"><i class="fa-solid fa-film"></i> {{ language === 'es' ? 'ÁLBUM DEL VIAJE' : 'JOURNEY ALBUM' }}</span>
+            <h3 class="album-title">{{ language === 'es' ? 'El Regreso al Fundo Santa Teresita' : 'The Return to Fundo Santa Teresita' }}</h3>
           </div>
-          <div class="gal-photo">
-            <img src="images/fundo_1.png" alt="Fundo Santa Teresita" />
+
+          <!-- Carrusel -->
+          <div class="album-slider" #albumSlider>
+            <div class="album-slide">
+              <img src="images/legacy/01_estacion_autobus.jpg" alt="La estación de autobús — inicio del viaje" loading="lazy" />
+              <div class="album-slide-caption">{{ language === 'es' ? '① La estación de autobús — inicio del viaje' : '① The bus station — start of the journey' }}</div>
+            </div>
+            <div class="album-slide">
+              <img src="images/legacy/02_bus_camino.jpg" alt="Dentro del bus camino a la Chacra" loading="lazy" />
+              <div class="album-slide-caption">{{ language === 'es' ? '② Dentro del bus rumbo a la Chacra Santa Teresita' : '② Inside the bus heading to Chacra Santa Teresita' }}</div>
+            </div>
+            <div class="album-slide">
+              <img src="images/legacy/03_cuartito_vivienda.jpg" alt="El cuartito de vivienda en el fundo" loading="lazy" />
+              <div class="album-slide-caption">{{ language === 'es' ? '③ El cuartito de vivienda — refugio en el fundo' : '③ The little room — our refuge at the farm' }}</div>
+            </div>
+            <div class="album-slide">
+              <img src="images/legacy/04_descenso.jpg" alt="Empezamos el descenso por las laderas" loading="lazy" />
+              <div class="album-slide-caption">{{ language === 'es' ? '④ Empezamos el descenso por las laderas de Chanchamayo' : '④ We begin the descent through the slopes of Chanchamayo' }}</div>
+            </div>
+            <div class="album-slide album-slide-featured">
+              <img src="images/legacy/05_cabanita.jpg" alt="Por fin en la cabañita en la chacra" loading="lazy" />
+              <div class="album-slide-caption">{{ language === 'es' ? '⑤ «Por fin en la cabañita en la chacra» — el reencuentro con la tierra' : '⑤ "Finally at the little cabin at the farm" — reconnecting with the land' }}</div>
+            </div>
+            <div class="album-slide album-slide-featured">
+              <img src="images/legacy/06_abuelos_teresa_silvino.jpg" alt="Mis abuelos, Teresa y Silvino" loading="lazy" />
+              <div class="album-slide-caption">{{ language === 'es' ? '⑥ Mis abuelos, Doña Teresa y Don Silvino — fundadores del legado' : '⑥ My grandparents, Doña Teresa and Don Silvino — founders of the legacy' }}</div>
+            </div>
+            <div class="album-slide">
+              <img src="images/legacy/07_bayas_verdes.jpg" alt="Bayas verdes de café, por madurar" loading="lazy" />
+              <div class="album-slide-caption">{{ language === 'es' ? '⑦ Bayas verdes de café, por madurar — la promesa de la cosecha' : '⑦ Green coffee berries yet to ripen — the harvest promise' }}</div>
+            </div>
+            <div class="album-slide">
+              <img src="images/legacy/08_bayas_madurando.jpg" alt="Bayas verdes madurando en la planta" loading="lazy" />
+              <div class="album-slide-caption">{{ language === 'es' ? '⑧ Bayas madurando en la planta — carmesí vivos a 1,600 msnm' : '⑧ Berries ripening on the plant — vivid crimson at 1,600 masl' }}</div>
+            </div>
+            <div class="album-slide">
+              <img src="images/legacy/album_01.jpg" alt="En camino por la selva central" loading="lazy" />
+              <div class="album-slide-caption">{{ language === 'es' ? '⑨ En camino por las trochas de la selva central' : '⑨ On the path through the central jungle trails' }}</div>
+            </div>
+            <div class="album-slide">
+              <img src="images/legacy/album_02.jpg" alt="Paisajes y verdor de Chanchamayo" loading="lazy" />
+              <div class="album-slide-caption">{{ language === 'es' ? '⑩ Paisajes y verdor infinito de Chanchamayo' : '⑩ Landscapes and endless greenery of Chanchamayo' }}</div>
+            </div>
+            <div class="album-slide">
+              <img src="images/legacy/album_03.jpg" alt="La vida cotidiana en la chacra" loading="lazy" />
+              <div class="album-slide-caption">{{ language === 'es' ? '⑪ La vida cotidiana y calma en la chacra' : '⑪ Daily life and serenity at the farm' }}</div>
+            </div>
+            <div class="album-slide">
+              <img src="images/legacy/album_04.jpg" alt="Sendero hacia las parcelas altas" loading="lazy" />
+              <div class="album-slide-caption">{{ language === 'es' ? '⑫ Sendero escarpado hacia las parcelas altas' : '⑫ Steep trail towards the high-altitude plots' }}</div>
+            </div>
+            <div class="album-slide album-slide-featured">
+              <img src="images/legacy/album_05.jpg" alt="Amanecer en el Fundo Santa Teresita" loading="lazy" />
+              <div class="album-slide-caption">{{ language === 'es' ? '⑬ Amanecer brumoso en el Fundo Santa Teresita' : '⑬ Misty sunrise at Fundo Santa Teresita' }}</div>
+            </div>
+            <div class="album-slide">
+              <img src="images/legacy/album_06.jpg" alt="Caminata matutina entre los cafetos" loading="lazy" />
+              <div class="album-slide-caption">{{ language === 'es' ? '⑭ Caminata matutina de supervisión entre los cafetos' : '⑭ Morning inspection walk among the coffee trees' }}</div>
+            </div>
+            <div class="album-slide">
+              <img src="images/legacy/album_07.jpg" alt="Cuidado manual de los arbustos" loading="lazy" />
+              <div class="album-slide-caption">{{ language === 'es' ? '⑮ Cuidado manual y poda de los arbustos de café' : '⑮ Hands-on pruning and care of the coffee shrubs' }}</div>
+            </div>
+            <div class="album-slide album-slide-featured">
+              <img src="images/legacy/album_08.jpg" alt="Inspección de frutos selectos" loading="lazy" />
+              <div class="album-slide-caption">{{ language === 'es' ? '⑯ Inspección de frutos selectos en la ladera' : '⑯ Inspecting select cherries on the mountain slope' }}</div>
+            </div>
+            <div class="album-slide">
+              <img src="images/legacy/album_09.jpg" alt="Tradición viva en cada rincón" loading="lazy" />
+              <div class="album-slide-caption">{{ language === 'es' ? '⑰ Tradición cafetalera viva en cada rincón' : '⑰ Living coffee tradition in every corner of the estate' }}</div>
+            </div>
+            <div class="album-slide">
+              <img src="images/legacy/album_10.jpg" alt="El corazón de Kfest en la montaña" loading="lazy" />
+              <div class="album-slide-caption">{{ language === 'es' ? '⑱ El corazón de Kfest en lo alto de la montaña' : '⑱ The heart of Kfest high in the mountains' }}</div>
+            </div>
           </div>
-          <div class="gal-photo">
-            <img src="images/fundo_2.png" alt="Caficultores Fundo Santa Teresita" />
-          </div>
-          <div class="gal-photo">
-            <img src="images/fundo_3.png" alt="Cosecha en Fundo Santa Teresita" />
+
+          <!-- Flechas de navegación -->
+          <button class="album-arrow album-prev" (click)="albumScroll(-1)" aria-label="Anterior"><i class="fa-solid fa-chevron-left"></i></button>
+          <button class="album-arrow album-next" (click)="albumScroll(1)" aria-label="Siguiente"><i class="fa-solid fa-chevron-right"></i></button>
+
+          <!-- Indicadores -->
+          <div class="album-dots">
+            @for (dot of [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17]; track dot) {
+              <span class="album-dot" [class.active]="albumIndex === dot" (click)="albumGoTo(dot)"></span>
+            }
           </div>
         </div>
 
@@ -254,187 +340,131 @@
     </section>
 
 
-    <!-- ========================= PASAPORTE DE TRAZABILIDAD (FEATURE C) ========================= -->
-    <section id="trazabilidad" class="section-dark sec-pad trace-section">
+    <!-- ========================= STRIP DOCUMENTAL: DEL GRANO A TU TAZA ========================= -->
+    <section id="proceso" class="section-darkest sec-pad process-strip-section">
+      <div class="container">
+        <div class="process-header">
+          <p class="eyebrow-line">─── {{ language === 'es' ? 'FOTODOCUMENTARIO' : 'PHOTO DOCUMENTARY' }}</p>
+          <h2 class="sec-title">
+            {{ language === 'es' ? 'Del Grano' : 'From Bean' }}
+            <em class="gold-script">{{ language === 'es' ? 'a Tu Taza' : 'to Your Cup' }}</em>
+          </h2>
+          <p class="sec-sub">{{ language === 'es' ? '17 pasos documentados en las laderas de Chanchamayo, desde la cereza carmesí hasta el aroma en tu mano.' : '17 documented steps on the slopes of Chanchamayo, from the crimson cherry to the aroma in your hand.' }}</p>
+        </div>
+      </div>
+
+      <!-- Carrusel infinito continuo: Del Grano a tu Taza (17 pasos) -->
+      <div class="process-carousel-wrap">
+        <div class="process-carousel-track">
+          <!-- Primer ciclo completo (Pasos 01 al 17) -->
+          @for (step of processSteps; track step.num) {
+            <div class="process-step-card">
+              <div class="process-step-num">{{ step.num }}</div>
+              <img [src]="step.img" [alt]="step.alt" loading="lazy" />
+              <div class="process-step-label">{{ language === 'es' ? step.es : step.en }}</div>
+            </div>
+          }
+          <!-- Segundo ciclo idéntico para continuidad infinita sin saltos -->
+          @for (step of processSteps; track 'loop-' + step.num) {
+            <div class="process-step-card" aria-hidden="true">
+              <div class="process-step-num">{{ step.num }}</div>
+              <img [src]="step.img" [alt]="step.alt" loading="lazy" />
+              <div class="process-step-label">{{ language === 'es' ? step.es : step.en }}</div>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================= NUESTRO EQUIPO ========================= -->
+    <section id="equipo" class="section-dark sec-pad team-section">
       <div class="container">
 
-        <div class="trace-header">
-          <div class="trace-pill">
-            <i class="fa-solid fa-certificate"></i>
-            <span>{{ language === 'es' ? 'CERTIFICACIÓN DE ORIGEN & COSECHA' : 'ORIGIN & HARVEST CERTIFICATE' }}</span>
-          </div>
+        <div class="team-header">
+          <p class="eyebrow-line">─── {{ language === 'es' ? 'FAMILIA, VOCACIÓN & ALTA CATA' : 'FAMILY, PASSION & SPECIALTY' }}</p>
           <h2 class="sec-title">
-            {{ language === 'es' ? 'Pasaporte de' : 'Traceability' }}
-            <em class="gold-script">{{ language === 'es' ? 'Trazabilidad & Terroir' : 'Passport & Terroir' }}</em>
+            {{ language === 'es' ? 'Nuestro' : 'Our' }}
+            <em class="gold-script">{{ language === 'es' ? 'Equipo' : 'Team' }}</em>
           </h2>
           <p class="sec-sub">
             {{ language === 'es'
-            ? 'Transparencia absoluta de la semilla a la taza: conoce cada parámetro geográfico, agronómico y de beneficio que forja la personalidad de nuestro lote 2025.'
-            : 'Total transparency from seed to cup: discover every geographic, agronomic, and processing metric shaping our 2025 microlot.' }}
+            ? 'Tres generaciones comprometidas con la excelencia del café de altura en Chanchamayo. Conoce a los rostros y manos que custodian cada etapa desde el cultivo hasta tu taza.'
+            : 'Three generations dedicated to high-altitude specialty coffee in Chanchamayo. Meet the passionate hands caring for each bean from harvest to cup.' }}
           </p>
         </div>
 
-        <div class="trace-card">
-          <!-- Trace Navigation Tabs -->
-          <div class="trace-tabs">
-            <button class="trace-tab" [class.active]="traceabilityTab === 'origen'" (click)="setTraceabilityTab('origen')">
-              <i class="fa-solid fa-mountain-sun"></i> {{ language === 'es' ? 'Origen & Terroir' : 'Terroir & Origin' }}
-            </button>
-            <button class="trace-tab" [class.active]="traceabilityTab === 'proceso'" (click)="setTraceabilityTab('proceso')">
-              <i class="fa-solid fa-seedling"></i> {{ language === 'es' ? 'Cosecha & Beneficio' : 'Harvest & Process' }}
-            </button>
-            <button class="trace-tab" [class.active]="traceabilityTab === 'cata'" (click)="setTraceabilityTab('cata')">
-              <i class="fa-solid fa-award"></i> {{ language === 'es' ? 'Análisis SCA' : 'SCA Analysis' }}
-            </button>
-            <button class="trace-tab" [class.active]="traceabilityTab === 'social'" (click)="setTraceabilityTab('social')">
-              <i class="fa-solid fa-hands-holding-circle"></i> {{ language === 'es' ? 'Compromiso Familiar' : 'Family Commitment' }}
-            </button>
-          </div>
+        <div class="team-grid">
 
-          <!-- Tab 1: Origen & Terroir -->
-          @if (traceabilityTab === 'origen') {
-            <div class="trace-content-grid animate-fade">
-              <div class="trace-metric">
-                <small>{{ language === 'es' ? 'FINCA / ORIGEN' : 'ESTATE / ORIGIN' }}</small>
-                <strong>Fundo Santa Teresita</strong>
-                <span>Sector Bajo Marankiari, Perené</span>
-              </div>
-              <div class="trace-metric">
-                <small>{{ language === 'es' ? 'REGIÓN / VALLE' : 'REGION / VALLEY' }}</small>
-                <strong>Chanchamayo, Junín</strong>
-                <span>Selva Central del Perú</span>
-              </div>
-              <div class="trace-metric">
-                <small>{{ language === 'es' ? 'ALTITUD DE CULTIVO' : 'GROWING ALTITUDE' }}</small>
-                <strong class="text-gold">1,450 – 1,800 msnm</strong>
-                <span>Clima templado andino-amazónico</span>
-              </div>
-              <div class="trace-metric">
-                <small>{{ language === 'es' ? 'VARIEDADES BOTÁNICAS' : 'BOTANICAL VARIETIES' }}</small>
-                <strong>Arábica: Typica, Caturra & Bourbon</strong>
-                <span>100% Variedades nobles de sombra</span>
-              </div>
-              <div class="trace-metric">
-                <small>{{ language === 'es' ? 'SUELO & ENTORNO' : 'SOIL & BIODIVERSITY' }}</small>
-                <strong>Franco-arcilloso rico en materia orgánica</strong>
-                <span>Bajo sombra de plátano, pacae y cedro</span>
-              </div>
-              <div class="trace-metric">
-                <small>{{ language === 'es' ? 'COORDENADAS GPS' : 'GPS COORDINATES' }}</small>
-                <strong>10°56′42″S · 75°14′18″W</strong>
-                <span>Microcuenca del río Perené</span>
-              </div>
+          <article class="team-card">
+            <div class="team-img-wrap">
+              <img src="images/team/fundadores.jpg" alt="Don Silvino &amp; Doña Teresa - Fundadores" loading="lazy" />
+              <span class="team-badge"><i class="fa-solid fa-seedling"></i> {{ language === 'es' ? 'FUNDADORES & LEGADO' : 'FOUNDERS & LEGACY' }}</span>
             </div>
-          }
-
-          <!-- Tab 2: Cosecha & Beneficio -->
-          @if (traceabilityTab === 'proceso') {
-            <div class="trace-content-grid animate-fade">
-              <div class="trace-metric">
-                <small>{{ language === 'es' ? 'RECOLECCIÓN' : 'PICKING METHOD' }}</small>
-                <strong>100% Cosecha Selectiva Manual</strong>
-                <span>Solo cerezas en punto óptimo de maduración (grano carmesí)</span>
-              </div>
-              <div class="trace-metric">
-                <small>{{ language === 'es' ? 'BENEFICIO HÚMEDO' : 'WET MILLING' }}</small>
-                <strong>Lavado Tradicional Artesanal</strong>
-                <span>Despulpado el mismo día de cosecha sin demoras</span>
-              </div>
-              <div class="trace-metric">
-                <small>{{ language === 'es' ? 'FERMENTACIÓN' : 'FERMENTATION' }}</small>
-                <strong class="text-gold">32 a 36 Horas Controladas</strong>
-                <span>En tanques de fermentación limpia bajo sombra</span>
-              </div>
-              <div class="trace-metric">
-                <small>{{ language === 'es' ? 'LAVADO DE GRANO' : 'WASHING WATER' }}</small>
-                <strong>Agua de Manantial de Vertiente</strong>
-                <span>Pureza natural sin recirculaciones químicas</span>
-              </div>
-              <div class="trace-metric">
-                <small>{{ language === 'es' ? 'SECADO SOLAR' : 'DRYING METHOD' }}</small>
-                <strong>Tarimas & Camas Africanas Cubiertas</strong>
-                <span>14 a 18 días con removido constante hasta 11.5% humedad</span>
-              </div>
-              <div class="trace-metric">
-                <small>{{ language === 'es' ? 'TUESTE' : 'ROASTING' }}</small>
-                <strong class="text-gold">Tueste Medio Artesanal en Lotes Pequeños</strong>
-                <span>Curva desarrollada para resaltar acidez brillante y aceites dulces</span>
-              </div>
+            <div class="team-body">
+              <h3 class="team-name">Don Silvino &amp; Doña Teresa</h3>
+              <p class="team-role">{{ language === 'es' ? 'Patriarcas y Custodios de la Tierra' : 'Patriarchs &amp; Earth Guardians' }}</p>
+              <p class="team-bio">
+                {{ language === 'es'
+                ? 'Pioneros en rescatar las tierras familiares del Fundo Santa Teresita en Chanchamayo. Su fe y paciencia sembraron las primeras plantas de Typica y Caturra.'
+                : 'Pioneers who reclaimed family lands at Santa Teresita Farm. Their patience and devotion planted our very first heirloom Typica and Caturra trees.' }}
+              </p>
             </div>
-          }
+          </article>
 
-          <!-- Tab 3: Análisis SCA -->
-          @if (traceabilityTab === 'cata') {
-            <div class="trace-content-grid animate-fade">
-              <div class="trace-metric">
-                <small>{{ language === 'es' ? 'PUNTUACIÓN PROTOCOLO SCA' : 'SCA CUPPING SCORE' }}</small>
-                <strong class="text-gold" style="font-size: 1.6rem;">81 a 84 Pts</strong>
-                <span>Categoría Internacional de Alta Especialidad</span>
-              </div>
-              <div class="trace-metric">
-                <small>{{ language === 'es' ? 'FRAGANCIA & AROMA' : 'FRAGRANCE & AROMA' }}</small>
-                <strong>Panela tostada, Miel de azahar y Cacao</strong>
-                <span>Aromas dulces intensos al abrir y moler</span>
-              </div>
-              <div class="trace-metric">
-                <small>{{ language === 'es' ? 'SABOR & RETROGUSTO' : 'FLAVOR & AFTERTASTE' }}</small>
-                <strong>Cacao 70%, Frutos rojos, Panela dulce</strong>
-                <span>Final prolongado, limpio y persistente</span>
-              </div>
-              <div class="trace-metric">
-                <small>{{ language === 'es' ? 'ACIDEZ' : 'ACIDITY' }}</small>
-                <strong>Málica / Cítrica Brillante</strong>
-                <span>Sensación fresca y vivaz que armoniza con la dulzura</span>
-              </div>
-              <div class="trace-metric">
-                <small>{{ language === 'es' ? 'CUERPO' : 'BODY' }}</small>
-                <strong>Medio Aterciopelado & Sedoso</strong>
-                <span>Gran sensación untuosa y balanceada en boca</span>
-              </div>
-              <div class="trace-metric">
-                <small>{{ language === 'es' ? 'EMPAQUE DE PROTECCIÓN' : 'BARRIER PACKAGING' }}</small>
-                <strong>Bolsa Trilaminada con Válvula Degas</strong>
-                <span>Cierre hermético ziploc para conservar aceites esenciales</span>
-              </div>
+          <article class="team-card highlight-lead">
+            <div class="team-img-wrap">
+              <img src="images/team/teresa_chavez.jpg" alt="Doña Teresa Chávez - Maestra Caficultora" loading="lazy" />
+              <span class="team-badge badge-gold"><i class="fa-solid fa-crown"></i> {{ language === 'es' ? 'LIDERESA DE FUNDO' : 'ESTATE LEADER' }}</span>
             </div>
-          }
-
-          <!-- Tab 4: Compromiso Familiar -->
-          @if (traceabilityTab === 'social') {
-            <div class="trace-content-grid animate-fade">
-              <div class="trace-metric">
-                <small>{{ language === 'es' ? 'LIDERAZGO FAMILIAR' : 'FAMILY LEADERSHIP' }}</small>
-                <strong>Mujeres Caficultoras de Selva Central</strong>
-                <span>Cuidado meticuloso transmitido por más de 3 generaciones</span>
-              </div>
-              <div class="trace-metric">
-                <small>{{ language === 'es' ? 'COMERCIO DIRECTO' : 'DIRECT TRADE' }}</small>
-                <strong class="text-gold">100% Trato Directo sin Intermediarios</strong>
-                <span>El valor completo retribuye el esfuerzo de los productores</span>
-              </div>
-              <div class="trace-metric">
-                <small>{{ language === 'es' ? 'ECONOMÍA CIRCULAR' : 'CIRCULAR ECONOMY' }}</small>
-                <strong>Iniciativa Útilkfest</strong>
-                <span>Reutilización artesanal de la borra de café en objetos funcionales</span>
-              </div>
-              <div class="trace-metric">
-                <small>{{ language === 'es' ? 'PRESERVACIÓN AMBIENTAL' : 'ENVIRONMENTAL CARE' }}</small>
-                <strong>Agricultura de Conservación de Bosque</strong>
-                <span>Protección de fuentes hídricas y biodiversidad local</span>
-              </div>
+            <div class="team-body">
+              <h3 class="team-name">Doña Teresa Chávez</h3>
+              <p class="team-role">{{ language === 'es' ? 'Directora &amp; Maestra Caficultora' : 'Director &amp; Master Coffee Grower' }}</p>
+              <p class="team-bio">
+                {{ language === 'es'
+                ? 'Lidera la producción sostenible con enfoque en empoderamiento de mujeres caficultoras y economía circular. Supervisa cada fermentación y secado solar.'
+                : 'Directs sustainable production empowering women coffee farmers and circular economy. Oversees precise micro-batch fermentation and solar drying.' }}
+              </p>
             </div>
-          }
+          </article>
 
-          <div class="trace-footer-row">
-            <span class="trace-verified"><i class="fa-solid fa-shield-halved"></i> {{ language === 'es' ? 'Lote Verificado 2025 · Cosecha Fresca Fundo Santa Teresita' : 'Verified 2025 Lot · Fresh Harvest Santa Teresita Farm' }}</span>
-            <a [href]="getWhatsAppLink('hero')" target="_blank" rel="noopener noreferrer" class="btn btn-sm-gold">
-              <i class="fa-brands fa-whatsapp"></i> {{ language === 'es' ? 'CONSULTAR POR ESTE LOTE' : 'INQUIRE ABOUT THIS LOT' }}
-            </a>
-          </div>
+          <article class="team-card">
+            <div class="team-img-wrap">
+              <img src="images/team/equipo_fundo.jpg" alt="Equipo de Tueste &amp; Baristas Kfest" loading="lazy" />
+              <span class="team-badge"><i class="fa-solid fa-fire-burner"></i> {{ language === 'es' ? 'TUESTE &amp; BARISTAS' : 'ROAST &amp; BARISTAS' }}</span>
+            </div>
+            <div class="team-body">
+              <h3 class="team-name">{{ language === 'es' ? 'Maestros Tostadores & Baristas' : 'Master Roasters & Baristas' }}</h3>
+              <p class="team-role">{{ language === 'es' ? 'Equipo Técnico Kfestcar &amp; Tostaduría' : 'Kfestcar &amp; Roastery Specialists' }}</p>
+              <p class="team-bio">
+                {{ language === 'es'
+                ? 'Calibran los perfiles de tueste medio para resaltar notas a panela de oro y cacao. Llevan la experiencia del café recién tostado a la barra móvil Kfestcar.'
+                : 'Calibrate custom medium roast curves to bring out golden panela and dark cacao notes. Power our mobile Kfestcar specialty espresso bars.' }}
+              </p>
+            </div>
+          </article>
+
+          <article class="team-card">
+            <div class="team-img-wrap">
+              <img src="images/team/cosechadores_campo.jpg" alt="Recolectores de Altura Fundo Santa Teresita" loading="lazy" />
+              <span class="team-badge"><i class="fa-solid fa-hand-holding-heart"></i> {{ language === 'es' ? 'COSECHA SELECTIVA' : 'SELECTIVE PICKING' }}</span>
+            </div>
+            <div class="team-body">
+              <h3 class="team-name">{{ language === 'es' ? 'Recolectores de Altura' : 'High Altitude Harvesters' }}</h3>
+              <p class="team-role">{{ language === 'es' ? 'Cosecha 100% Manual en Pendiente' : '100% Hand-Picked on Slopes' }}</p>
+              <p class="team-bio">
+                {{ language === 'es'
+                ? 'Recorren las laderas empinadas a más de 1,600 msnm seleccionando únicamente las cerezas carmesí en su punto óptimo de azúcar y madurez brix.'
+                : 'Traverse steep slopes at 1,600+ masl picking solely peak-ripe crimson cherries for maximum brix sweetness and complex cup aromatics.' }}
+              </p>
+            </div>
+          </article>
+
         </div>
 
       </div>
     </section>
+
 
 
     <!-- ========================= COLECCIÓN ========================= -->
@@ -460,112 +490,51 @@
           <div class="grind-box">
             <span class="grind-label">{{ language === 'es' ? 'MOLIENDA:' : 'GRIND:' }}</span>
             <div class="grind-tabs">
-              <button [class.active]="selectedGrind === 'grano'" (click)="setGrind('grano')">{{ language === 'es' ? 'En
-                Grano' : 'Whole Bean' }}</button>
-              <button [class.active]="selectedGrind === 'v60'" (click)="setGrind('v60')">V60 / {{ language === 'es' ?
-                'Filtrado' : 'Filter' }}</button>
-              <button [class.active]="selectedGrind === 'prensa'" (click)="setGrind('prensa')">{{ language === 'es' ?
-                'Prensa Francesa' : 'French Press' }}</button>
-              <button [class.active]="selectedGrind === 'gota'" (click)="setGrind('gota')">{{ language === 'es' ? 'Gota
-                a Gota' : 'Slow Drip' }}</button>
+              <button [class.active]="selectedGrind === 'grano'" (click)="setGrind('grano')">
+                <i class="fa-solid fa-seedling"></i> {{ language === 'es' ? 'En Grano' : 'Whole Bean' }}
+              </button>
+              <button [class.active]="selectedGrind === 'v60'" (click)="setGrind('v60')">
+                <i class="fa-solid fa-filter"></i> V60 / {{ language === 'es' ? 'Filtrado' : 'Filter' }}
+              </button>
+              <button [class.active]="selectedGrind === 'prensa'" (click)="setGrind('prensa')">
+                <i class="fa-solid fa-mug-hot"></i> {{ language === 'es' ? 'Prensa Francesa' : 'French Press' }}
+              </button>
+              <button [class.active]="selectedGrind === 'gota'" (click)="setGrind('gota')">
+                <i class="fa-solid fa-droplet"></i> {{ language === 'es' ? 'Gota a Gota' : 'Slow Drip' }}
+              </button>
+              <button [class.active]="selectedGrind === 'accesorios'" (click)="setGrind('accesorios')">
+                <i class="fa-solid fa-box-open"></i> {{ language === 'es' ? 'Accesorios' : 'Accessories' }}
+              </button>
             </div>
           </div>
         </div>
 
-        <div class="products-grid">
-
-          <!-- PRODUCTO 1: 250g -->
-          <article class="prod-card">
-            <div class="prod-img-area">
-              <span class="prod-weight">{{ language === 'es' ? '250 GRAMOS' : '250 GRAMS' }}</span>
-              <img src="images/bag_250g.png" alt="Kfest 250g" class="prod-img" />
-            </div>
-            <div class="prod-body">
-              <p class="prod-cat">{{ language === 'es' ? 'RESERVA PERSONAL' : 'PERSONAL RESERVE' }}</p>
-              <h3 class="prod-name">{{ language === 'es' ? '1 Paquete CAFÉ DE ESPECIALIDAD' : '1 Bag SPECIALTY COFFEE'
-                }}</h3>
-              <p class="prod-desc">
-                {{ language === 'es'
-                ? 'La medida perfecta para disfrutar semanalmente en casa u oficina. Notas florales intactas y tueste
-                fresco garantizado.'
-                : 'The perfect size for weekly enjoyment at home or office. Intact floral notes and guaranteed fresh
-                roast.' }}
-              </p>
-              <div class="prod-footer">
-                <div class="prod-price">
-                  <small>{{ language === 'es' ? 'PRECIO INDIVIDUAL' : 'UNIT PRICE' }}</small>
-                  <strong>S/ 30.00</strong>
-                </div>
-                <a [href]="getWhatsAppLink('prod_250g')" target="_blank" rel="noopener noreferrer" class="btn-sm">
-                  <i class="fa-brands fa-whatsapp"></i> {{ language === 'es' ? 'PEDIR POR WHATSAPP' : 'ORDER VIA
-                  WHATSAPP' }}
-                </a>
+        <div class="products-grid animate-fade">
+          @for (prod of collectionProducts; track prod.name) {
+            <article class="prod-card" [class.prod-featured]="prod.isFeatured">
+              @if (prod.isFeatured) {
+                <div class="most-req">◉ {{ language === 'es' ? 'MÁS SOLICITADO' : 'MOST POPULAR' }}</div>
+              }
+              <div class="prod-img-area">
+                <span class="prod-weight">{{ prod.weight }}</span>
+                <img [src]="prod.img" [alt]="prod.name" class="prod-img" />
               </div>
-            </div>
-          </article>
-
-          <!-- PRODUCTO 2: 500g (FEATURED) -->
-          <article class="prod-card prod-featured">
-            <div class="most-req">◉ {{ language === 'es' ? 'MÁS SOLICITADO' : 'MOST POPULAR' }}</div>
-            <div class="prod-img-area">
-              <span class="prod-weight">{{ language === 'es' ? '500 GRAMOS TOTAL' : '500 GRAMS TOTAL' }}</span>
-              <img src="images/bag_500g.png" alt="Kfest 500g Dúo" class="prod-img" />
-            </div>
-            <div class="prod-body">
-              <p class="prod-cat text-gold">{{ language === 'es' ? 'DÚO ESENCIAL RESERVA' : 'ESSENTIAL RESERVE DUO' }}
-              </p>
-              <h3 class="prod-name">{{ language === 'es' ? '2 Paquetes CAFÉ DE ESPECIALIDAD' : '2 Bags SPECIALTY COFFEE'
-                }}</h3>
-              <p class="prod-desc">
-                {{ language === 'es'
-                ? 'Nuestra presentación insignia predilecta por familias cafeteras. Disfruta un perfil aromático intenso
-                y balance perfecto.'
-                : 'Our flagship presentation favored by coffee families. Intense aromatic profile and perfect balance.'
-                }}
-              </p>
-              <div class="prod-footer">
-                <div class="prod-price">
-                  <small>{{ language === 'es' ? 'PRECIO DÚO (500G)' : 'DUO PRICE (500G)' }}</small>
-                  <strong class="text-gold">S/ 56.00</strong>
+              <div class="prod-body">
+                <p class="prod-cat" [class.text-gold]="prod.isFeatured">{{ prod.tag }}</p>
+                <h3 class="prod-name">{{ prod.name }}</h3>
+                <p class="prod-desc">{{ prod.desc }}</p>
+                <div class="prod-footer">
+                  <div class="prod-price">
+                    <small>{{ language === 'es' ? 'PRECIO' : 'PRICE' }}</small>
+                    <strong [class.text-gold]="prod.isFeatured">{{ prod.price }}</strong>
+                  </div>
+                  <a [href]="getWhatsAppLink(prod.action)" target="_blank" rel="noopener noreferrer" class="btn-sm" [class.btn-sm-gold]="prod.isFeatured">
+                    <i class="fa-brands fa-whatsapp"></i> {{ language === 'es' ? 'PEDIR POR WHATSAPP' : 'ORDER VIA WHATSAPP' }}
+                  </a>
                 </div>
-                <a [href]="getWhatsAppLink('prod_500g')" target="_blank" rel="noopener noreferrer" class="btn-sm btn-sm-gold">
-                  <i class="fa-brands fa-whatsapp"></i> {{ language === 'es' ? 'PEDIR POR WHATSAPP' : 'ORDER VIA
-                  WHATSAPP' }}
-                </a>
               </div>
-            </div>
-          </article>
-
-          <!-- PRODUCTO 3: 1kg -->
-          <article class="prod-card">
-            <div class="prod-img-area">
-              <span class="prod-weight">{{ language === 'es' ? '1 KILOGRAMO TOTAL' : '1 KILOGRAM TOTAL' }}</span>
-              <img src="images/bag_1kg.png" alt="Kfest 1kg Pack" class="prod-img" />
-            </div>
-            <div class="prod-body">
-              <p class="prod-cat">{{ language === 'es' ? 'COFRE DEGUSTACIÓN · AHORRA S/ 20' : 'TASTING CHEST · SAVE S/
-                20' }}</p>
-              <h3 class="prod-name">{{ language === 'es' ? '4 Paquetes CAFÉ DE ESPECIALIDAD' : '4 Bags SPECIALTY COFFEE'
-                }}</h3>
-              <p class="prod-desc">
-                {{ language === 'es'
-                ? 'Pack maestro de 1 kg distribuido en 4 bolsas herméticas independientes con válvula desgasificadora
-                para preservar cada aroma.'
-                : 'Master 1 kg pack in 4 independent degassing-valve hermetic bags to preserve every aroma.' }}
-              </p>
-              <div class="prod-footer">
-                <div class="prod-price">
-                  <small>{{ language === 'es' ? 'PRECIO PACK 1KG' : '1KG PACK PRICE' }}</small>
-                  <strong>S/ 100.00</strong>
-                </div>
-                <a [href]="getWhatsAppLink('prod_1kg')" target="_blank" rel="noopener noreferrer" class="btn-sm">
-                  <i class="fa-brands fa-whatsapp"></i> {{ language === 'es' ? 'PEDIR POR WHATSAPP' : 'ORDER VIA
-                  WHATSAPP' }}
-                </a>
-              </div>
-            </div>
-          </article>
-
+            </article>
+          }
         </div>
 
         <!-- DELIVERY STRIP -->
@@ -936,12 +905,11 @@
 
         <div class="brew-header">
           <div class="brew-badge">
-            <i class="fa-solid fa-calculator"></i>
-            <span>{{ language === 'es' ? 'ALTA CATA & CIENCIA DE EXTRACCIÓN' : 'BREWING SCIENCE & EXTRACTION' }}</span>
+            <i class="fa-solid fa-flask"></i>
+            <span>{{ language === 'es' ? 'CIENCIA DE EXTRACCIÓN & CALIBRACIÓN' : 'BREWING SCIENCE & EXTRACTION' }}</span>
           </div>
           <h2 class="sec-title">
-            {{ language === 'es' ? 'Calculadora' : 'Barista' }}
-            <em class="gold-script">{{ language === 'es' ? 'Barista en Casa' : 'Brew Calculator' }}</em>
+            Barista <em class="gold-script">Lab</em>
           </h2>
           <p class="sec-sub">
             {{ language === 'es'
@@ -954,12 +922,30 @@
 
           <!-- Method Selector Buttons -->
           <div class="brew-methods-grid">
-            @for (method of brewMethodsList; track method) {
-              <button class="brew-method-btn" [class.active]="selectedBrewMethod === method" (click)="setBrewMethod(method)">
-                <span class="bm-icon"><i [class]="currentBrewConfig.icon"></i></span>
-                <span class="bm-name">{{ method === 'v60' ? 'V60 / Cono' : method === 'prensa' ? 'Prensa Francesa' : method === 'moka' ? 'Moka Italiana' : method === 'espresso' ? 'Espresso' : method === 'chemex' ? 'Chemex' : 'Gota a Gota' }}</span>
-              </button>
-            }
+            <button class="brew-method-btn" [class.active]="selectedBrewMethod === 'v60'" (click)="setBrewMethod('v60')">
+              <span class="bm-icon"><i class="fa-solid fa-filter"></i></span>
+              <span class="bm-name">V60 / Cono</span>
+            </button>
+            <button class="brew-method-btn" [class.active]="selectedBrewMethod === 'prensa'" (click)="setBrewMethod('prensa')">
+              <span class="bm-icon"><i class="fa-solid fa-mug-hot"></i></span>
+              <span class="bm-name">Prensa Francesa</span>
+            </button>
+            <button class="brew-method-btn" [class.active]="selectedBrewMethod === 'moka'" (click)="setBrewMethod('moka')">
+              <span class="bm-icon"><i class="fa-solid fa-fire-burner"></i></span>
+              <span class="bm-name">Moka Italiana</span>
+            </button>
+            <button class="brew-method-btn" [class.active]="selectedBrewMethod === 'espresso'" (click)="setBrewMethod('espresso')">
+              <span class="bm-icon"><i class="fa-solid fa-bolt"></i></span>
+              <span class="bm-name">Espresso</span>
+            </button>
+            <button class="brew-method-btn" [class.active]="selectedBrewMethod === 'chemex'" (click)="setBrewMethod('chemex')">
+              <span class="bm-icon"><i class="fa-solid fa-flask"></i></span>
+              <span class="bm-name">Chemex</span>
+            </button>
+            <button class="brew-method-btn" [class.active]="selectedBrewMethod === 'gota'" (click)="setBrewMethod('gota')">
+              <span class="bm-icon"><i class="fa-solid fa-droplet"></i></span>
+              <span class="bm-name">Gota a Gota</span>
+            </button>
           </div>
 
           <!-- Cup Quantity Selector -->
@@ -1017,6 +1003,31 @@
             <div class="tip-text">
               <strong>{{ language === 'es' ? 'Consejo del Barista Kfest:' : 'Kfest Barista Tip:' }}</strong>
               <p>{{ currentBrewConfig.tip[language] }}</p>
+            </div>
+          </div>
+
+          <!-- Barista Gear Strip with real tools -->
+          <div class="brew-gear-strip">
+            <span class="gear-strip-label">{{ language === 'es' ? 'EQUIPO RECOMENDADO DEL BARISTA' : 'RECOMMENDED BARISTA GEAR' }}</span>
+            <div class="brew-gear-row">
+              <div class="gear-item gear-active">
+                <div class="gear-img-box">
+                  <img src="images/barista/balanza.png" alt="Balanza digital de precisión" />
+                </div>
+                <small>{{ language === 'es' ? 'Balanza Digital' : 'Digital Scale' }}</small>
+              </div>
+              <div class="gear-item gear-active">
+                <div class="gear-img-box">
+                  <img src="images/barista/aguja_madera.png" alt="Aguja WDT de madera" />
+                </div>
+                <small>{{ language === 'es' ? 'Aguja Madera WDT' : 'Wood WDT Needle' }}</small>
+              </div>
+              <div class="gear-item gear-active">
+                <div class="gear-img-box">
+                  <img src="images/barista/aguja_latte.png" alt="Aguja de latte art profesional" />
+                </div>
+                <small>{{ language === 'es' ? 'Aguja Latte Art' : 'Latte Art Needle' }}</small>
+              </div>
             </div>
           </div>
 
@@ -1366,7 +1377,7 @@
 
       <div class="footer-brand">
         <div class="footer-logo-row">
-          <img src="images/Logo_Oficial.png" alt="Kfest - Café del Fundo Santa Teresita" class="footer-logo" />
+          <img [src]="isLightMode ? 'images/logo_marron.png' : 'images/Logo_Oficial.png'" alt="Kfest - Café del Fundo Santa Teresita" class="footer-logo" />
         </div>
         <p class="footer-desc">
           {{ language === 'es'
@@ -1385,14 +1396,17 @@
 
       <div class="footer-col">
         <h4>{{ language === 'es' ? 'NAVEGACIÓN & CATÁLOGO' : 'NAVIGATION & CATALOG' }}</h4>
-        <a href="#inicio">{{ language === 'es' ? 'Inicio' : 'Home' }}</a>
-        <a href="#coleccion">{{ language === 'es' ? 'Colección Reserve' : 'Reserve Collection' }}</a>
-        <a href="#quiz">{{ language === 'es' ? 'Test Café Ideal' : 'Ideal Coffee Quiz' }}</a>
-        <a href="#trazabilidad">{{ language === 'es' ? 'Pasaporte de Trazabilidad' : 'Traceability Passport' }}</a>
-        <a href="#calculadora">{{ language === 'es' ? 'Calculadora Barista' : 'Barista Brew Guide' }}</a>
-        <a href="#testimonios">{{ language === 'es' ? 'Reseñas & Catas' : 'Reviews & Tastings' }}</a>
-        <a href="#faq">{{ language === 'es' ? 'Preguntas Frecuentes' : 'FAQ' }}</a>
-        <a href="#contacto">{{ language === 'es' ? 'Contacto & Concierge' : 'Contact & Concierge' }}</a>
+        <a href="#inicio" (click)="scrollToSection('inicio', $event)">{{ language === 'es' ? 'Inicio' : 'Home' }}</a>
+        <a href="#herencia" (click)="scrollToSection('herencia', $event)">{{ language === 'es' ? 'Nuestra Historia' : 'Our Story' }}</a>
+        <a href="#equipo" (click)="scrollToSection('equipo', $event)">{{ language === 'es' ? 'Nuestro Equipo' : 'Our Team' }}</a>
+        <a href="#coleccion" (click)="scrollToSection('coleccion', $event)">{{ language === 'es' ? 'Colección Reserve' : 'Reserve Collection' }}</a>
+        <a href="#quiz" (click)="scrollToSection('quiz', $event)">{{ language === 'es' ? 'Tu Café Ideal' : 'Ideal Match Quiz' }}</a>
+        <a href="#cata" (click)="scrollToSection('cata', $event)">{{ language === 'es' ? 'Perfiles de Cata' : 'Cupping Profiles' }}</a>
+        <a href="#calculadora" (click)="scrollToSection('calculadora', $event)">BARISTA LAB</a>
+        <a href="#catering" (click)="scrollToSection('catering', $event)">KFESTCAR</a>
+        <a href="#testimonios" (click)="scrollToSection('testimonios', $event)">{{ language === 'es' ? 'Reseñas & Testimonios' : 'Customer Reviews' }}</a>
+        <a href="#faq" (click)="scrollToSection('faq', $event)">{{ language === 'es' ? 'Preguntas Frecuentes' : 'FAQ' }}</a>
+        <a href="#contacto" (click)="scrollToSection('contacto', $event)">{{ language === 'es' ? 'Contacto & Despachos' : 'Contact & Orders' }}</a>
       </div>
 
       <div class="footer-col">
@@ -1442,7 +1456,7 @@
     </div>
 
     <div class="container footer-bar">
-      <span>© 2025 Kfest · {{ language === 'es' ? 'Fundo Santa Teresita, Chanchamayo. Edición Reserve.' : 'Santa
+      <span>© 2026 Kfest · {{ language === 'es' ? 'Fundo Santa Teresita, Chanchamayo. Edición Reserve.' : 'Santa
         Teresita Farm, Chanchamayo. Reserve Edition.' }}</span>
       <div class="legal-links">
         <a href="#">{{ language === 'es' ? 'Términos & Condiciones' : 'Terms & Conditions' }}</a>

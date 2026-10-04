@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 
 export type Language = 'es' | 'en';
-export type GrindType = 'grano' | 'v60' | 'prensa' | 'gota';
+export type GrindType = 'grano' | 'v60' | 'prensa' | 'gota' | 'accesorios';
 export type CataFormat = 'grano' | 'molido';
 export type EventType = 'bodas' | 'corporativos' | 'ferias' | 'aniversarios' | 'lanzamientos' | 'privados';
 export type BrewMethod = 'v60' | 'prensa' | 'moka' | 'espresso' | 'chemex' | 'gota';
@@ -12,6 +12,10 @@ export type WhatsAppAction =
   | 'prod_250g'
   | 'prod_500g'
   | 'prod_1kg'
+  | 'prod_40g'
+  | 'prod_bidon'
+  | 'prod_bandeja'
+  | 'prod_edicion'
   | 'delivery'
   | 'cata_fe'
   | 'cata_paciencia'
@@ -243,13 +247,15 @@ const GRIND_NAMES: Record<Language, Record<GrindType, string>> = {
     grano: 'En Grano (Whole Bean)',
     v60: 'V60 / Filtrado',
     prensa: 'Prensa Francesa (French Press)',
-    gota: 'Gota a Gota (Drip)'
+    gota: 'Gota a Gota (Drip)',
+    accesorios: 'Accesorios & Edición'
   },
   en: {
     grano: 'Whole Bean',
     v60: 'V60 / Drip Filter',
     prensa: 'French Press',
-    gota: 'Slow Drip'
+    gota: 'Slow Drip',
+    accesorios: 'Accessories & Edition'
   }
 };
 
@@ -281,6 +287,114 @@ const EVENT_NAMES: Record<Language, Record<EventType, string>> = {
 export class App {
   language: Language = 'es';
   mobileMenuOpen = false;
+  activeSection: string = 'inicio';
+  isScrolled: boolean = false;
+  isLightMode: boolean = false;
+
+  constructor() {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('kfest_theme');
+        if (saved === 'light') {
+          this.isLightMode = true;
+          if (typeof document !== 'undefined') {
+            document.body.classList.add('light-theme');
+          }
+        }
+      } catch (e) {}
+    }
+  }
+
+  toggleTheme(): void {
+    this.isLightMode = !this.isLightMode;
+    if (typeof document !== 'undefined') {
+      if (this.isLightMode) {
+        document.body.classList.add('light-theme');
+      } else {
+        document.body.classList.remove('light-theme');
+      }
+      try {
+        localStorage.setItem('kfest_theme', this.isLightMode ? 'light' : 'dark');
+      } catch (e) {}
+    }
+  }
+
+  private readonly sectionIds: string[] = [
+    'inicio',
+    'herencia',
+    'proceso',
+    'equipo',
+    'coleccion',
+    'quiz',
+    'cata',
+    'calculadora',
+    'catering',
+    'testimonios',
+    'faq',
+    'contacto'
+  ];
+
+  @HostListener('window:scroll', [])
+  onWindowScroll(): void {
+    if (typeof window === 'undefined') return;
+    const scrollPos = window.scrollY || document.documentElement.scrollTop || 0;
+    this.isScrolled = scrollPos > 30;
+
+    const navOffset = 120;
+    for (let i = this.sectionIds.length - 1; i >= 0; i--) {
+      const id = this.sectionIds[i];
+      const el = document.getElementById(id);
+      if (el) {
+        const top = el.offsetTop - navOffset;
+        if (scrollPos >= top) {
+          this.activeSection = id;
+          break;
+        }
+      }
+    }
+  }
+
+  scrollToSection(sectionId: string, event?: Event): void {
+    if (event) {
+      event.preventDefault();
+    }
+    this.activeSection = sectionId;
+    this.closeMobileMenu();
+    if (typeof document !== 'undefined' && typeof window !== 'undefined') {
+      const el = document.getElementById(sectionId);
+      if (el) {
+        const navHeight = 72;
+        const targetY = el.getBoundingClientRect().top + window.scrollY - navHeight;
+        window.scrollTo({
+          top: targetY > 0 ? targetY : 0,
+          behavior: 'smooth'
+        });
+      }
+    }
+  }
+
+  // ─── ÁLBUM HISTÓRICO DEL VIAJE ─── carousel state
+  albumIndex = 0;
+  private readonly albumTotal = 18;
+
+  albumScroll(dir: number): void {
+    this.albumIndex = (this.albumIndex + dir + this.albumTotal) % this.albumTotal;
+    this.syncAlbumSlider();
+  }
+
+  albumGoTo(index: number): void {
+    this.albumIndex = index;
+    this.syncAlbumSlider();
+  }
+
+  private syncAlbumSlider(): void {
+    if (typeof document === 'undefined') return;
+    const slider = document.querySelector('.album-slider') as HTMLElement;
+    if (slider) {
+      const slideWidth = slider.offsetWidth;
+      slider.scrollTo({ left: slideWidth * this.albumIndex, behavior: 'smooth' });
+    }
+  }
 
   // Selected store options
   selectedGrind: GrindType = 'grano';
@@ -309,6 +423,26 @@ export class App {
   activeTestimonialIndex: number = 0;
   testimonialsList = TESTIMONIALS;
 
+  readonly processSteps = [
+    { num: '01', img: 'images/process/p01_cosecha.jpg', alt: 'Cosecha selectiva de cerezas maduras', es: 'COSECHA', en: 'HARVEST' },
+    { num: '02', img: 'images/process/p02_cosechando.jpg', alt: 'Cosechando en las laderas de altura', es: 'RECOLECCIÓN', en: 'PICKING' },
+    { num: '03', img: 'images/process/p03_seleccion_a.jpg', alt: 'Selección manual de cerezas', es: 'SELECCIÓN I', en: 'SELECTION I' },
+    { num: '04', img: 'images/process/p04_seleccion_b.jpg', alt: 'Segunda selección artesanal', es: 'SELECCIÓN II', en: 'SELECTION II' },
+    { num: '05', img: 'images/process/p05_seleccion_c.jpg', alt: 'Selección final de cerezas carmesí', es: 'SELECCIÓN III', en: 'SELECTION III' },
+    { num: '06', img: 'images/process/p06_despulpar.jpg', alt: 'Despulpado artesanal de las cerezas', es: 'DESPULPADO', en: 'PULPING' },
+    { num: '07', img: 'images/process/p07_lavado.jpg', alt: 'Lavado del café despulpado', es: 'LAVADO', en: 'WASHING' },
+    { num: '08', img: 'images/process/p08_secado.jpg', alt: 'Secado solar en camas africanas', es: 'SECADO SOLAR', en: 'SUN DRYING' },
+    { num: '09', img: 'images/process/p09_subiendo_a.jpg', alt: 'Subiendo el café por las laderas', es: 'TRASLADO', en: 'TRANSPORT' },
+    { num: '10', img: 'images/process/p10_subiendo_1km.jpg', alt: 'Caminata de 1 km con la cosecha', es: '1 KM CAMINATA', en: '1 KM WALK' },
+    { num: '11', img: 'images/process/p11_pilado.jpg', alt: 'Pilado artesanal del café pergamino', es: 'PILADO', en: 'MILLING' },
+    { num: '12', img: 'images/process/p12_cafe_verde.jpg', alt: 'Café verde listo para el tueste', es: 'CAFÉ VERDE', en: 'GREEN COFFEE' },
+    { num: '13', img: 'images/process/p13_tostando.jpg', alt: 'Tueste artesanal en pequeños lotes', es: 'TUESTE', en: 'ROASTING' },
+    { num: '14', img: 'images/process/p14_seleccion_tostado.jpg', alt: 'Selección del tostado óptimo', es: 'SELEC. TOSTADO', en: 'ROAST SELECT.' },
+    { num: '15', img: 'images/process/p15_molido.jpg', alt: 'Molienda calibrada por método', es: 'MOLIENDA', en: 'GRINDING' },
+    { num: '16', img: 'images/process/p16_envasado.jpg', alt: 'Envasado con válvula desgasificadora', es: 'ENVASADO', en: 'PACKAGING' },
+    { num: '17', img: 'images/process/p17_presentacion.jpg', alt: 'Presentación final — de la chacra a tu taza', es: 'TU TAZA', en: 'YOUR CUP' }
+  ];
+
   // Contact numbers
   readonly phonePrimary = '51918422677';
   readonly phoneSecondary = '51987483134';
@@ -327,6 +461,220 @@ export class App {
 
   setGrind(grind: GrindType): void {
     this.selectedGrind = grind;
+  }
+
+  get collectionProducts() {
+    const isEs = this.language === 'es';
+    switch (this.selectedGrind) {
+      case 'v60':
+        return [
+          {
+            weight: isEs ? '250 GRAMOS' : '250 GRAMS',
+            tag: isEs ? 'MOLIENDA MEDIA-FINA V60' : 'MEDIUM-FINE V60 GRIND',
+            name: isEs ? '1 Paquete CAFÉ DE ESPECIALIDAD (V60)' : '1 Bag SPECIALTY COFFEE (V60)',
+            desc: isEs
+              ? 'Calibrado con molienda media-fina para extracción cónica en V60. Resalta aromas a panela de oro y acidez cítrica brillante.'
+              : 'Calibrated medium-fine for V60 cone extraction. Highlights sweet panela and bright citrus acidity.',
+            price: 'S/ 30.00',
+            img: 'images/products/singleproducto.png',
+            action: 'prod_250g' as WhatsAppAction,
+            isFeatured: false
+          },
+          {
+            weight: isEs ? '500 GRAMOS TOTAL' : '500 GRAMS TOTAL',
+            tag: isEs ? 'DÚO CALIBRADO FILTRADOS' : 'POUR OVER CALIBRATED DUO',
+            name: isEs ? '2 Paquetes CAFÉ DE ESPECIALIDAD (V60)' : '2 Bags SPECIALTY COFFEE (V60)',
+            desc: isEs
+              ? 'Dos empaques de 250g sellados con nitrógeno y válvula. Abres uno y el otro queda hermético para máxima frescura en cada vertido.'
+              : 'Two 250g hermetic bags with degas valves. Freshness locked in for every single pour over.',
+            price: 'S/ 56.00',
+            img: 'images/products/twoproducto.png',
+            action: 'prod_500g' as WhatsAppAction,
+            isFeatured: true
+          },
+          {
+            weight: isEs ? '1 KILOGRAMO TOTAL' : '1 KILOGRAM TOTAL',
+            tag: isEs ? 'COFRE FILTRADOS · AHORRA S/ 20' : 'DRIP PACK · SAVE S/ 20',
+            name: isEs ? '4 Paquetes CAFÉ DE ESPECIALIDAD (V60)' : '4 Bags SPECIALTY COFFEE (V60)',
+            desc: isEs
+              ? 'Cuatro bolsas de 250g con molienda calibrada para cafetera V60 o Chemex. El suministro mensual perfecto al mejor precio.'
+              : 'Four 250g bags custom ground for V60 or Chemex. Your ultimate monthly brew supply at the best value.',
+            price: 'S/ 100.00',
+            img: 'images/products/prod_22.png',
+            action: 'prod_1kg' as WhatsAppAction,
+            isFeatured: false
+          }
+        ];
+      case 'prensa':
+        return [
+          {
+            weight: isEs ? '250 GRAMOS' : '250 GRAMS',
+            tag: isEs ? 'MOLIENDA GRUESA INMERSIÓN' : 'COARSE IMMERSION GRIND',
+            name: isEs ? '1 Paquete CAFÉ DE ESPECIALIDAD (Prensa)' : '1 Bag SPECIALTY COFFEE (Press)',
+            desc: isEs
+              ? 'Molienda gruesa tipo sal marina, diseñada para no tapar el filtro metálico y lograr una taza sedosa y achocolatada.'
+              : 'Coarse sea-salt grind designed for metal mesh filtration, delivering a velvety, chocolate cup.',
+            price: 'S/ 30.00',
+            img: 'images/products/blend_bolsa.png',
+            action: 'prod_250g' as WhatsAppAction,
+            isFeatured: false
+          },
+          {
+            weight: isEs ? '500 GRAMOS TOTAL' : '500 GRAMS TOTAL',
+            tag: isEs ? 'DÚO PRENSA FRANCESA' : 'FRENCH PRESS DUO',
+            name: isEs ? '2 Paquetes CAFÉ DE ESPECIALIDAD (Prensa)' : '2 Bags SPECIALTY COFFEE (Press)',
+            desc: isEs
+              ? 'Dúo de 250g con molienda gruesa para prensa francesa o cold brew. Extracción con cuerpo redondo y notas a cacao al 70%.'
+              : 'Two 250g packs coarse-ground for French press or cold brew. Full-bodied extraction with 70% dark cacao notes.',
+            price: 'S/ 56.00',
+            img: 'images/products/twoproducto.png',
+            action: 'prod_500g' as WhatsAppAction,
+            isFeatured: true
+          },
+          {
+            weight: isEs ? '1 KILOGRAMO TOTAL' : '1 KILOGRAM TOTAL',
+            tag: isEs ? 'COFRE PRENSA · AHORRA S/ 20' : 'PRESS PACK · SAVE S/ 20',
+            name: isEs ? '4 Paquetes CAFÉ DE ESPECIALIDAD (Prensa)' : '4 Bags SPECIALTY COFFEE (Press)',
+            desc: isEs
+              ? 'Pack familiar de 1kg en 4 bolsas independientes con molienda gruesa. Rendimiento supremo para desayunos en familia.'
+              : 'Family 1kg pack across 4 independent coarse-ground bags. Perfect for family gatherings.',
+            price: 'S/ 100.00',
+            img: 'images/products/prod_23.png',
+            action: 'prod_1kg' as WhatsAppAction,
+            isFeatured: false
+          }
+        ];
+      case 'gota':
+        return [
+          {
+            weight: isEs ? 'CAJA 5 DRIP' : '5-PACK DRIP',
+            tag: isEs ? 'DRIP COFFEE INDIVIDUAL' : 'SINGLE-SERVE DRIP BAGS',
+            name: isEs ? 'Caja 5 Drip Coffee INDIVIDUALES' : '5 Single-Serve DRIP COFFEE BOX',
+            desc: isEs
+              ? 'Filtros individuales de café gota a gota listos para infusionar directamente en tu taza con solo agregar agua caliente. Máxima practicidad.'
+              : 'Portable single-serve pour-over filters ready to brew directly into your mug with hot water.',
+            price: 'S/ 25.00',
+            img: 'images/products/5_drip_coffee.png',
+            action: 'prod_250g' as WhatsAppAction,
+            isFeatured: false
+          },
+          {
+            weight: isEs ? '500 GRAMOS TOTAL' : '500 GRAMS TOTAL',
+            tag: isEs ? 'DÚO GOTA A GOTA SELVA' : 'RAINFOREST DRIP DUO',
+            name: isEs ? '2 Paquetes CAFÉ DE ESPECIALIDAD (Drip)' : '2 Bags SPECIALTY COFFEE (Drip)',
+            desc: isEs
+              ? 'Molienda media-gruesa para la tradicional cafetera gota a gota de Selva Central. Produce una esencia densa, dulce y aromática.'
+              : 'Calibrated grind for traditional slow drip percolators. Yields a dense, sweet, and aromatic coffee essence.',
+            price: 'S/ 56.00',
+            img: 'images/products/60gr_blend.png',
+            action: 'prod_500g' as WhatsAppAction,
+            isFeatured: true
+          },
+          {
+            weight: isEs ? '1 KILOGRAMO TOTAL' : '1 KILOGRAM TOTAL',
+            tag: isEs ? 'COFRE GOTA A GOTA · AHORRA S/ 20' : 'DRIP CHEST · SAVE S/ 20',
+            name: isEs ? '4 Paquetes CAFÉ DE ESPECIALIDAD (Drip)' : '4 Bags SPECIALTY COFFEE (Drip)',
+            desc: isEs
+              ? 'Cofre degustación de 1kg con molienda artesanal para gota a gota tradicional. Rendimiento incomparable para amantes de la esencia pura.'
+              : '1kg tasting chest with artisan grind for slow drip. Unmatched yield for pure essence lovers.',
+            price: 'S/ 100.00',
+            img: 'images/products/4_paquetes_virtudes.png',
+            action: 'prod_1kg' as WhatsAppAction,
+            isFeatured: false
+          }
+        ];
+      case 'accesorios':
+        return [
+          {
+            weight: isEs ? '40 GRAMOS' : '40 GRAMS',
+            tag: isEs ? 'DEGUSTACIÓN SINGLE' : 'SINGLE TASTING POUCH',
+            name: isEs ? 'Sachet Blend Degustación 40g' : '40g Blend Tasting Sachet',
+            desc: isEs
+              ? 'Dosis calibrada de microlote de altura (81-84 Pts SCA). La medida exacta para probar la esencia pura de nuestro tueste artesanal.'
+              : 'Calibrated single dose of specialty microlot (81-84 SCA). The exact measure to sample our fresh artisan roast.',
+            price: 'S/ 10.00',
+            img: 'images/products/40gr_blend.png',
+            action: 'prod_40g' as WhatsAppAction,
+            isFeatured: false
+          },
+          {
+            weight: isEs ? 'BIDÓN TÉRMICO' : 'THERMAL CANISTER',
+            tag: isEs ? 'CONSERVACIÓN & TRANSPORTE' : 'STORAGE & TRANSPORT',
+            name: isEs ? 'Bidón Kfest de Conservación Hermética' : 'Kfest Airtight Coffee Canister',
+            desc: isEs
+              ? 'Recipiente hermético diseñado para proteger los granos de café de la luz, humedad y oxígeno, manteniendo el aroma del Fundo intacto.'
+              : 'Airtight container crafted to shield beans from light, moisture, and oxidation, preserving farm aroma.',
+            price: 'S/ 45.00',
+            img: 'images/products/bidon.png',
+            action: 'prod_bidon' as WhatsAppAction,
+            isFeatured: true
+          },
+          {
+            weight: isEs ? 'BANDEJA SCA' : 'SCA CUPPING TRAY',
+            tag: isEs ? 'EQUIPO PROFESIONAL' : 'PROFESSIONAL GEAR',
+            name: isEs ? 'Bandeja Oficial de Cata Kfest' : 'Kfest Official Cupping Tray',
+            desc: isEs
+              ? 'Bandeja ergonómica de cata profesional para inspección de café verde, pergamino y grano tostado según estándares internacionales.'
+              : 'Ergonomic professional cupping tray for green and roasted bean inspection following SCA protocols.',
+            price: 'S/ 28.00',
+            img: 'images/products/bandeja_cata.png',
+            action: 'prod_bandeja' as WhatsAppAction,
+            isFeatured: false
+          },
+          {
+            weight: isEs ? '1 KG (4 x 250g)' : '1 KG (4 x 250g)',
+            tag: isEs ? 'EDICIÓN ANIVERSARIO' : 'ANNIVERSARY EDITION',
+            name: isEs ? 'Cofre Edición Fundo Santa Teresita' : 'Santa Teresita Estate Gift Chest',
+            desc: isEs
+              ? 'Edición de lujo con 4 paquetes de 250g seleccionados de los mejores lotes de altura, empacados con válvula y presentación de regalo.'
+              : 'Deluxe estate gift pack featuring four 250g bags from our best high-elevation microlots with aroma valves.',
+            price: 'S/ 110.00',
+            img: 'images/products/prod_21.png',
+            action: 'prod_edicion' as WhatsAppAction,
+            isFeatured: false
+          }
+        ];
+      case 'grano':
+      default:
+        return [
+          {
+            weight: isEs ? '250 GRAMOS' : '250 GRAMS',
+            tag: isEs ? 'RESERVA PERSONAL' : 'PERSONAL RESERVE',
+            name: isEs ? '1 Paquete CAFÉ DE ESPECIALIDAD' : '1 Bag SPECIALTY COFFEE',
+            desc: isEs
+              ? 'La medida perfecta para moler en casa justo antes de preparar. Granos enteros con aceites aromáticos intactos y tueste reciente.'
+              : 'The perfect size for fresh home grinding. Whole beans with intact aromatic oils and recent roast date.',
+            price: 'S/ 30.00',
+            img: 'images/products/blend_bolsa.png',
+            action: 'prod_250g' as WhatsAppAction,
+            isFeatured: false
+          },
+          {
+            weight: isEs ? '500 GRAMOS TOTAL' : '500 GRAMS TOTAL',
+            tag: isEs ? 'DÚO ESENCIAL RESERVA' : 'ESSENTIAL RESERVE DUO',
+            name: isEs ? '2 Paquetes CAFÉ DE ESPECIALIDAD' : '2 Bags SPECIALTY COFFEE',
+            desc: isEs
+              ? 'Nuestra presentación insignia en grano entero. Dos bolsas de 250g con válvula desgasificadora: una abierta y la otra perfectamente sellada.'
+              : 'Our flagship whole bean presentation. Two 250g bags with nitrogen aroma valves for supreme shelf freshness.',
+            price: 'S/ 56.00',
+            img: 'images/products/twoproducto.png',
+            action: 'prod_500g' as WhatsAppAction,
+            isFeatured: true
+          },
+          {
+            weight: isEs ? '1 KILOGRAMO TOTAL' : '1 KILOGRAM TOTAL',
+            tag: isEs ? 'COFRE DEGUSTACIÓN · AHORRA S/ 20' : 'TASTING CHEST · SAVE S/ 20',
+            name: isEs ? '4 Paquetes CAFÉ DE ESPECIALIDAD' : '4 Bags SPECIALTY COFFEE',
+            desc: isEs
+              ? 'Pack maestro de 1 kg en grano distribuido en 4 bolsas individuales. Máxima frescura por semanas para verdaderos amantes del café.'
+              : 'Master 1kg whole bean pack across 4 individual bags. Weeks of peak freshness for true coffee aficionados.',
+            price: 'S/ 100.00',
+            img: 'images/products/prod_24.png',
+            action: 'prod_1kg' as WhatsAppAction,
+            isFeatured: false
+          }
+        ];
+    }
   }
 
   setCataFormat(format: CataFormat): void {
@@ -534,6 +882,10 @@ export class App {
         prod_250g: `Hola Kfest, deseo pedir 1 Paquete de Café de Especialidad Reserva Personal 250g (S/ 30.00). Molienda elegida: ${grind}.`,
         prod_500g: `Hola Kfest, deseo pedir 2 Paquetes Dúo Esencial Reserva 500g (S/ 56.00). Molienda elegida: ${grind}.`,
         prod_1kg: `Hola Kfest, deseo pedir el Cofre Degustación de 4 Paquetes 1kg (S/ 100.00). Molienda elegida: ${grind}.`,
+        prod_40g: 'Hola Kfest, deseo pedir el Sachet Blend Degustación 40g (S/ 10.00).',
+        prod_bidon: 'Hola Kfest, deseo adquirir el Bidón Kfest de Conservación Hermética (S/ 45.00).',
+        prod_bandeja: 'Hola Kfest, deseo comprar la Bandeja Oficial de Cata Kfest (S/ 28.00).',
+        prod_edicion: 'Hola Kfest, deseo encargar el Cofre Edición Fundo Santa Teresita 1kg (S/ 110.00).',
         delivery: 'Hola Kfest, quisiera coordinar la entrega de mi pedido de tueste reciente para los días de despacho (Lunes, Miércoles y Viernes).',
         cata_fe: `Hola Kfest, me interesa pedir el Perfil Fe (Catuai + Pache, 1,600 msnm). Presentación: ${cataFormatText}.`,
         cata_paciencia: `Hola Kfest, me interesa pedir el Perfil Paciencia (Catimor, 1,800 msnm). Presentación: ${cataFormatText}.`,
@@ -548,6 +900,10 @@ export class App {
         prod_250g: `Hello Kfest, I would like to order 1 Personal Reserve Specialty Coffee Bag 250g (S/ 30.00). Selected grind: ${grind}.`,
         prod_500g: `Hello Kfest, I would like to order 2 Bags Essential Reserve Duo 500g (S/ 56.00). Selected grind: ${grind}.`,
         prod_1kg: `Hello Kfest, I would like to order the 4-Bag Master Tasting Pack 1kg (S/ 100.00). Selected grind: ${grind}.`,
+        prod_40g: 'Hello Kfest, I would like to order the 40g Blend Tasting Sachet (S/ 10.00).',
+        prod_bidon: 'Hello Kfest, I would like to order the Kfest Airtight Coffee Canister (S/ 45.00).',
+        prod_bandeja: 'Hello Kfest, I would like to purchase the Official Cupping Tray (S/ 28.00).',
+        prod_edicion: 'Hello Kfest, I would like to order the Santa Teresita Estate Gift Chest 1kg (S/ 110.00).',
         delivery: 'Hello Kfest, I would like to coordinate delivery for my recent roast order on dispatch days (Mon, Wed, Fri).',
         cata_fe: `Hello Kfest, I am interested in ordering the Faith Profile (Catuai + Pache, 1,600 masl). Format: ${cataFormatText}.`,
         cata_paciencia: `Hello Kfest, I am interested in ordering the Patience Profile (Catimor, 1,800 masl). Format: ${cataFormatText}.`,
