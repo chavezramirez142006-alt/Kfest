@@ -572,190 +572,323 @@
           </h2>
           <p class="sec-sub">
             {{ language === 'es'
-            ? 'Responde 3 preguntas breves sobre tus hábitos y gustos. Nuestro sommelier digital seleccionará el microlote y la molienda exacta para ti.'
-            : 'Answer 3 quick questions about your taste and brewing routine. Our digital sommelier will match your perfect roast and grind.' }}
+            ? 'Explora nuestra carta oficial Kfest: selecciona tu momento, tus sabores preferidos y encuentra tu café ideal con pedido automático por WhatsApp.'
+            : 'Explore our official Kfest menu: choose your coffee moment, flavor profile, and get your ideal order automatically via WhatsApp.' }}
           </p>
 
           <!-- Step Indicators -->
           @if (quizStep <= 3) {
             <div class="quiz-stepper">
-              <div class="step-pill" [class.step-active]="quizStep === 1" [class.step-done]="quizStep > 1">
-                <span>1</span> {{ language === 'es' ? 'Tu Método' : 'Your Brewer' }}
-              </div>
+              <button type="button" class="step-pill" [class.step-active]="quizStep === 1" [class.step-done]="quizStep > 1" (click)="setQuizStep(1)">
+                <span>1</span> {{ language === 'es' ? 'Tipo de Café' : 'Coffee Type' }}
+              </button>
               <div class="step-sep">──</div>
-              <div class="step-pill" [class.step-active]="quizStep === 2" [class.step-done]="quizStep > 2">
-                <span>2</span> {{ language === 'es' ? 'Tus Aromas' : 'Flavor Notes' }}
-              </div>
+              <button type="button" class="step-pill" [class.step-active]="quizStep === 2" [class.step-done]="quizStep > 2" (click)="setQuizStep(2)">
+                <span>2</span> {{ language === 'es' ? 'Sabor & Café' : 'Flavor & Match' }}
+              </button>
               <div class="step-sep">──</div>
-              <div class="step-pill" [class.step-active]="quizStep === 3">
-                <span>3</span> {{ language === 'es' ? 'Tu Consumo' : 'Consumption' }}
-              </div>
+              <button type="button" class="step-pill" [class.step-active]="quizStep === 3" (click)="setQuizStep(3)">
+                <span>3</span> {{ language === 'es' ? 'Personalizar' : 'Customize' }}
+              </button>
             </div>
           }
         </div>
 
         <div class="quiz-card">
 
-          <!-- STEP 1: Método de preparación -->
+          <!-- STEP 1: Tipo de café / Experiencia del Menú -->
           @if (quizStep === 1) {
             <div class="quiz-step-view animate-fade">
-              <h3 class="quiz-question">{{ language === 'es' ? '1. ¿En qué cafetera sueles preparar tu café?' : '1. Which brewing device do you use?' }}</h3>
-              <p class="quiz-hint">{{ language === 'es' ? 'Esto nos permite calibrar la molienda exacta para que no quede ni amargo ni aguado.' : 'This allows us to calibrate the exact grind so it extracts sweet and balanced.' }}</p>
+              <h3 class="quiz-question">
+                {{ language === 'es' ? '1. ¿Qué tipo de café o experiencia te apetece hoy?' : '1. What kind of coffee or experience are you craving today?' }}
+              </h3>
+              <p class="quiz-hint">
+                {{ language === 'es'
+                  ? 'Elige una sección de nuestra carta oficial Kfest: calientes tradicionales, fríos, frappés, filtrados de especialidad, coctelería o café en grano para casa.'
+                  : 'Select a category from our official Kfest menu: warm classics, iced drinks, frappes, pour-over, bar cocktails, or coffee bags.' }}
+              </p>
 
-              <div class="quiz-options-grid">
-                <button class="quiz-opt" (click)="setQuizAnswer(1, 'v60')">
-                  <span class="opt-icon"><i class="fa-solid fa-filter"></i></span>
-                  <div class="opt-body">
-                    <strong>{{ language === 'es' ? 'Filtrado / Gota a Gota' : 'Pour Over / Drip' }}</strong>
-                    <small>{{ language === 'es' ? 'V60, Cafetera eléctrica de filtro, Chemex' : 'V60, Chemex, standard drip maker' }}</small>
-                  </div>
-                </button>
-
-                <button class="quiz-opt" (click)="setQuizAnswer(1, 'prensa')">
-                  <span class="opt-icon"><i class="fa-solid fa-mug-hot"></i></span>
-                  <div class="opt-body">
-                    <strong>{{ language === 'es' ? 'Inmersión / Prensa Francesa' : 'French Press / Immersion' }}</strong>
-                    <small>{{ language === 'es' ? 'Prensa francesa, émbolo o cafetera de infusión' : 'French press, plunger or cold immersion' }}</small>
-                  </div>
-                </button>
-
-                <button class="quiz-opt" (click)="setQuizAnswer(1, 'moka')">
-                  <span class="opt-icon"><i class="fa-solid fa-fire-burner"></i></span>
-                  <div class="opt-body">
-                    <strong>{{ language === 'es' ? 'Moka Italiana o Espresso' : 'Moka Pot or Espresso Machine' }}</strong>
-                    <small>{{ language === 'es' ? 'Cafetera italiana de hornilla o máquina espresso' : 'Stovetop moka pot or home espresso machine' }}</small>
-                  </div>
-                </button>
-
-                <button class="quiz-opt" (click)="setQuizAnswer(1, 'grano')">
-                  <span class="opt-icon"><i class="fa-solid fa-seedling"></i></span>
-                  <div class="opt-body">
-                    <strong>{{ language === 'es' ? 'Tengo Molino Propio (En Grano)' : 'I Have a Grinder (Whole Bean)' }}</strong>
-                    <small>{{ language === 'es' ? 'Prefiero molerlo en casa justo antes de preparar' : 'I grind fresh at home right before brewing' }}</small>
-                  </div>
-                </button>
+              <div class="quiz-categories-grid">
+                @for (cat of quizCategories; track cat.id) {
+                  <button type="button" class="quiz-cat-card" (click)="setQuizCategory(cat.id)">
+                    <div class="cat-card-top">
+                      <span class="cat-icon"><i [class]="cat.icon"></i></span>
+                      <span class="cat-tag">{{ cat.tag[language] }}</span>
+                    </div>
+                    <div class="cat-card-body">
+                      <strong>{{ cat.name[language] }}</strong>
+                      <p>{{ cat.desc[language] }}</p>
+                    </div>
+                    <div class="cat-card-footer">
+                      <span>{{ language === 'es' ? 'Explorar opciones' : 'Explore options' }} <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                  </button>
+                }
               </div>
             </div>
           }
 
-          <!-- STEP 2: Perfil aromático -->
+          <!-- STEP 2: Perfil de sabor y Selección de Café -->
           @if (quizStep === 2) {
             <div class="quiz-step-view animate-fade">
-              <h3 class="quiz-question">{{ language === 'es' ? '2. ¿Qué sensaciones aromáticas prefieres en taza?' : '2. What flavor profile do you crave most?' }}</h3>
-              <p class="quiz-hint">{{ language === 'es' ? 'Todos nuestros cafés son 100% arábica de altura sin aditivos ni azúcares.' : 'All our coffees are 100% high-altitude shade arabica with zero additives.' }}</p>
-
-              <div class="quiz-options-grid">
-                <button class="quiz-opt" (click)="setQuizAnswer(2, 'dulce')">
-                  <span class="opt-icon"><i class="fa-solid fa-jar-wheat"></i></span>
-                  <div class="opt-body">
-                    <strong>{{ language === 'es' ? 'Dulce & Meloso' : 'Sweet & Honeyed' }}</strong>
-                    <small>{{ language === 'es' ? 'Notas a panela de oro, miel silvestre y toque cítrico suave' : 'Golden panela, wildflower honey, and soft citrus' }}</small>
-                  </div>
-                </button>
-
-                <button class="quiz-opt" (click)="setQuizAnswer(2, 'intenso')">
-                  <span class="opt-icon"><i class="fa-solid fa-cubes-stacked"></i></span>
-                  <div class="opt-body">
-                    <strong>{{ language === 'es' ? 'Chocolatoso & Profundo' : 'Dark Chocolate & Deep' }}</strong>
-                    <small>{{ language === 'es' ? 'Cacao fino al 70%, nueces tostadas y caramelo oscuro' : '70% dark cacao, toasted hazelnuts, and deep caramel' }}</small>
-                  </div>
-                </button>
-
-                <button class="quiz-opt" (click)="setQuizAnswer(2, 'afrutado')">
-                  <span class="opt-icon"><i class="fa-solid fa-wine-glass"></i></span>
-                  <div class="opt-body">
-                    <strong>{{ language === 'es' ? 'Frutos Rojos & Floral' : 'Red Berries & Floral' }}</strong>
-                    <small>{{ language === 'es' ? 'Cereza madura, ciruela dulce y acidez brillante balanceada' : 'Ripe cherry, plum, and bright elegant acidity' }}</small>
-                  </div>
-                </button>
+              <div class="step-head-flex">
+                <div>
+                  <h3 class="quiz-question">
+                    {{ language === 'es' ? '2. Elige tu perfil de sabor y tu café preferido' : '2. Choose your flavor profile & preferred coffee' }}
+                  </h3>
+                  <p class="quiz-hint">
+                    {{ language === 'es'
+                      ? 'Filtra por notas o intensidad. Haz clic en el café de la carta que más se te antoje para seleccionarlo.'
+                      : 'Filter by taste or intensity. Tap on any coffee card to select your preference.' }}
+                  </p>
+                </div>
               </div>
 
-              <div class="quiz-nav-row">
-                <button class="btn-quiz-back" (click)="quizStep = 1">
-                  <i class="fa-solid fa-arrow-left"></i> {{ language === 'es' ? 'Atrás' : 'Back' }}
+              <!-- Filter pills -->
+              <div class="quiz-filter-row">
+                <span class="filter-label"><i class="fa-solid fa-sliders"></i> {{ language === 'es' ? 'Filtrar notas:' : 'Filter notes:' }}</span>
+                @for (filter of getActiveFlavorFilters(); track filter.id) {
+                  <button
+                    type="button"
+                    class="quiz-filter-chip"
+                    [class.active]="quizFlavor === filter.id"
+                    (click)="setQuizFlavor(filter.id)">
+                    {{ filter.label[language] }}
+                  </button>
+                }
+              </div>
+
+              <!-- Coffee Items Grid from the Menu -->
+              <div class="quiz-coffees-grid">
+                @for (item of getFilteredCoffees(); track item.id) {
+                  <article
+                    class="quiz-coffee-card"
+                    [class.card-selected]="selectedCoffeeId === item.id"
+                    (click)="selectQuizCoffee(item.id)">
+                    <div class="coffee-card-header">
+                      <span class="coffee-card-icon"><i [class]="item.icon"></i></span>
+                      <div class="coffee-card-pricing">
+                        <span class="coffee-price">{{ item.price }}</span>
+                        @if (item.badge) {
+                          <span class="coffee-badge">{{ item.badge[language] }}</span>
+                        }
+                      </div>
+                    </div>
+
+                    <div class="coffee-card-info">
+                      <h4 class="coffee-card-title">{{ item.name[language] }}</h4>
+                      <p class="coffee-card-desc">{{ item.desc[language] }}</p>
+
+                      <div class="coffee-card-notes">
+                        <small>{{ language === 'es' ? 'NOTAS SENSORIALES:' : 'TASTING NOTES:' }}</small>
+                        <span>{{ item.notes[language] }}</span>
+                      </div>
+                    </div>
+
+                    <div class="coffee-card-action">
+                      @if (selectedCoffeeId === item.id) {
+                        <span class="btn-select-indicator active">
+                          <i class="fa-solid fa-circle-check"></i> {{ language === 'es' ? 'Café Seleccionado' : 'Selected Coffee' }}
+                        </span>
+                      } @else {
+                        <span class="btn-select-indicator">
+                          <i class="fa-regular fa-circle"></i> {{ language === 'es' ? 'Elegir este café' : 'Choose this coffee' }}
+                        </span>
+                      }
+                    </div>
+                  </article>
+                }
+              </div>
+
+              <div class="quiz-nav-row quiz-nav-between">
+                <button type="button" class="btn-quiz-back" (click)="quizStep = 1">
+                  <i class="fa-solid fa-arrow-left"></i> {{ language === 'es' ? 'Cambiar Categoría' : 'Change Category' }}
+                </button>
+                <button type="button" class="btn btn-gold btn-quiz-next" (click)="quizStep = 3">
+                  {{ language === 'es' ? 'Continuar con ' : 'Continue with ' }}
+                  <strong>{{ getSelectedCoffee().name[language] }}</strong>
+                  <i class="fa-solid fa-arrow-right"></i>
                 </button>
               </div>
             </div>
           }
 
-          <!-- STEP 3: Volumen / Consumo -->
+          <!-- STEP 3: Personalización & Acompañamiento -->
           @if (quizStep === 3) {
             <div class="quiz-step-view animate-fade">
-              <h3 class="quiz-question">{{ language === 'es' ? '3. ¿Para quién y cuántas tazas preparan al día?' : '3. How many cups are brewed daily?' }}</h3>
-              <p class="quiz-hint">{{ language === 'es' ? 'Así te recomendamos el tamaño ideal para que nunca tomes café oxidado o viejo.' : 'This ensures you receive fresh small-batch coffee without losing aromatic oils.' }}</p>
+              <h3 class="quiz-question">
+                {{ language === 'es' ? '3. Personaliza tu café y añade un acompañamiento' : '3. Customize your coffee & add a pairing' }}
+              </h3>
+              <p class="quiz-hint">
+                {{ language === 'es'
+                  ? 'Opciones oficiales de la carta Kfest. Puedes elegir tipo de leche o molienda, y acompañar con panadería artesanal o postres.'
+                  : 'Official Kfest menu options. Pick your milk or grind type, and pair with fresh artisan bakery or desserts.' }}
+              </p>
 
-              <div class="quiz-options-grid">
-                <button class="quiz-opt" (click)="setQuizAnswer(3, 'personal')">
-                  <span class="opt-icon"><i class="fa-solid fa-user"></i></span>
-                  <div class="opt-body">
-                    <strong>{{ language === 'es' ? 'Para Mí Solo (1 a 2 tazas al día)' : 'Just for Me (1 to 2 cups daily)' }}</strong>
-                    <small>{{ language === 'es' ? 'Bolsa de 250g: fresco y en su punto por 2 a 3 semanas' : '250g bag: stays peak fresh for 2-3 weeks' }}</small>
+              <!-- Current Coffee Summary Banner -->
+              <div class="quiz-selection-banner">
+                <div class="banner-left">
+                  <span class="banner-icon"><i [class]="getSelectedCoffee().icon"></i></span>
+                  <div>
+                    <span class="banner-cat">{{ getSelectedCoffee().categoryLabel[language] }}</span>
+                    <h4 class="banner-title">{{ getSelectedCoffee().name[language] }}</h4>
                   </div>
-                </button>
-
-                <button class="quiz-opt" (click)="setQuizAnswer(3, 'pareja')">
-                  <span class="opt-icon"><i class="fa-solid fa-user-group"></i></span>
-                  <div class="opt-body">
-                    <strong>{{ language === 'es' ? 'En Pareja o Familia (2 a 4 tazas diarias)' : 'Couple or Family (2 to 4 cups daily)' }}</strong>
-                    <small>{{ language === 'es' ? 'Dúo de 500g (2x250g): abres una bolsa y la otra queda sellada' : '500g Duo (2x250g): one opened, one hermetically sealed' }}</small>
-                  </div>
-                </button>
-
-                <button class="quiz-opt" (click)="setQuizAnswer(3, 'familia')">
-                  <span class="opt-icon"><i class="fa-solid fa-people-group"></i></span>
-                  <div class="opt-body">
-                    <strong>{{ language === 'es' ? 'Amantes del Café u Oficina (4+ tazas diarias)' : 'Coffee Lovers / Office (4+ cups daily)' }}</strong>
-                    <small>{{ language === 'es' ? 'Cofre de 1kg (4x250g): máximo rendimiento al mejor precio' : '1kg Pack (4x250g): best value with 4 individual packs' }}</small>
-                  </div>
-                </button>
+                </div>
+                <div class="banner-price">{{ getSelectedCoffee().price }}</div>
               </div>
 
-              <div class="quiz-nav-row">
-                <button class="btn-quiz-back" (click)="quizStep = 2">
-                  <i class="fa-solid fa-arrow-left"></i> {{ language === 'es' ? 'Atrás' : 'Back' }}
+              <!-- Options Section 1: Preparation / Milk / Grind -->
+              <div class="custom-block">
+                <h4 class="custom-block-title">
+                  <i class="fa-solid fa-gear"></i>
+                  {{ getSelectedCoffee().allowsMilk ? (language === 'es' ? 'Tipo de Leche:' : 'Milk Choice:') : (getSelectedCoffee().isPack ? (language === 'es' ? 'Tipo de Molienda:' : 'Grind Type:') : (language === 'es' ? 'Preparación / Adicional:' : 'Preparation / Add-on:')) }}
+                </h4>
+                <div class="quiz-options-grid custom-grid">
+                  @for (prep of getQuizPrepOptions(); track prep.id) {
+                    <button
+                      type="button"
+                      class="quiz-opt"
+                      [class.opt-active]="quizPrepOption === prep.id"
+                      (click)="setQuizPrepOption(prep.id)">
+                      <span class="opt-icon"><i [class]="prep.icon || 'fa-solid fa-check'"></i></span>
+                      <div class="opt-body">
+                        <strong>{{ prep.name[language] }}</strong>
+                        @if (prep.desc) {
+                          <small>{{ prep.desc[language] }}</small>
+                        }
+                      </div>
+                      @if (prep.price > 0) {
+                        <span class="opt-price-pill">+S/ {{ prep.price }}.00</span>
+                      }
+                    </button>
+                  }
+                </div>
+              </div>
+
+              <!-- Options Section 2: Bakery / Food Pairing -->
+              <div class="custom-block">
+                <h4 class="custom-block-title">
+                  <i class="fa-solid fa-bread-slice"></i>
+                  {{ language === 'es' ? '¿Deseas acompañar con Panadería o Postre de la carta?' : 'Pair with Bakery or Dessert from the menu?' }}
+                </h4>
+                <div class="quiz-options-grid custom-grid">
+                  @for (food of getQuizFoodOptions(); track food.id) {
+                    <button
+                      type="button"
+                      class="quiz-opt"
+                      [class.opt-active]="quizFoodOption === food.id"
+                      (click)="setQuizFoodOption(food.id)">
+                      <span class="opt-icon"><i [class]="food.icon || 'fa-solid fa-utensils'"></i></span>
+                      <div class="opt-body">
+                        <strong>{{ food.name[language] }}</strong>
+                        @if (food.desc) {
+                          <small>{{ food.desc[language] }}</small>
+                        }
+                      </div>
+                      @if (food.price > 0) {
+                        <span class="opt-price-pill">+S/ {{ food.price }}.00</span>
+                      }
+                    </button>
+                  }
+                </div>
+              </div>
+
+              <!-- Live Total Summary -->
+              <div class="quiz-total-bar">
+                <div class="total-label">
+                  <span>{{ language === 'es' ? 'Total estimado con adicionales:' : 'Estimated total with add-ons:' }}</span>
+                  <strong class="total-amount">{{ getQuizTotalPrice() }}</strong>
+                </div>
+              </div>
+
+              <div class="quiz-nav-row quiz-nav-between">
+                <button type="button" class="btn-quiz-back" (click)="quizStep = 2">
+                  <i class="fa-solid fa-arrow-left"></i> {{ language === 'es' ? 'Volver a Cafés' : 'Back to Coffees' }}
+                </button>
+                <button type="button" class="btn btn-gold btn-quiz-next" (click)="quizStep = 4">
+                  {{ language === 'es' ? 'Ver Mi Café Ideal Seleccionado' : 'View My Perfect Match' }}
+                  <i class="fa-solid fa-arrow-right"></i>
                 </button>
               </div>
             </div>
           }
 
-          <!-- STEP 4: RESULTADO PERSONALIZADO -->
+          <!-- STEP 4: RESULTADO PERSONALIZADO & WHATSAPP -->
           @if (quizStep === 4) {
             <div class="quiz-result-view animate-fade">
               <div class="result-badge">
                 <i class="fa-solid fa-circle-check"></i>
-                <span>{{ language === 'es' ? 'TU MATCH PERFECTO SELECCIONADO' : 'YOUR PERFECT MATCH SELECTED' }}</span>
+                <span>{{ language === 'es' ? 'TU CAFÉ IDEAL SELECCIONADO DE LA CARTA KFEST' : 'YOUR IDEAL COFFEE FROM THE KFEST MENU' }}</span>
               </div>
 
               <div class="result-layout">
                 <div class="result-img-box">
-                  <img [src]="getQuizRecommendation().img" [alt]="getQuizRecommendation().title[language]" />
+                  @if (getSelectedCoffee().img) {
+                    <img [src]="getSelectedCoffee().img" [alt]="getSelectedCoffee().name[language]" />
+                  } @else {
+                    <div class="result-icon-fallback">
+                      <i [class]="getSelectedCoffee().icon"></i>
+                      <span>KFEST COFFEE</span>
+                    </div>
+                  }
                 </div>
 
                 <div class="result-info">
-                  <h3 class="result-title">{{ getQuizRecommendation().title[language] }}</h3>
-                  <div class="result-price">{{ getQuizRecommendation().price }}</div>
+                  <span class="result-cat-pill">{{ getSelectedCoffee().categoryLabel[language] }}</span>
+                  <h3 class="result-title">{{ getSelectedCoffee().name[language] }}</h3>
 
-                  <div class="result-pill-row">
-                    <span class="result-pill">
-                      <i class="fa-solid fa-box-open"></i> {{ getQuizRecommendation().package[language] }}
-                    </span>
-                    <span class="result-pill pill-gold">
-                      <i class="fa-solid fa-gear"></i> {{ getQuizRecommendation().grind[language] }}
-                    </span>
+                  <div class="result-price-row">
+                    <span class="result-price">{{ getQuizTotalPrice() }}</span>
+                    @if (getSelectedCoffee().badge) {
+                      <span class="result-pill pill-gold">{{ getSelectedCoffee().badge![language] }}</span>
+                    }
                   </div>
 
-                  <p class="result-reason">{{ getQuizRecommendation().reason[language] }}</p>
+                  <p class="result-reason">{{ getSelectedCoffee().desc[language] }}</p>
 
                   <div class="result-notes-box">
-                    <small>{{ language === 'es' ? 'NOTAS SENSORIALES' : 'TASTING NOTES' }}</small>
-                    <strong>{{ getQuizRecommendation().notes[language] }}</strong>
+                    <small>{{ language === 'es' ? 'NOTAS SENSORIALES & PERFIL' : 'TASTING NOTES & PROFILE' }}</small>
+                    <strong>{{ getSelectedCoffee().notes[language] }}</strong>
+                  </div>
+
+                  <!-- Order Breakdown Box -->
+                  <div class="result-breakdown-card">
+                    <h5 class="breakdown-title">
+                      <i class="fa-solid fa-receipt"></i>
+                      {{ language === 'es' ? 'Resumen de tu preferencia:' : 'Your Preference Summary:' }}
+                    </h5>
+                    <ul class="breakdown-list">
+                      <li>
+                        <span><i class="fa-solid fa-mug-saucer"></i> {{ language === 'es' ? 'Café:' : 'Coffee:' }}</span>
+                        <strong>{{ getSelectedCoffee().name[language] }} ({{ getSelectedCoffee().price }})</strong>
+                      </li>
+                      @if (getQuizPrepName()) {
+                        <li>
+                          <span><i class="fa-solid fa-gear"></i> {{ language === 'es' ? 'Preparación / Leche:' : 'Prep / Milk:' }}</span>
+                          <strong>{{ getQuizPrepName() }}</strong>
+                        </li>
+                      }
+                      @if (getQuizFoodName()) {
+                        <li>
+                          <span><i class="fa-solid fa-bread-slice"></i> {{ language === 'es' ? 'Acompañamiento:' : 'Food Pairing:' }}</span>
+                          <strong>{{ getQuizFoodName() }}</strong>
+                        </li>
+                      }
+                      <li class="breakdown-total-item">
+                        <span>{{ language === 'es' ? 'Total estimado:' : 'Estimated total:' }}</span>
+                        <strong class="total-gold">{{ getQuizTotalPrice() }}</strong>
+                      </li>
+                    </ul>
                   </div>
 
                   <div class="result-actions">
                     <a [href]="getQuizWhatsAppLink()" target="_blank" rel="noopener noreferrer" class="btn btn-gold btn-result-cta">
                       <i class="fa-brands fa-whatsapp"></i> {{ language === 'es' ? 'PEDIR ESTE CAFÉ POR WHATSAPP' : 'ORDER THIS COFFEE VIA WHATSAPP' }}
                     </a>
-                    <button class="btn-quiz-retry" (click)="resetQuiz()">
+                    <button type="button" class="btn-quiz-retry" (click)="quizStep = 2">
+                      <i class="fa-solid fa-list-ul"></i> {{ language === 'es' ? 'Elegir otro café del menú' : 'Choose another coffee' }}
+                    </button>
+                    <button type="button" class="btn-quiz-retry" (click)="resetQuiz()">
                       <i class="fa-solid fa-rotate-right"></i> {{ language === 'es' ? 'Hacer el test de nuevo' : 'Retake Test' }}
                     </button>
                   </div>

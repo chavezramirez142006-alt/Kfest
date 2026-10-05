@@ -1,4 +1,16 @@
 import { Component, HostListener } from '@angular/core';
+import {
+  CoffeeCategoryKey,
+  CoffeeMenuItem,
+  QuizOption,
+  QUIZ_CATEGORIES,
+  QUIZ_FLAVOR_FILTERS,
+  COFFEE_MENU,
+  QUIZ_MILK_OPTIONS,
+  QUIZ_GRIND_OPTIONS,
+  QUIZ_SPECIAL_OPTIONS,
+  QUIZ_FOOD_OPTIONS
+} from './coffee-menu.data';
 
 export type Language = 'es' | 'en';
 export type GrindType = 'grano' | 'v60' | 'prensa' | 'gota' | 'accesorios';
@@ -406,11 +418,21 @@ export class App {
   brewCups: number = 2;
   brewMethodsList: BrewMethod[] = ['v60', 'prensa', 'moka', 'espresso', 'chemex', 'gota'];
 
-  // Feature B: Coffee Quiz State
+  // Feature B: Coffee Quiz State (Encuentra tu Café Ideal - Carta Kfest)
   quizStep: number = 1;
+  quizCategory: CoffeeCategoryKey = 'calientes';
+  quizFlavor: string = 'todos';
+  selectedCoffeeId: string = 'capuchino';
+  quizPrepOption: string = 'leche_entera';
+  quizFoodOption: string = 'none';
+
+  // Legacy compatibility fields
   quizMethod: string = '';
-  quizFlavor: string = '';
   quizAmount: string = '';
+
+  readonly quizCategories = QUIZ_CATEGORIES;
+  readonly quizFlavorFilters = QUIZ_FLAVOR_FILTERS;
+  readonly coffeeMenu = COFFEE_MENU;
 
   // Feature C: Traceability Passport State
   traceabilityTab: TraceabilityTab = 'origen';
@@ -726,100 +748,186 @@ export class App {
     return `https://wa.me/${this.phonePrimary}?text=${encodeURIComponent(message)}`;
   }
 
-  // --- FEATURE B: COFFEE QUIZ METHODS ---
+  // --- FEATURE B: COFFEE QUIZ METHODS (CARTA KFEST) ---
+  setQuizCategory(category: CoffeeCategoryKey): void {
+    this.quizCategory = category;
+    this.quizFlavor = 'todos';
+
+    const defaultCoffees: Record<CoffeeCategoryKey, string> = {
+      calientes: 'capuchino',
+      iced: 'caramel_latte',
+      cold_brew: 'cold_brew_maracuya',
+      frappes: 'frappe_oreo',
+      filtrados: 'mupeco',
+      bar_kfest: 'coffee_sour',
+      virtudes: 'virtud_resiliencia'
+    };
+
+    const targetId = defaultCoffees[category] || this.getFilteredCoffees()[0]?.id || 'capuchino';
+    this.selectQuizCoffee(targetId);
+    this.quizStep = 2;
+  }
+
+  setQuizFlavor(flavor: string): void {
+    this.quizFlavor = flavor;
+    const filtered = this.getFilteredCoffees();
+    if (filtered.length > 0 && !filtered.some(c => c.id === this.selectedCoffeeId)) {
+      this.selectQuizCoffee(filtered[0].id);
+    }
+  }
+
+  selectQuizCoffee(coffeeId: string): void {
+    this.selectedCoffeeId = coffeeId;
+    const coffee = this.getSelectedCoffee();
+    if (coffee.allowsMilk) {
+      this.quizPrepOption = 'leche_entera';
+    } else if (coffee.isPack) {
+      this.quizPrepOption = 'grano';
+    } else {
+      this.quizPrepOption = 'clasica';
+    }
+  }
+
+  setQuizPrepOption(optId: string): void {
+    this.quizPrepOption = optId;
+  }
+
+  setQuizFoodOption(optId: string): void {
+    this.quizFoodOption = optId;
+  }
+
+  setQuizStep(step: number): void {
+    this.quizStep = step;
+  }
+
+  getSelectedCoffee(): CoffeeMenuItem {
+    return this.coffeeMenu.find(c => c.id === this.selectedCoffeeId) || this.coffeeMenu[0];
+  }
+
+  getFilteredCoffees(): CoffeeMenuItem[] {
+    return this.coffeeMenu.filter(c => {
+      const matchCat = c.category === this.quizCategory;
+      if (!matchCat) return false;
+      if (this.quizFlavor === 'todos') return true;
+      return c.flavorTag === this.quizFlavor;
+    });
+  }
+
+  getActiveFlavorFilters(): { id: string; label: { es: string; en: string } }[] {
+    return this.quizFlavorFilters[this.quizCategory] || [{ id: 'todos', label: { es: 'Todos', en: 'All' } }];
+  }
+
+  getQuizPrepOptions(): QuizOption[] {
+    const coffee = this.getSelectedCoffee();
+    if (coffee.allowsMilk) return QUIZ_MILK_OPTIONS;
+    if (coffee.isPack) return QUIZ_GRIND_OPTIONS;
+    return QUIZ_SPECIAL_OPTIONS;
+  }
+
+  getQuizFoodOptions(): QuizOption[] {
+    return QUIZ_FOOD_OPTIONS;
+  }
+
+  getSelectedPrepOption(): QuizOption {
+    const options = this.getQuizPrepOptions();
+    return options.find(o => o.id === this.quizPrepOption) || options[0];
+  }
+
+  getSelectedFoodOption(): QuizOption {
+    return QUIZ_FOOD_OPTIONS.find(o => o.id === this.quizFoodOption) || QUIZ_FOOD_OPTIONS[0];
+  }
+
+  getQuizTotalNum(): number {
+    const coffee = this.getSelectedCoffee();
+    const prep = this.getSelectedPrepOption();
+    const food = this.getSelectedFoodOption();
+    return (coffee?.priceNum || 0) + (prep?.price || 0) + (food?.price || 0);
+  }
+
+  getQuizTotalPrice(): string {
+    return `S/ ${this.getQuizTotalNum().toFixed(2)}`;
+  }
+
+  getQuizPrepName(): string {
+    const prep = this.getSelectedPrepOption();
+    return prep ? prep.name[this.language] : '';
+  }
+
+  getQuizFoodName(): string {
+    const food = this.getSelectedFoodOption();
+    return food && food.id !== 'none' ? food.name[this.language] : '';
+  }
+
   setQuizAnswer(step: number, answer: string): void {
     if (step === 1) {
-      this.quizMethod = answer;
-      this.quizStep = 2;
+      const catMap: Record<string, CoffeeCategoryKey> = {
+        v60: 'filtrados',
+        prensa: 'filtrados',
+        moka: 'calientes',
+        grano: 'virtudes'
+      };
+      this.setQuizCategory(catMap[answer] || 'calientes');
     } else if (step === 2) {
-      this.quizFlavor = answer;
+      this.setQuizFlavor(answer);
       this.quizStep = 3;
     } else if (step === 3) {
-      this.quizAmount = answer;
-      this.quizStep = 4; // Result step
+      this.quizStep = 4;
     }
   }
 
   resetQuiz(): void {
     this.quizStep = 1;
-    this.quizMethod = '';
-    this.quizFlavor = '';
-    this.quizAmount = '';
+    this.quizCategory = 'calientes';
+    this.quizFlavor = 'todos';
+    this.selectedCoffeeId = 'capuchino';
+    this.quizPrepOption = 'leche_entera';
+    this.quizFoodOption = 'none';
   }
 
-  getQuizRecommendation(): {
-    title: { es: string; en: string };
-    package: { es: string; en: string };
-    price: string;
-    grind: { es: string; en: string };
-    notes: { es: string; en: string };
-    reason: { es: string; en: string };
-    img: string;
-  } {
-    const isFamily = this.quizAmount === 'familia';
-    const isCouple = this.quizAmount === 'pareja';
-
-    if (isFamily) {
-      return {
-        title: { es: 'Cofre Degustación Maestro 1kg', en: '1kg Master Tasting Pack' },
-        package: { es: 'Pack de 4 bolsas individuales (1kg total)', en: '4 individual fresh bags (1kg total)' },
-        price: 'S/ 100.00',
-        grind: {
-          es: this.quizMethod === 'grano' ? 'En Grano Entero' : 'Molienda calibrada para ' + this.quizMethod.toUpperCase(),
-          en: this.quizMethod === 'grano' ? 'Whole Bean' : 'Calibrated grind for ' + this.quizMethod.toUpperCase()
-        },
-        notes: { es: 'Panela de oro, Cacao 70%, Notas frutales de altura', en: 'Golden panela, 70% Dark cacao, High mountain fruit' },
-        reason: {
-          es: 'Ideal para abastecer tu hogar u oficina con máxima frescura por 4 semanas, abriendo una bolsa fresca cada semana.',
-          en: 'Perfect to supply your home or office with peak freshness for 4 weeks, opening one fresh bag each week.'
-        },
-        img: 'images/bag_1kg.png'
-      };
-    } else if (isCouple) {
-      return {
-        title: { es: 'Dúo Esencial Reserva 500g', en: '500g Essential Reserve Duo' },
-        package: { es: '2 bolsas herméticas de 250g con válvula', en: '2 airtight 250g bags with aroma valve' },
-        price: 'S/ 56.00',
-        grind: {
-          es: this.quizMethod === 'grano' ? 'En Grano Entero' : 'Molienda calibrada a tu cafetera',
-          en: this.quizMethod === 'grano' ? 'Whole Bean' : 'Custom calibrated grind'
-        },
-        notes: { es: 'Panela tostada, Miel de flores silvestres y Cacao puro', en: 'Toasted panela, Wildflower honey, Pure cacao' },
-        reason: {
-          es: 'El formato más solicitado: permite compartir 2 a 3 tazas al día conservando intactos los aromas del Fundo Santa Teresita.',
-          en: 'Our most popular format: allows 2 to 3 cups daily while preserving the original farm fragrance.'
-        },
-        img: 'images/bag_500g.png'
-      };
-    } else {
-      return {
-        title: { es: 'Reserva Personal 250g', en: '250g Personal Reserve' },
-        package: { es: '1 bolsa hermética de 250g con válvula', en: '1 airtight 250g bag with aroma valve' },
-        price: 'S/ 30.00',
-        grind: {
-          es: this.quizMethod === 'grano' ? 'En Grano Entero' : 'Molienda exacta para ' + (this.quizMethod ? this.quizMethod.toUpperCase() : 'tu método'),
-          en: this.quizMethod === 'grano' ? 'Whole Bean' : 'Custom grind for ' + (this.quizMethod ? this.quizMethod.toUpperCase() : 'your brewer')
-        },
-        notes: { es: 'Miel de monte, Cacao aromático, Puntuación 81-84 SCA', en: 'Mountain honey, Aromatic cacao, 81-84 SCA Points' },
-        reason: {
-          es: 'Ideal para tu ritual cafetero personal diario: café de microlote de altura recién tostado solo para ti.',
-          en: 'Tailored for your personal daily coffee ritual: freshly roasted high altitude microlot coffee.'
-        },
-        img: 'images/bag_250g.png'
-      };
-    }
+  getQuizRecommendation() {
+    const coffee = this.getSelectedCoffee();
+    return {
+      title: coffee.name,
+      package: coffee.categoryLabel,
+      price: this.getQuizTotalPrice(),
+      grind: {
+        es: this.getQuizPrepName(),
+        en: this.getQuizPrepName()
+      },
+      notes: coffee.notes,
+      reason: coffee.desc,
+      img: coffee.img || 'images/products/blend_bolsa.png'
+    };
   }
 
   getQuizWhatsAppLink(): string {
     const isEs = this.language === 'es';
-    const rec = this.getQuizRecommendation();
-    const title = rec.title[this.language];
-    const price = rec.price;
-    const grind = rec.grind[this.language];
+    const coffee = this.getSelectedCoffee();
+    const totalPrice = this.getQuizTotalPrice();
+    const prepName = this.getQuizPrepName();
+    const foodName = this.getQuizFoodName();
 
     const message = isEs
-      ? `Hola Kfest, completé el test "Descubre tu Café Ideal" en su web. Mi resultado recomendado es: ${title} (${price}) con molienda: ${grind}. Quisiera coordinar mi pedido.`
-      : `Hello Kfest, I completed the "Find your Ideal Coffee" test on your website. My recommended match is: ${title} (${price}) with grind: ${grind}. I would like to order it.`;
+      ? `☕ *¡Hola Kfest! Hice el test "Encuentra tu Café Ideal" en su web.*\n\n` +
+        `Mi café de preferencia es:\n` +
+        `👉 *${coffee.name.es}* (${coffee.price})\n` +
+        `📌 *Categoría:* ${coffee.categoryLabel.es}\n` +
+        `✨ *Notas sensoriales:* ${coffee.notes.es}\n\n` +
+        `*Detalles de mi preferencia:*` +
+        (prepName ? `\n• Preparación / Leche: ${prepName}` : '') +
+        (foodName ? `\n• Acompañamiento: ${foodName}` : '') +
+        `\n• *Total estimado:* ${totalPrice}\n\n` +
+        `¿Me podrían confirmar disponibilidad para preparar / tomar mi pedido? ¡Muchas gracias!`
+      : `☕ *Hello Kfest! I completed the "Find your Ideal Coffee" test on your website.*\n\n` +
+        `My selected coffee match is:\n` +
+        `👉 *${coffee.name.en}* (${coffee.price})\n` +
+        `📌 *Category:* ${coffee.categoryLabel.en}\n` +
+        `✨ *Tasting notes:* ${coffee.notes.en}\n\n` +
+        `*Order details:*` +
+        (prepName ? `\n• Preparation / Milk: ${prepName}` : '') +
+        (foodName ? `\n• Pairing: ${foodName}` : '') +
+        `\n• *Estimated Total:* ${totalPrice}\n\n` +
+        `Could you please confirm availability to take my order? Thank you!`;
 
     return `https://wa.me/${this.phonePrimary}?text=${encodeURIComponent(message)}`;
   }
