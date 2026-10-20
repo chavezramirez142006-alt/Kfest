@@ -303,6 +303,39 @@ export class App {
   isScrolled: boolean = false;
   isLightMode: boolean = false;
 
+  // ─── BUSCADOR INSTANTÁNEO, NOTAS DE CATA Y FAVORITOS ───
+  searchQuery: string = '';
+  selectedSensoryFilter: string = 'todos';
+  selectedCatalogCategory: string = 'todos';
+  onlyFavoritesFilter: boolean = false;
+  catalogSortBy: 'relevance' | 'price-asc' | 'price-desc' | 'name-asc' = 'relevance';
+  favoriteCoffeeIds: string[] = [];
+  toastMessage: string = '';
+  toastVisible: boolean = false;
+  private toastTimer: any = null;
+
+  readonly sensoryNotesFilters = [
+    { id: 'todos', label: { es: 'Todos', en: 'All' }, icon: 'fa-solid fa-mug-hot' },
+    { id: 'chocolate', label: { es: '🍫 Chocolate & Cacao', en: '🍫 Chocolate & Cacao' }, keywords: ['chocolate', 'cacao', 'amargo'] },
+    { id: 'panela', label: { es: '🍯 Panela & Caramelo', en: '🍯 Panela & Caramel' }, keywords: ['panela', 'miel', 'caramelo', 'dulce', 'toffee'] },
+    { id: 'citrico', label: { es: '🍋 Cítrico & Frutal', en: '🍋 Citrus & Fruity' }, keywords: ['cítrico', 'citrico', 'frutal', 'frutas', 'naranja', 'maracuyá', 'maracuya', 'fresa', 'arándanos', 'arandanos', 'acidez'] },
+    { id: 'floral', label: { es: '🌸 Floral & Jazmín', en: '🌸 Floral & Jasmine' }, keywords: ['floral', 'jazmín', 'jazmin', 'flores', 'delicado'] },
+    { id: 'nuez', label: { es: '🥜 Nuez & Avellana', en: '🥜 Roasted Nuts' }, keywords: ['nuez', 'avellana', 'secos', 'almendra', 'tostada'] },
+    { id: 'intenso', label: { es: '⚡ Extra Intenso', en: '⚡ Extra Bold' }, keywords: ['intenso', 'fuerte', 'cuerpo', 'denso', 'espresso', 'doble'] },
+    { id: 'cremoso', label: { es: '🥛 Cremoso & Leche', en: '🥛 Creamy & Milk' }, keywords: ['cremoso', 'leche', 'sedoso', 'suave', 'microespuma', 'chantilly'] }
+  ];
+
+  readonly catalogCategories = [
+    { id: 'todos', label: { es: 'Todas las Categorías', en: 'All Categories' }, icon: 'fa-solid fa-border-all' },
+    { id: 'calientes', label: { es: 'Bebidas Calientes', en: 'Warm Classics' }, icon: 'fa-solid fa-mug-hot' },
+    { id: 'iced', label: { es: 'Cafés Helados (Iced)', en: 'Iced Coffee' }, icon: 'fa-solid fa-snowflake' },
+    { id: 'cold_brew', label: { es: 'Cold Brew de Autor', en: 'Signature Cold Brew' }, icon: 'fa-solid fa-glass-water' },
+    { id: 'frappes', label: { es: 'Frappés & Golosos', en: 'Frappes & Treats' }, icon: 'fa-solid fa-blender' },
+    { id: 'filtrados', label: { es: 'Filtrados de Especialidad', en: 'Specialty Pour Over' }, icon: 'fa-solid fa-filter' },
+    { id: 'bar_kfest', label: { es: 'Bar Kfest (Coctelería)', en: 'Kfest Bar Cocktails' }, icon: 'fa-solid fa-martini-glass-citrus' },
+    { id: 'virtudes', label: { es: 'Línea Virtudes (Bolsa)', en: 'Virtues Coffee Bags' }, icon: 'fa-solid fa-seedling' }
+  ];
+
   constructor() {
     if (typeof window !== 'undefined') {
       try {
@@ -311,6 +344,16 @@ export class App {
           this.isLightMode = true;
           if (typeof document !== 'undefined') {
             document.body.classList.add('light-theme');
+          }
+        }
+      } catch (e) {}
+
+      try {
+        const savedFavs = localStorage.getItem('kfest_favorites');
+        if (savedFavs) {
+          const parsed = JSON.parse(savedFavs);
+          if (Array.isArray(parsed)) {
+            this.favoriteCoffeeIds = parsed;
           }
         }
       } catch (e) {}
@@ -1025,5 +1068,197 @@ export class App {
 
     const message = messages[this.language][type] || messages[this.language].concierge;
     return `https://wa.me/${this.phonePrimary}?text=${encodeURIComponent(message)}`;
+  }
+
+  // ─── MÉTODOS DEL BUSCADOR & FAVORITOS ───
+  get favoritesCount(): number {
+    return this.favoriteCoffeeIds.length;
+  }
+
+  isFavorite(coffeeId: string): boolean {
+    return this.favoriteCoffeeIds.includes(coffeeId);
+  }
+
+  toggleFavorite(coffee: CoffeeMenuItem, event?: Event): void {
+    if (event) {
+      event.stopPropagation();
+      event.preventDefault();
+    }
+    const id = coffee.id;
+    const index = this.favoriteCoffeeIds.indexOf(id);
+    const coffeeName = coffee.name[this.language];
+
+    if (index >= 0) {
+      this.favoriteCoffeeIds.splice(index, 1);
+      this.showToast(
+        this.language === 'es'
+          ? `🤍 Eliminado de tus favoritos: ${coffeeName}`
+          : `🤍 Removed from favorites: ${coffeeName}`
+      );
+    } else {
+      this.favoriteCoffeeIds.push(id);
+      this.showToast(
+        this.language === 'es'
+          ? `❤️ ¡Guardado en tus favoritos! ${coffeeName}`
+          : `❤️ Saved to favorites! ${coffeeName}`
+      );
+    }
+
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem('kfest_favorites', JSON.stringify(this.favoriteCoffeeIds));
+      } catch (e) {}
+    }
+  }
+
+  onSearchInput(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    this.searchQuery = target?.value || '';
+  }
+
+  clearSearch(): void {
+    this.searchQuery = '';
+  }
+
+  setSensoryFilter(filterId: string): void {
+    this.selectedSensoryFilter = filterId;
+  }
+
+  setCatalogCategory(catId: string): void {
+    this.selectedCatalogCategory = catId;
+  }
+
+  toggleOnlyFavorites(): void {
+    this.onlyFavoritesFilter = !this.onlyFavoritesFilter;
+  }
+
+  onSortChange(event: Event): void {
+    const select = event.target as HTMLSelectElement;
+    if (select) {
+      this.catalogSortBy = select.value as any;
+    }
+  }
+
+  setCatalogSort(sortBy: 'relevance' | 'price-asc' | 'price-desc' | 'name-asc'): void {
+    this.catalogSortBy = sortBy;
+  }
+
+  resetCatalogFilters(): void {
+    this.searchQuery = '';
+    this.selectedSensoryFilter = 'todos';
+    this.selectedCatalogCategory = 'todos';
+    this.onlyFavoritesFilter = false;
+    this.catalogSortBy = 'relevance';
+  }
+
+  goToFavorites(): void {
+    this.onlyFavoritesFilter = true;
+    this.scrollToSection('coleccion');
+  }
+
+  getFilteredCatalog(): CoffeeMenuItem[] {
+    let list = [...this.coffeeMenu];
+
+    // Filter by Category
+    if (this.selectedCatalogCategory !== 'todos') {
+      list = list.filter(item => item.category === this.selectedCatalogCategory);
+    }
+
+    // Filter by Favorites
+    if (this.onlyFavoritesFilter) {
+      list = list.filter(item => this.favoriteCoffeeIds.includes(item.id));
+    }
+
+    // Filter by Sensory Notes
+    if (this.selectedSensoryFilter !== 'todos') {
+      const activeFilter = this.sensoryNotesFilters.find(f => f.id === this.selectedSensoryFilter);
+      if (activeFilter && activeFilter.keywords) {
+        list = list.filter(item => {
+          const combined = `${item.notes.es} ${item.notes.en} ${item.flavorLabel.es} ${item.flavorTag} ${item.desc.es} ${item.desc.en}`.toLowerCase();
+          return activeFilter.keywords!.some(kw => combined.includes(kw));
+        });
+      }
+    }
+
+    // Filter by Search Query
+    if (this.searchQuery.trim()) {
+      const q = this.searchQuery.toLowerCase().trim();
+      list = list.filter(item => {
+        const nameEs = item.name.es.toLowerCase();
+        const nameEn = item.name.en.toLowerCase();
+        const descEs = item.desc.es.toLowerCase();
+        const descEn = item.desc.en.toLowerCase();
+        const notesEs = item.notes.es.toLowerCase();
+        const notesEn = item.notes.en.toLowerCase();
+        const catEs = item.categoryLabel.es.toLowerCase();
+        const catEn = item.categoryLabel.en.toLowerCase();
+        const tag = (item.flavorTag || '').toLowerCase();
+        return (
+          nameEs.includes(q) ||
+          nameEn.includes(q) ||
+          descEs.includes(q) ||
+          descEn.includes(q) ||
+          notesEs.includes(q) ||
+          notesEn.includes(q) ||
+          catEs.includes(q) ||
+          catEn.includes(q) ||
+          tag.includes(q)
+        );
+      });
+    }
+
+    // Sorting
+    if (this.catalogSortBy === 'price-asc') {
+      list.sort((a, b) => a.priceNum - b.priceNum);
+    } else if (this.catalogSortBy === 'price-desc') {
+      list.sort((a, b) => b.priceNum - a.priceNum);
+    } else if (this.catalogSortBy === 'name-asc') {
+      list.sort((a, b) => a.name[this.language].localeCompare(b.name[this.language]));
+    }
+
+    return list;
+  }
+
+  getCoffeeWhatsAppLink(item: CoffeeMenuItem): string {
+    const isEs = this.language === 'es';
+    const msg = isEs
+      ? `☕ *¡Hola Kfest!* Deseo pedir de su carta:\n\n` +
+        `👉 *${item.name.es}* (${item.price})\n` +
+        `📌 *Categoría:* ${item.categoryLabel.es}\n` +
+        `✨ *Notas:* ${item.notes.es}\n\n` +
+        `¿Me confirman si tienen disponibilidad para preparar mi pedido? ¡Muchas gracias!`
+      : `☕ *Hello Kfest!* I would like to order from your menu:\n\n` +
+        `👉 *${item.name.en}* (${item.price})\n` +
+        `📌 *Category:* ${item.categoryLabel.en}\n` +
+        `✨ *Notes:* ${item.notes.en}\n\n` +
+        `Could you please confirm availability to take my order? Thank you!`;
+    return `https://wa.me/${this.phonePrimary}?text=${encodeURIComponent(msg)}`;
+  }
+
+  customizeFromCatalog(item: CoffeeMenuItem): void {
+    this.quizCategory = item.category;
+    this.selectQuizCoffee(item.id);
+    this.quizStep = 3;
+    this.scrollToSection('quiz');
+  }
+
+  showToast(message: string): void {
+    this.toastMessage = message;
+    this.toastVisible = true;
+    if (this.toastTimer) {
+      clearTimeout(this.toastTimer);
+    }
+    if (typeof window !== 'undefined') {
+      this.toastTimer = setTimeout(() => {
+        this.toastVisible = false;
+      }, 2600);
+    }
+  }
+
+  hideToast(): void {
+    this.toastVisible = false;
+    if (this.toastTimer) {
+      clearTimeout(this.toastTimer);
+    }
   }
 }

@@ -23,6 +23,18 @@
       </nav>
 
       <div class="header-controls">
+        <button
+          type="button"
+          class="fav-header-btn"
+          (click)="goToFavorites()"
+          [attr.aria-label]="language === 'es' ? 'Ver mis cafés favoritos' : 'View my favorite coffees'"
+          [title]="language === 'es' ? 'Mis Favoritos' : 'My Favorites'">
+          <i class="fa-solid fa-heart"></i>
+          @if (favoritesCount > 0) {
+            <span class="fav-badge-bubble">{{ favoritesCount }}</span>
+          }
+        </button>
+
         <button class="theme-toggle-btn" (click)="toggleTheme()" [attr.aria-label]="isLightMode ? (language === 'es' ? 'Cambiar a modo oscuro' : 'Switch to dark mode') : (language === 'es' ? 'Cambiar a modo crema' : 'Switch to cream mode')" [title]="isLightMode ? (language === 'es' ? 'Modo Oscuro' : 'Dark Mode') : (language === 'es' ? 'Modo Crema' : 'Cream Mode')">
           <i class="fa-solid" [class.fa-sun]="!isLightMode" [class.fa-moon]="isLightMode"></i>
         </button>
@@ -551,6 +563,231 @@
             <i class="fa-brands fa-whatsapp"></i>
             &nbsp; {{ language === 'es' ? 'COORDINAR ENTREGA' : 'ARRANGE DELIVERY' }}
           </a>
+        </div>
+
+        <!-- ========================= EXPLORADOR SENSORIAL & BUSCADOR KFEST ========================= -->
+        <div class="catalog-explorer-wrap">
+
+          <div class="catalog-explorer-head">
+            <div class="catalog-head-left">
+              <span class="explorer-badge">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                {{ language === 'es' ? 'BUSCADOR & CATÁLOGO SENSORIAL' : 'SEARCH & SENSORY CATALOG' }}
+              </span>
+              <h3 class="catalog-title">
+                {{ language === 'es' ? 'Explora Toda Nuestra' : 'Explore Our Full' }}
+                <em class="gold-script">{{ language === 'es' ? 'Carta de Cafés' : 'Coffee Menu' }}</em>
+              </h3>
+              <p class="catalog-desc">
+                {{ language === 'es'
+                  ? 'Filtra al instante por notas de cata (panela, cacao, cítrico, floral...), categoría o busca por nombre. Guarda tus cafés preferidos con ❤️ y pidelos directo por WhatsApp.'
+                  : 'Instantly filter by sensory tasting notes (panela, cacao, citrus, floral...), category or search by name. Save favorites with ❤️ and order directly via WhatsApp.' }}
+              </p>
+            </div>
+
+            <!-- Acciones rápidas / Stats -->
+            <div class="catalog-head-right">
+              <button
+                type="button"
+                class="btn-fav-filter-pill"
+                [class.active]="onlyFavoritesFilter"
+                (click)="toggleOnlyFavorites()">
+                <i class="fa-solid fa-heart"></i>
+                <span>{{ language === 'es' ? 'Solo Favoritos' : 'Only Favorites' }}</span>
+                <span class="fav-pill-badge">{{ favoritesCount }}</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Barra de Búsqueda y Barra de Herramientas -->
+          <div class="catalog-toolbar">
+            <div class="catalog-search-box">
+              <i class="fa-solid fa-magnifying-glass search-icon"></i>
+              <input
+                type="text"
+                class="catalog-search-input"
+                [value]="searchQuery"
+                (input)="onSearchInput($event)"
+                [placeholder]="language === 'es' ? 'Buscar café o nota sensorial (ej: chocolate, panela, frutal, cold brew, v60...)' : 'Search coffee or tasting note (e.g. chocolate, panela, fruity, cold brew, v60...)'" />
+              @if (searchQuery) {
+                <button type="button" class="search-clear-btn" (click)="clearSearch()" aria-label="Limpiar búsqueda">✕</button>
+              }
+            </div>
+
+            <div class="catalog-sort-box">
+              <label for="catalog-sort-select" class="sort-label">
+                <i class="fa-solid fa-arrow-down-short-wide"></i>
+                <span>{{ language === 'es' ? 'Ordenar:' : 'Sort:' }}</span>
+              </label>
+              <select
+                id="catalog-sort-select"
+                class="catalog-select"
+                [value]="catalogSortBy"
+                (change)="onSortChange($event)">
+                <option value="relevance">{{ language === 'es' ? 'Destacados / Carta' : 'Featured / Menu' }}</option>
+                <option value="price-asc">{{ language === 'es' ? 'Precio: Menor a Mayor' : 'Price: Low to High' }}</option>
+                <option value="price-desc">{{ language === 'es' ? 'Precio: Mayor a Menor' : 'Price: High to Low' }}</option>
+                <option value="name-asc">{{ language === 'es' ? 'Nombre: A - Z' : 'Name: A - Z' }}</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Filtro de Categorías -->
+          <div class="catalog-categories-row">
+            @for (cat of catalogCategories; track cat.id) {
+              <button
+                type="button"
+                class="cat-chip"
+                [class.active]="selectedCatalogCategory === cat.id"
+                (click)="setCatalogCategory(cat.id)">
+                <i [class]="cat.icon"></i>
+                <span>{{ cat.label[language] }}</span>
+              </button>
+            }
+          </div>
+
+          <!-- Filtro por Notas de Cata Sensoriales -->
+          <div class="sensory-filter-row">
+            <span class="sensory-row-label">
+              <i class="fa-solid fa-sliders"></i>
+              {{ language === 'es' ? 'Notas de cata:' : 'Tasting notes:' }}
+            </span>
+            <div class="sensory-chips-scroll">
+              @for (filter of sensoryNotesFilters; track filter.id) {
+                <button
+                  type="button"
+                  class="sensory-chip"
+                  [class.active]="selectedSensoryFilter === filter.id"
+                  (click)="setSensoryFilter(filter.id)">
+                  <i [class]="filter.icon"></i>
+                  <span>{{ filter.label[language] }}</span>
+                </button>
+              }
+            </div>
+          </div>
+
+          <!-- Barra de Estado / Resultados -->
+          <div class="catalog-status-bar">
+            <div class="status-count">
+              <span>{{ language === 'es' ? 'Mostrando' : 'Showing' }} <strong>{{ getFilteredCatalog().length }}</strong> {{ language === 'es' ? 'cafés de especialidad' : 'specialty coffees' }}</span>
+              @if (onlyFavoritesFilter) {
+                <span class="badge-filter-applied">❤️ {{ language === 'es' ? 'Filtrando por favoritos' : 'Filtering by favorites' }}</span>
+              }
+              @if (searchQuery) {
+                <span class="badge-filter-applied">"{{ searchQuery }}"</span>
+              }
+            </div>
+
+            @if (searchQuery || selectedSensoryFilter !== 'todos' || selectedCatalogCategory !== 'todos' || onlyFavoritesFilter) {
+              <button type="button" class="btn-clear-all" (click)="resetCatalogFilters()">
+                <i class="fa-solid fa-rotate-left"></i>
+                {{ language === 'es' ? 'Restablecer filtros' : 'Reset filters' }}
+              </button>
+            }
+          </div>
+
+          <!-- Grid de Cafés -->
+          @if (getFilteredCatalog().length > 0) {
+            <div class="catalog-grid animate-fade">
+              @for (item of getFilteredCatalog(); track item.id) {
+                <article class="cat-coffee-card" [class.card-is-fav]="isFavorite(item.id)">
+
+                  <div class="card-top-bar">
+                    <span class="cat-pill-badge">{{ item.categoryLabel[language] }}</span>
+                    <button
+                      type="button"
+                      class="btn-fav-heart"
+                      [class.is-favorite]="isFavorite(item.id)"
+                      (click)="toggleFavorite(item, $event)"
+                      [attr.aria-label]="isFavorite(item.id) ? (language === 'es' ? 'Quitar de favoritos' : 'Remove from favorites') : (language === 'es' ? 'Guardar en favoritos' : 'Save to favorites')"
+                      [title]="isFavorite(item.id) ? (language === 'es' ? 'En favoritos ❤️' : 'In favorites ❤️') : (language === 'es' ? 'Guardar café ❤️' : 'Save coffee ❤️')">
+                      <i [class]="isFavorite(item.id) ? 'fa-solid fa-heart active-heart' : 'fa-regular fa-heart'"></i>
+                    </button>
+                  </div>
+
+                  <div class="cat-card-center">
+                    <div class="cat-icon-wrap">
+                      <i [class]="item.icon"></i>
+                    </div>
+                    <div class="cat-title-price">
+                      <h4 class="coffee-card-title">{{ item.name[language] }}</h4>
+                      <div class="card-pricing-row">
+                        <strong class="coffee-price-gold">{{ item.price }}</strong>
+                        @if (item.badge) {
+                          <span class="card-badge-sub">{{ item.badge[language] }}</span>
+                        }
+                      </div>
+                    </div>
+                  </div>
+
+                  <p class="coffee-card-desc">{{ item.desc[language] }}</p>
+
+                  <div class="card-sensory-box">
+                    <div class="sensory-box-title">
+                      <i class="fa-solid fa-sparkles"></i>
+                      <span>{{ language === 'es' ? 'PERFIL & NOTAS DE CATA' : 'PROFILE & TASTING NOTES' }}</span>
+                    </div>
+                    <p class="sensory-notes-text">{{ item.notes[language] }}</p>
+                  </div>
+
+                  <div class="cat-card-actions">
+                    <a
+                      [href]="getCoffeeWhatsAppLink(item)"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="btn-card-order-wa"
+                      [title]="language === 'es' ? 'Pedir directamente por WhatsApp' : 'Order directly via WhatsApp'">
+                      <i class="fa-brands fa-whatsapp"></i>
+                      <span>{{ language === 'es' ? 'PEDIR' : 'ORDER' }}</span>
+                    </a>
+                    <button
+                      type="button"
+                      class="btn-card-customize-opt"
+                      (click)="customizeFromCatalog(item)"
+                      [title]="language === 'es' ? 'Personalizar tipo de leche o molienda en el Asistente' : 'Customize milk or grind in Advisor'">
+                      <i class="fa-solid fa-wand-magic-sparkles"></i>
+                      <span>{{ language === 'es' ? 'PERSONALIZAR' : 'CUSTOMIZE' }}</span>
+                    </button>
+                  </div>
+
+                </article>
+              }
+            </div>
+          } @else {
+            <!-- Empty state -->
+            <div class="catalog-empty-state animate-fade">
+              @if (onlyFavoritesFilter && favoritesCount === 0) {
+                <div class="empty-icon-wrap empty-heart-icon">
+                  <i class="fa-regular fa-heart"></i>
+                </div>
+                <h4>{{ language === 'es' ? 'Aún no tienes cafés en tus favoritos' : 'You do not have any favorite coffees yet' }}</h4>
+                <p>
+                  {{ language === 'es'
+                    ? 'Haz clic en el corazón ❤️ de cualquiera de nuestros cafés de la carta para guardarlo aquí y tenerlo siempre a mano.'
+                    : 'Click the heart ❤️ on any coffee card to save it here for quick access anytime.' }}
+                </p>
+                <button type="button" class="btn btn-gold btn-sm" (click)="resetCatalogFilters()">
+                  <i class="fa-solid fa-mug-hot"></i>
+                  {{ language === 'es' ? 'Explorar toda la carta' : 'Explore full menu' }}
+                </button>
+              } @else {
+                <div class="empty-icon-wrap">
+                  <i class="fa-solid fa-mug-saucer"></i>
+                </div>
+                <h4>{{ language === 'es' ? 'No encontramos cafés con esos criterios' : 'No coffees match your search' }}</h4>
+                <p>
+                  {{ language === 'es'
+                    ? 'Prueba con otra palabra clave (como "panela", "chocolate", "cítrico", "cold brew") o limpia los filtros activos.'
+                    : 'Try another keyword (like "panela", "chocolate", "citrus", "cold brew") or reset your active filters.' }}
+                </p>
+                <button type="button" class="btn btn-gold btn-sm" (click)="resetCatalogFilters()">
+                  <i class="fa-solid fa-rotate-left"></i>
+                  {{ language === 'es' ? 'Restablecer todos los filtros' : 'Reset all filters' }}
+                </button>
+              }
+            </div>
+          }
+
         </div>
 
       </div>
@@ -1598,5 +1835,14 @@
       </div>
     </div>
   </footer>
+
+  <!-- ========================= TOAST NOTIFICATION ========================= -->
+  <aside class="toast-floating-container" [class.toast-active]="toastVisible" role="status" aria-live="polite">
+    <div class="toast-bubble">
+      <i class="fa-solid fa-heart toast-heart-icon"></i>
+      <span class="toast-txt">{{ toastMessage }}</span>
+      <button type="button" class="toast-close-btn" (click)="hideToast()" aria-label="Cerrar notificación">✕</button>
+    </div>
+  </aside>
 
 </div>
