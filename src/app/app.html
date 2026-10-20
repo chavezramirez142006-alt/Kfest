@@ -11,7 +11,6 @@
       <nav class="nav-links" [class.open]="mobileMenuOpen">
         <a href="#inicio" class="nav-link" [class.active]="activeSection === 'inicio'" (click)="scrollToSection('inicio', $event)">{{ language === 'es' ? 'INICIO' : 'HOME' }}</a>
         <a href="#herencia" class="nav-link" [class.active]="activeSection === 'herencia'" (click)="scrollToSection('herencia', $event)">{{ language === 'es' ? 'HISTORIA' : 'OUR STORY' }}</a>
-        <a href="#equipo" class="nav-link" [class.active]="activeSection === 'equipo'" (click)="scrollToSection('equipo', $event)">{{ language === 'es' ? 'EQUIPO' : 'OUR TEAM' }}</a>
         <a href="#coleccion" class="nav-link" [class.active]="activeSection === 'coleccion'" (click)="scrollToSection('coleccion', $event)">{{ language === 'es' ? 'COLECCIÓN' : 'COLLECTION' }}</a>
         <a href="#quiz" class="nav-link" [class.active]="activeSection === 'quiz'" (click)="scrollToSection('quiz', $event)">{{ language === 'es' ? 'TU CAFÉ IDEAL' : 'IDEAL MATCH' }}</a>
         <a href="#cata" class="nav-link" [class.active]="activeSection === 'cata'" (click)="scrollToSection('cata', $event)">{{ language === 'es' ? 'CATAS' : 'PROFILES' }}</a>
@@ -387,97 +386,6 @@
         </div>
       </div>
     </section>
-
-
-    <!-- ========================= NUESTRO EQUIPO ========================= -->
-    <section id="equipo" class="section-dark sec-pad team-section">
-      <div class="container">
-
-        <div class="team-header">
-          <p class="eyebrow-line">─── {{ language === 'es' ? 'FAMILIA, VOCACIÓN & ALTA CATA' : 'FAMILY, PASSION & SPECIALTY' }}</p>
-          <h2 class="sec-title">
-            {{ language === 'es' ? 'Nuestro' : 'Our' }}
-            <em class="gold-script">{{ language === 'es' ? 'Equipo' : 'Team' }}</em>
-          </h2>
-          <p class="sec-sub">
-            {{ language === 'es'
-            ? 'Tres generaciones comprometidas con la excelencia del café de altura en Chanchamayo. Conoce a los rostros y manos que custodian cada etapa desde el cultivo hasta tu taza.'
-            : 'Three generations dedicated to high-altitude specialty coffee in Chanchamayo. Meet the passionate hands caring for each bean from harvest to cup.' }}
-          </p>
-        </div>
-
-        <div class="team-grid">
-
-          <article class="team-card">
-            <div class="team-img-wrap">
-              <img src="images/team/fundadores.jpg" alt="Don Silvino &amp; Doña Teresa - Fundadores" loading="lazy" />
-              <span class="team-badge"><i class="fa-solid fa-seedling"></i> {{ language === 'es' ? 'FUNDADORES & LEGADO' : 'FOUNDERS & LEGACY' }}</span>
-            </div>
-            <div class="team-body">
-              <h3 class="team-name">Don Silvino &amp; Doña Teresa</h3>
-              <p class="team-role">{{ language === 'es' ? 'Patriarcas y Custodios de la Tierra' : 'Patriarchs &amp; Earth Guardians' }}</p>
-              <p class="team-bio">
-                {{ language === 'es'
-                ? 'Pioneros en rescatar las tierras familiares del Fundo Santa Teresita en Chanchamayo. Su fe y paciencia sembraron las primeras plantas de Typica y Caturra.'
-                : 'Pioneers who reclaimed family lands at Santa Teresita Farm. Their patience and devotion planted our very first heirloom Typica and Caturra trees.' }}
-              </p>
-            </div>
-          </article>
-
-          <article class="team-card highlight-lead">
-            <div class="team-img-wrap">
-              <img src="images/team/teresa_chavez.jpg" alt="Doña Teresa Chávez - Maestra Caficultora" loading="lazy" />
-              <span class="team-badge badge-gold"><i class="fa-solid fa-crown"></i> {{ language === 'es' ? 'LIDERESA DE FUNDO' : 'ESTATE LEADER' }}</span>
-            </div>
-            <div class="team-body">
-              <h3 class="team-name">Doña Teresa Chávez</h3>
-              <p class="team-role">{{ language === 'es' ? 'Directora &amp; Maestra Caficultora' : 'Director &amp; Master Coffee Grower' }}</p>
-              <p class="team-bio">
-                {{ language === 'es'
-                ? 'Lidera la producción sostenible con enfoque en empoderamiento de mujeres caficultoras y economía circular. Supervisa cada fermentación y secado solar.'
-                : 'Directs sustainable production empowering women coffee farmers and circular economy. Oversees precise micro-batch fermentation and solar drying.' }}
-              </p>
-            </div>
-          </article>
-
-          <article class="team-card">
-            <div class="team-img-wrap">
-              <img src="images/team/equipo_fundo.jpg" alt="Equipo de Tueste &amp; Baristas Kfest" loading="lazy" />
-              <span class="team-badge"><i class="fa-solid fa-fire-burner"></i> {{ language === 'es' ? 'TUESTE &amp; BARISTAS' : 'ROAST &amp; BARISTAS' }}</span>
-            </div>
-            <div class="team-body">
-              <h3 class="team-name">{{ language === 'es' ? 'Maestros Tostadores & Baristas' : 'Master Roasters & Baristas' }}</h3>
-              <p class="team-role">{{ language === 'es' ? 'Equipo Técnico Kfestcar &amp; Tostaduría' : 'Kfestcar &amp; Roastery Specialists' }}</p>
-              <p class="team-bio">
-                {{ language === 'es'
-                ? 'Calibran los perfiles de tueste medio para resaltar notas a panela de oro y cacao. Llevan la experiencia del café recién tostado a la barra móvil Kfestcar.'
-                : 'Calibrate custom medium roast curves to bring out golden panela and dark cacao notes. Power our mobile Kfestcar specialty espresso bars.' }}
-              </p>
-            </div>
-          </article>
-
-          <article class="team-card">
-            <div class="team-img-wrap">
-              <img src="images/team/cosechadores_campo.jpg" alt="Recolectores de Altura Fundo Santa Teresita" loading="lazy" />
-              <span class="team-badge"><i class="fa-solid fa-hand-holding-heart"></i> {{ language === 'es' ? 'COSECHA SELECTIVA' : 'SELECTIVE PICKING' }}</span>
-            </div>
-            <div class="team-body">
-              <h3 class="team-name">{{ language === 'es' ? 'Recolectores de Altura' : 'High Altitude Harvesters' }}</h3>
-              <p class="team-role">{{ language === 'es' ? 'Cosecha 100% Manual en Pendiente' : '100% Hand-Picked on Slopes' }}</p>
-              <p class="team-bio">
-                {{ language === 'es'
-                ? 'Recorren las laderas empinadas a más de 1,600 msnm seleccionando únicamente las cerezas carmesí en su punto óptimo de azúcar y madurez brix.'
-                : 'Traverse steep slopes at 1,600+ masl picking solely peak-ripe crimson cherries for maximum brix sweetness and complex cup aromatics.' }}
-              </p>
-            </div>
-          </article>
-
-        </div>
-
-      </div>
-    </section>
-
-
 
     <!-- ========================= COLECCIÓN ========================= -->
     <section id="coleccion" class="section-brown sec-pad">

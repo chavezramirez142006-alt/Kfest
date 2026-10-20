@@ -378,7 +378,6 @@ export class App {
     'inicio',
     'herencia',
     'proceso',
-    'equipo',
     'coleccion',
     'quiz',
     'cata',
