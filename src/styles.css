@@ -169,13 +169,14 @@ img {
    MODO CLARO CÁLIDO (COLOR CREMA ARTESANAL / PERGAMINO)
    Color crema cálido, elegante y tostado — NO blanco puro
    ===================================================== */
-body.light-theme {
+body.light-theme,
+.light-theme {
   --bg0: #f6f1e8; /* Crema artesanal suave */
   --bg0-rgb: 246, 241, 232;
   --bg1: #ece4d4; /* Crema tostado pergamino */
-  --bg2: #fbf8f2; /* Crema seda para tarjetas */
-  --bg3: #e2d7c3; /* Crema café con leche */
-  --bg4: #d6c9b3;
+  --bg2: #ffffff; /* Blanco puro para tarjetas */
+  --bg3: #fbf8f2; /* Crema seda */
+  --bg4: #e2d7c3;
 
   /* Tipografía en café tostado oscuro */
   --text0: #2b180d; /* Café tostado profundo */
@@ -197,11 +198,30 @@ body.light-theme {
   /* Bordes suaves de café */
   --bdr: rgba(74, 51, 34, 0.12);
   --bdr-light: rgba(74, 51, 34, 0.18);
-  --glass-bg: rgba(246, 241, 232, 0.88);
+  --glass-bg: rgba(246, 241, 232, 0.94);
   --glass-bdr: rgba(166, 115, 36, 0.25);
   --glass-shd: 0 12px 32px rgba(74, 51, 34, 0.08), 0 0 0 1px rgba(166, 115, 36, 0.15) inset;
 }
 
-body.light-theme .section-brown {
-  background: linear-gradient(180deg, #ece4d4 0%, #e2d7c3 100%);
+body.light-theme {
+  background-color: #f6f1e8;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(166, 115, 36, 0.08), transparent 70%),
+    radial-gradient(circle at 100% 40%, rgba(166, 115, 36, 0.04), transparent 40%),
+    radial-gradient(circle at 0% 80%, rgba(166, 115, 36, 0.04), transparent 40%);
+}
+
+body.light-theme .section-dark,
+.light-theme .section-dark {
+  background: var(--bg0) !important;
+}
+
+body.light-theme .section-darkest,
+.light-theme .section-darkest {
+  background: var(--bg1) !important;
+}
+
+body.light-theme .section-brown,
+.light-theme .section-brown {
+  background: linear-gradient(180deg, #ece4d4 0%, #f6f1e8 100%) !important;
 }

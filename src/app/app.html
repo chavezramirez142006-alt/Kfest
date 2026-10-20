@@ -1,4 +1,4 @@
-<div class="site">
+<div class="site" [class.light-theme]="isLightMode">
 
   <!-- ========================= NAVBAR ========================= -->
   <header class="navbar" [class.nav-scrolled]="isScrolled">
@@ -9,16 +9,46 @@
       </a>
 
       <nav class="nav-links" [class.open]="mobileMenuOpen">
-        <a href="#inicio" class="nav-link" [class.active]="activeSection === 'inicio'" (click)="scrollToSection('inicio', $event)">{{ language === 'es' ? 'INICIO' : 'HOME' }}</a>
-        <a href="#herencia" class="nav-link" [class.active]="activeSection === 'herencia'" (click)="scrollToSection('herencia', $event)">{{ language === 'es' ? 'HISTORIA' : 'OUR STORY' }}</a>
-        <a href="#coleccion" class="nav-link" [class.active]="activeSection === 'coleccion'" (click)="scrollToSection('coleccion', $event)">{{ language === 'es' ? 'COLECCIÓN' : 'COLLECTION' }}</a>
-        <a href="#quiz" class="nav-link" [class.active]="activeSection === 'quiz'" (click)="scrollToSection('quiz', $event)">{{ language === 'es' ? 'TU CAFÉ IDEAL' : 'IDEAL MATCH' }}</a>
-        <a href="#cata" class="nav-link" [class.active]="activeSection === 'cata'" (click)="scrollToSection('cata', $event)">{{ language === 'es' ? 'CATAS' : 'PROFILES' }}</a>
-        <a href="#calculadora" class="nav-link" [class.active]="activeSection === 'calculadora'" (click)="scrollToSection('calculadora', $event)">BARISTA LAB</a>
-        <a href="#catering" class="nav-link" [class.active]="activeSection === 'catering'" (click)="scrollToSection('catering', $event)">KFESTCAR</a>
-        <a href="#testimonios" class="nav-link" [class.active]="activeSection === 'testimonios'" (click)="scrollToSection('testimonios', $event)">{{ language === 'es' ? 'RESEÑAS' : 'REVIEWS' }}</a>
-        <a href="#faq" class="nav-link" [class.active]="activeSection === 'faq'" (click)="scrollToSection('faq', $event)">FAQ</a>
-        <a href="#contacto" class="nav-link" [class.active]="activeSection === 'contacto'" (click)="scrollToSection('contacto', $event)">{{ language === 'es' ? 'CONTACTO' : 'CONTACT' }}</a>
+        <a href="#inicio" class="nav-link" [class.active]="activeSection === 'inicio'" (click)="scrollToSection('inicio', $event)">
+          <i class="fa-solid fa-mug-saucer nav-item-icon"></i>
+          <span>{{ language === 'es' ? 'INICIO' : 'HOME' }}</span>
+        </a>
+        <a href="#herencia" class="nav-link" [class.active]="activeSection === 'herencia'" (click)="scrollToSection('herencia', $event)">
+          <i class="fa-solid fa-seedling nav-item-icon"></i>
+          <span>{{ language === 'es' ? 'HISTORIA' : 'OUR STORY' }}</span>
+        </a>
+        <a href="#coleccion" class="nav-link" [class.active]="activeSection === 'coleccion'" (click)="scrollToSection('coleccion', $event)">
+          <i class="fa-solid fa-bag-shopping nav-item-icon"></i>
+          <span>{{ language === 'es' ? 'COLECCIÓN' : 'COLLECTION' }}</span>
+        </a>
+        <a href="#quiz" class="nav-link" [class.active]="activeSection === 'quiz'" (click)="scrollToSection('quiz', $event)">
+          <i class="fa-solid fa-wand-magic-sparkles nav-item-icon"></i>
+          <span>{{ language === 'es' ? 'TU CAFÉ IDEAL' : 'IDEAL MATCH' }}</span>
+        </a>
+        <a href="#cata" class="nav-link" [class.active]="activeSection === 'cata'" (click)="scrollToSection('cata', $event)">
+          <i class="fa-solid fa-award nav-item-icon"></i>
+          <span>{{ language === 'es' ? 'CATAS' : 'PROFILES' }}</span>
+        </a>
+        <a href="#calculadora" class="nav-link" [class.active]="activeSection === 'calculadora'" (click)="scrollToSection('calculadora', $event)">
+          <i class="fa-solid fa-flask nav-item-icon"></i>
+          <span>BARISTA LAB</span>
+        </a>
+        <a href="#catering" class="nav-link" [class.active]="activeSection === 'catering'" (click)="scrollToSection('catering', $event)">
+          <i class="fa-solid fa-truck-fast nav-item-icon"></i>
+          <span>KFESTCAR</span>
+        </a>
+        <a href="#testimonios" class="nav-link" [class.active]="activeSection === 'testimonios'" (click)="scrollToSection('testimonios', $event)">
+          <i class="fa-solid fa-star nav-item-icon"></i>
+          <span>{{ language === 'es' ? 'RESEÑAS' : 'REVIEWS' }}</span>
+        </a>
+        <a href="#faq" class="nav-link" [class.active]="activeSection === 'faq'" (click)="scrollToSection('faq', $event)">
+          <i class="fa-solid fa-circle-question nav-item-icon"></i>
+          <span>FAQ</span>
+        </a>
+        <a href="#contacto" class="nav-link" [class.active]="activeSection === 'contacto'" (click)="scrollToSection('contacto', $event)">
+          <i class="fa-solid fa-paper-plane nav-item-icon"></i>
+          <span>{{ language === 'es' ? 'CONTACTO' : 'CONTACT' }}</span>
+        </a>
       </nav>
 
       <div class="header-controls">
@@ -45,7 +75,7 @@
         </div>
 
         <button class="mobile-toggle" (click)="toggleMobileMenu()" [attr.aria-expanded]="mobileMenuOpen" [attr.aria-label]="language === 'es' ? 'Abrir o cerrar menú' : 'Toggle navigation menu'">
-          <span class="hamburger-icon" aria-hidden="true">{{ mobileMenuOpen ? '✕' : '☰' }}</span>
+          <i class="hamburger-icon" [class]="mobileMenuOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'" aria-hidden="true"></i>
         </button>
       </div>
 
@@ -66,7 +96,7 @@
         <div class="hero-left">
 
           <div class="badge-capsule">
-            <span class="badge-dot">◉</span>
+            <i class="badge-dot fa-solid fa-circle-dot" aria-hidden="true"></i>
             <span>{{ language === 'es' ? 'COSECHA SELECCIONADA 2026 · FUNDO SANTA TERESITA' : 'SELECTED HARVEST 2026 ·
               SANTA TERESITA FARM' }}</span>
           </div>
@@ -99,7 +129,7 @@
               {{ language === 'es' ? 'PEDIR RESERVA POR WHATSAPP' : 'REQUEST RESERVATION VIA WHATSAPP' }}
             </a>
             <a href="#herencia" class="btn btn-outline">
-              <span class="btn-sym">▣</span>
+              <i class="btn-sym fa-solid fa-seedling" aria-hidden="true"></i>
               {{ language === 'es' ? 'CONOCER NUESTRO LEGADO' : 'DISCOVER OUR LEGACY' }}
             </a>
           </div>
@@ -111,21 +141,21 @@
 
           <div class="hero-pills">
             <div class="hero-pill">
-              <span class="pill-icon">◎</span>
+              <i class="pill-icon fa-solid fa-mug-hot" aria-hidden="true"></i>
               <div>
                 <small>{{ language === 'es' ? 'CALIDAD TAZA' : 'CUP QUALITY' }}</small>
                 <strong>81–84 Pts SCA</strong>
               </div>
             </div>
             <div class="hero-pill">
-              <span class="pill-icon">▣</span>
+              <i class="pill-icon fa-solid fa-truck-fast" aria-hidden="true"></i>
               <div>
                 <small>{{ language === 'es' ? 'ENTREGA SEGURA' : 'SECURE DELIVERY' }}</small>
                 <strong>{{ language === 'es' ? 'Lima & Provincias' : 'Lima & Nationwide' }}</strong>
               </div>
             </div>
             <div class="hero-pill">
-              <span class="pill-icon">◷</span>
+              <i class="pill-icon fa-solid fa-fire-burner" aria-hidden="true"></i>
               <div>
                 <small>{{ language === 'es' ? 'TUESTE FRESCO' : 'FRESH ROAST' }}</small>
                 <strong>{{ language === 'es' ? 'Lun, Mié & Vie' : 'Mon, Wed & Fri' }}</strong>
@@ -153,28 +183,28 @@
       <div class="hero-ribbon">
         <div class="container ribbon-row">
           <div class="ribbon-item">
-            <span class="ribbon-sym">⌁</span>
+            <i class="ribbon-sym fa-solid fa-mountain" aria-hidden="true"></i>
             <div>
               <small>{{ language === 'es' ? 'ALTITUD SELECCIONADA' : 'SELECTED ALTITUDE' }}</small>
               <strong>{{ language === 'es' ? '1,300 a 1,800 msnm' : '1,300 to 1,800 masl' }}</strong>
             </div>
           </div>
           <div class="ribbon-item">
-            <span class="ribbon-sym">◉</span>
+            <i class="ribbon-sym fa-solid fa-map-pin" aria-hidden="true"></i>
             <div>
               <small>{{ language === 'es' ? 'TERROIR SAGRADO' : 'SACRED TERROIR' }}</small>
               <strong>Perené · Selva Central</strong>
             </div>
           </div>
           <div class="ribbon-item">
-            <span class="ribbon-sym">♙</span>
+            <i class="ribbon-sym fa-solid fa-award" aria-hidden="true"></i>
             <div>
               <small>{{ language === 'es' ? 'ESTÁNDAR TAZA' : 'CUPPING STANDARD' }}</small>
               <strong>81 a 84 Puntos SCA</strong>
             </div>
           </div>
           <div class="ribbon-item">
-            <span class="ribbon-sym">♻</span>
+            <i class="ribbon-sym fa-solid fa-leaf" aria-hidden="true"></i>
             <div>
               <small>{{ language === 'es' ? 'COMPROMISO CIRCULAR' : 'CIRCULAR COMMITMENT' }}</small>
               <strong>{{ language === 'es' ? 'Cero Desperdicio · Bio' : 'Zero Waste · Bio' }}</strong>
@@ -433,7 +463,7 @@
           @for (prod of collectionProducts; track prod.name) {
             <article class="prod-card" [class.prod-featured]="prod.isFeatured">
               @if (prod.isFeatured) {
-                <div class="most-req">◉ {{ language === 'es' ? 'MÁS SOLICITADO' : 'MOST POPULAR' }}</div>
+                <div class="most-req"><i class="fa-solid fa-star" aria-hidden="true"></i> {{ language === 'es' ? 'MÁS SOLICITADO' : 'MOST POPULAR' }}</div>
               }
               <div class="prod-img-area">
                 <span class="prod-weight">{{ prod.weight }}</span>
@@ -488,8 +518,8 @@
               </h3>
               <p class="catalog-desc">
                 {{ language === 'es'
-                  ? 'Filtra al instante por notas de cata (panela, cacao, cítrico, floral...), categoría o busca por nombre. Guarda tus cafés preferidos con ❤️ y pidelos directo por WhatsApp.'
-                  : 'Instantly filter by sensory tasting notes (panela, cacao, citrus, floral...), category or search by name. Save favorites with ❤️ and order directly via WhatsApp.' }}
+                  ? 'Filtra al instante por notas de cata (panela, cacao, cítrico, floral...), categoría o busca por nombre. Guarda tus cafés preferidos y pidelos directo por WhatsApp.'
+                  : 'Instantly filter by sensory tasting notes (panela, cacao, citrus, floral...), category or search by name. Save favorite coffees and order directly via WhatsApp.' }}
               </p>
             </div>
 
@@ -518,7 +548,7 @@
                 (input)="onSearchInput($event)"
                 [placeholder]="language === 'es' ? 'Buscar café o nota sensorial (ej: chocolate, panela, frutal, cold brew, v60...)' : 'Search coffee or tasting note (e.g. chocolate, panela, fruity, cold brew, v60...)'" />
               @if (searchQuery) {
-                <button type="button" class="search-clear-btn" (click)="clearSearch()" aria-label="Limpiar búsqueda">✕</button>
+                <button type="button" class="search-clear-btn" (click)="clearSearch()" aria-label="Limpiar búsqueda"><i class="fa-solid fa-xmark"></i></button>
               }
             </div>
 
@@ -579,7 +609,7 @@
             <div class="status-count">
               <span>{{ language === 'es' ? 'Mostrando' : 'Showing' }} <strong>{{ getFilteredCatalog().length }}</strong> {{ language === 'es' ? 'cafés de especialidad' : 'specialty coffees' }}</span>
               @if (onlyFavoritesFilter) {
-                <span class="badge-filter-applied">❤️ {{ language === 'es' ? 'Filtrando por favoritos' : 'Filtering by favorites' }}</span>
+                <span class="badge-filter-applied"><i class="fa-solid fa-heart"></i> {{ language === 'es' ? 'Filtrando por favoritos' : 'Filtering by favorites' }}</span>
               }
               @if (searchQuery) {
                 <span class="badge-filter-applied">"{{ searchQuery }}"</span>
@@ -608,7 +638,7 @@
                       [class.is-favorite]="isFavorite(item.id)"
                       (click)="toggleFavorite(item, $event)"
                       [attr.aria-label]="isFavorite(item.id) ? (language === 'es' ? 'Quitar de favoritos' : 'Remove from favorites') : (language === 'es' ? 'Guardar en favoritos' : 'Save to favorites')"
-                      [title]="isFavorite(item.id) ? (language === 'es' ? 'En favoritos ❤️' : 'In favorites ❤️') : (language === 'es' ? 'Guardar café ❤️' : 'Save coffee ❤️')">
+                      [title]="isFavorite(item.id) ? (language === 'es' ? 'En favoritos' : 'In favorites') : (language === 'es' ? 'Guardar café' : 'Save coffee')">
                       <i [class]="isFavorite(item.id) ? 'fa-solid fa-heart active-heart' : 'fa-regular fa-heart'"></i>
                     </button>
                   </div>
@@ -671,8 +701,8 @@
                 <h4>{{ language === 'es' ? 'Aún no tienes cafés en tus favoritos' : 'You do not have any favorite coffees yet' }}</h4>
                 <p>
                   {{ language === 'es'
-                    ? 'Haz clic en el corazón ❤️ de cualquiera de nuestros cafés de la carta para guardarlo aquí y tenerlo siempre a mano.'
-                    : 'Click the heart ❤️ on any coffee card to save it here for quick access anytime.' }}
+                    ? 'Haz clic en el icono de corazón de cualquiera de nuestros cafés de la carta para guardarlo aquí y tenerlo siempre a mano.'
+                    : 'Click the heart icon on any coffee card to save it here for quick access anytime.' }}
                 </p>
                 <button type="button" class="btn btn-gold btn-sm" (click)="resetCatalogFilters()">
                   <i class="fa-solid fa-mug-hot"></i>
@@ -1329,7 +1359,7 @@
 
         <div class="util-left">
           <span class="eco-label">
-            ◉ {{ language === 'es' ? 'ECONOMÍA CIRCULAR · CERO HUELLA' : 'CIRCULAR ECONOMY · ZERO FOOTPRINT' }}
+            <i class="fa-solid fa-recycle" aria-hidden="true"></i> {{ language === 'es' ? 'ECONOMÍA CIRCULAR · CERO HUELLA' : 'CIRCULAR ECONOMY · ZERO FOOTPRINT' }}
           </span>
 
           <h2 class="sec-title">
@@ -1395,7 +1425,7 @@
       <div class="container catering-grid">
 
         <div class="catering-left">
-          <span class="gold-label">⚑ {{ language === 'es' ? 'BARRA MÓVIL & CONCIERGE PRIVADO' : 'MOBILE BAR & PRIVATE
+          <span class="gold-label"><i class="fa-solid fa-mug-saucer" aria-hidden="true"></i> {{ language === 'es' ? 'BARRA MÓVIL & CONCIERGE PRIVADO' : 'MOBILE BAR & PRIVATE
             CONCIERGE' }}</span>
 
           <h2 class="sec-title">
@@ -1417,17 +1447,17 @@
             }}</h5>
 
           <div class="event-grid">
-            <button [class.active]="selectedEvent === 'bodas'" (click)="setEvent('bodas')">♢ {{ language === 'es' ?
+            <button [class.active]="selectedEvent === 'bodas'" (click)="setEvent('bodas')"><i class="fa-solid fa-champagne-glasses"></i> {{ language === 'es' ?
               'Bodas de Gala' : 'Gala Weddings' }}</button>
-            <button [class.active]="selectedEvent === 'corporativos'" (click)="setEvent('corporativos')">▣ {{ language
+            <button [class.active]="selectedEvent === 'corporativos'" (click)="setEvent('corporativos')"><i class="fa-solid fa-briefcase"></i> {{ language
               === 'es' ? 'Corporativos VIP' : 'VIP Corporate' }}</button>
-            <button [class.active]="selectedEvent === 'ferias'" (click)="setEvent('ferias')">⚑ {{ language === 'es' ?
+            <button [class.active]="selectedEvent === 'ferias'" (click)="setEvent('ferias')"><i class="fa-solid fa-store"></i> {{ language === 'es' ?
               'Ferias Gourmet' : 'Gourmet Fairs' }}</button>
-            <button [class.active]="selectedEvent === 'aniversarios'" (click)="setEvent('aniversarios')">♙ {{ language
+            <button [class.active]="selectedEvent === 'aniversarios'" (click)="setEvent('aniversarios')"><i class="fa-solid fa-cake-candles"></i> {{ language
               === 'es' ? 'Aniversarios' : 'Anniversaries' }}</button>
-            <button [class.active]="selectedEvent === 'lanzamientos'" (click)="setEvent('lanzamientos')">⚑ {{ language
+            <button [class.active]="selectedEvent === 'lanzamientos'" (click)="setEvent('lanzamientos')"><i class="fa-solid fa-rocket"></i> {{ language
               === 'es' ? 'Lanzamientos' : 'Launches' }}</button>
-            <button [class.active]="selectedEvent === 'privados'" (click)="setEvent('privados')">⚐ {{ language === 'es'
+            <button [class.active]="selectedEvent === 'privados'" (click)="setEvent('privados')"><i class="fa-solid fa-user-tie"></i> {{ language === 'es'
               ? 'Eventos Privados' : 'Private Events' }}</button>
           </div>
 
@@ -1689,11 +1719,11 @@
 
       <div class="footer-col">
         <h4>{{ language === 'es' ? 'CONTACTO & DESPACHOS' : 'CONTACT & DISPATCH' }}</h4>
-        <span>⌕ 918 422 677 / 987 483 134</span>
-        <span>✉ pedidos@kfest.pe</span>
-        <span>◉ {{ language === 'es' ? 'Fundo Santa Teresita, Chanchamayo, Región Junín, Perú' : 'Santa Teresita
+        <span><i class="fa-solid fa-phone" aria-hidden="true"></i> 918 422 677 / 987 483 134</span>
+        <span><i class="fa-solid fa-envelope" aria-hidden="true"></i> pedidos@kfest.pe</span>
+        <span><i class="fa-solid fa-location-dot" aria-hidden="true"></i> {{ language === 'es' ? 'Fundo Santa Teresita, Chanchamayo, Región Junín, Perú' : 'Santa Teresita
           Farm, Chanchamayo, Junín Region, Peru' }}</span>
-        <span>◷ {{ language === 'es' ? 'Lun - Sáb: 8:00 am - 5:00 pm' : 'Mon - Sat: 8:00 am - 5:00 pm' }}</span>
+        <span><i class="fa-solid fa-clock" aria-hidden="true"></i> {{ language === 'es' ? 'Lun - Sáb: 8:00 am - 5:00 pm' : 'Mon - Sat: 8:00 am - 5:00 pm' }}</span>
       </div>
 
       <div class="footer-col">
@@ -1749,7 +1779,7 @@
     <div class="toast-bubble">
       <i class="fa-solid fa-heart toast-heart-icon"></i>
       <span class="toast-txt">{{ toastMessage }}</span>
-      <button type="button" class="toast-close-btn" (click)="hideToast()" aria-label="Cerrar notificación">✕</button>
+      <button type="button" class="toast-close-btn" (click)="hideToast()" aria-label="Cerrar notificación"><i class="fa-solid fa-xmark"></i></button>
     </div>
   </aside>
 

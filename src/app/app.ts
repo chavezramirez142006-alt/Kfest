@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, ViewEncapsulation } from '@angular/core';
 import {
   CoffeeCategoryKey,
   CoffeeMenuItem,
@@ -294,7 +294,8 @@ const EVENT_NAMES: Record<Language, Record<EventType, string>> = {
   selector: 'app-root',
   standalone: true,
   templateUrl: './app.html',
-  styleUrls: ['./app.css']
+  styleUrls: ['./app.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class App {
   language: Language = 'es';
@@ -315,14 +316,14 @@ export class App {
   private toastTimer: any = null;
 
   readonly sensoryNotesFilters = [
-    { id: 'todos', label: { es: 'Todos', en: 'All' }, icon: 'fa-solid fa-mug-hot' },
-    { id: 'chocolate', label: { es: '🍫 Chocolate & Cacao', en: '🍫 Chocolate & Cacao' }, keywords: ['chocolate', 'cacao', 'amargo'] },
-    { id: 'panela', label: { es: '🍯 Panela & Caramelo', en: '🍯 Panela & Caramel' }, keywords: ['panela', 'miel', 'caramelo', 'dulce', 'toffee'] },
-    { id: 'citrico', label: { es: '🍋 Cítrico & Frutal', en: '🍋 Citrus & Fruity' }, keywords: ['cítrico', 'citrico', 'frutal', 'frutas', 'naranja', 'maracuyá', 'maracuya', 'fresa', 'arándanos', 'arandanos', 'acidez'] },
-    { id: 'floral', label: { es: '🌸 Floral & Jazmín', en: '🌸 Floral & Jasmine' }, keywords: ['floral', 'jazmín', 'jazmin', 'flores', 'delicado'] },
-    { id: 'nuez', label: { es: '🥜 Nuez & Avellana', en: '🥜 Roasted Nuts' }, keywords: ['nuez', 'avellana', 'secos', 'almendra', 'tostada'] },
-    { id: 'intenso', label: { es: '⚡ Extra Intenso', en: '⚡ Extra Bold' }, keywords: ['intenso', 'fuerte', 'cuerpo', 'denso', 'espresso', 'doble'] },
-    { id: 'cremoso', label: { es: '🥛 Cremoso & Leche', en: '🥛 Creamy & Milk' }, keywords: ['cremoso', 'leche', 'sedoso', 'suave', 'microespuma', 'chantilly'] }
+    { id: 'todos', label: { es: 'Todos los Cafés', en: 'All Coffees' }, icon: 'fa-solid fa-mug-hot' },
+    { id: 'chocolate', label: { es: 'Chocolate & Cacao', en: 'Chocolate & Cacao' }, icon: 'fa-solid fa-cookie-bite', keywords: ['chocolate', 'cacao', 'amargo'] },
+    { id: 'panela', label: { es: 'Panela & Caramelo', en: 'Panela & Caramel' }, icon: 'fa-solid fa-cubes-stacked', keywords: ['panela', 'miel', 'caramelo', 'dulce', 'toffee'] },
+    { id: 'citrico', label: { es: 'Cítrico & Frutal', en: 'Citrus & Fruity' }, icon: 'fa-solid fa-lemon', keywords: ['cítrico', 'citrico', 'frutal', 'frutas', 'naranja', 'maracuyá', 'maracuya', 'fresa', 'arándanos', 'arandanos', 'acidez'] },
+    { id: 'floral', label: { es: 'Floral & Jazmín', en: 'Floral & Jasmine' }, icon: 'fa-solid fa-spa', keywords: ['floral', 'jazmín', 'jazmin', 'flores', 'delicado'] },
+    { id: 'nuez', label: { es: 'Nuez & Avellana', en: 'Roasted Nuts' }, icon: 'fa-solid fa-seedling', keywords: ['nuez', 'avellana', 'secos', 'almendra', 'tostada'] },
+    { id: 'intenso', label: { es: 'Extra Intenso', en: 'Extra Bold' }, icon: 'fa-solid fa-bolt', keywords: ['intenso', 'fuerte', 'cuerpo', 'denso', 'espresso', 'doble'] },
+    { id: 'cremoso', label: { es: 'Cremoso & Leche', en: 'Creamy & Milk' }, icon: 'fa-solid fa-mug-hot', keywords: ['cremoso', 'leche', 'sedoso', 'suave', 'microespuma', 'chantilly'] }
   ];
 
   readonly catalogCategories = [
@@ -950,21 +951,21 @@ export class App {
     const foodName = this.getQuizFoodName();
 
     const message = isEs
-      ? `☕ *¡Hola Kfest! Hice el test "Encuentra tu Café Ideal" en su web.*\n\n` +
+      ? `*¡Hola Kfest! Hice el test "Encuentra tu Café Ideal" en su web.*\n\n` +
         `Mi café de preferencia es:\n` +
-        `👉 *${coffee.name.es}* (${coffee.price})\n` +
-        `📌 *Categoría:* ${coffee.categoryLabel.es}\n` +
-        `✨ *Notas sensoriales:* ${coffee.notes.es}\n\n` +
+        `*${coffee.name.es}* (${coffee.price})\n` +
+        `*Categoría:* ${coffee.categoryLabel.es}\n` +
+        `*Notas sensoriales:* ${coffee.notes.es}\n\n` +
         `*Detalles de mi preferencia:*` +
         (prepName ? `\n• Preparación / Leche: ${prepName}` : '') +
         (foodName ? `\n• Acompañamiento: ${foodName}` : '') +
         `\n• *Total estimado:* ${totalPrice}\n\n` +
         `¿Me podrían confirmar disponibilidad para preparar / tomar mi pedido? ¡Muchas gracias!`
-      : `☕ *Hello Kfest! I completed the "Find your Ideal Coffee" test on your website.*\n\n` +
+      : `*Hello Kfest! I completed the "Find your Ideal Coffee" test on your website.*\n\n` +
         `My selected coffee match is:\n` +
-        `👉 *${coffee.name.en}* (${coffee.price})\n` +
-        `📌 *Category:* ${coffee.categoryLabel.en}\n` +
-        `✨ *Tasting notes:* ${coffee.notes.en}\n\n` +
+        `*${coffee.name.en}* (${coffee.price})\n` +
+        `*Category:* ${coffee.categoryLabel.en}\n` +
+        `*Tasting notes:* ${coffee.notes.en}\n\n` +
         `*Order details:*` +
         (prepName ? `\n• Preparation / Milk: ${prepName}` : '') +
         (foodName ? `\n• Pairing: ${foodName}` : '') +
@@ -1091,15 +1092,15 @@ export class App {
       this.favoriteCoffeeIds.splice(index, 1);
       this.showToast(
         this.language === 'es'
-          ? `🤍 Eliminado de tus favoritos: ${coffeeName}`
-          : `🤍 Removed from favorites: ${coffeeName}`
+          ? `Eliminado de tus favoritos: ${coffeeName}`
+          : `Removed from favorites: ${coffeeName}`
       );
     } else {
       this.favoriteCoffeeIds.push(id);
       this.showToast(
         this.language === 'es'
-          ? `❤️ ¡Guardado en tus favoritos! ${coffeeName}`
-          : `❤️ Saved to favorites! ${coffeeName}`
+          ? `Guardado en tus favoritos: ${coffeeName}`
+          : `Saved to favorites: ${coffeeName}`
       );
     }
 
@@ -1221,15 +1222,15 @@ export class App {
   getCoffeeWhatsAppLink(item: CoffeeMenuItem): string {
     const isEs = this.language === 'es';
     const msg = isEs
-      ? `☕ *¡Hola Kfest!* Deseo pedir de su carta:\n\n` +
-        `👉 *${item.name.es}* (${item.price})\n` +
-        `📌 *Categoría:* ${item.categoryLabel.es}\n` +
-        `✨ *Notas:* ${item.notes.es}\n\n` +
+      ? `*¡Hola Kfest!* Deseo pedir de su carta:\n\n` +
+        `*${item.name.es}* (${item.price})\n` +
+        `*Categoría:* ${item.categoryLabel.es}\n` +
+        `*Notas:* ${item.notes.es}\n\n` +
         `¿Me confirman si tienen disponibilidad para preparar mi pedido? ¡Muchas gracias!`
-      : `☕ *Hello Kfest!* I would like to order from your menu:\n\n` +
-        `👉 *${item.name.en}* (${item.price})\n` +
-        `📌 *Category:* ${item.categoryLabel.en}\n` +
-        `✨ *Notes:* ${item.notes.en}\n\n` +
+      : `*Hello Kfest!* I would like to order from your menu:\n\n` +
+        `*${item.name.en}* (${item.price})\n` +
+        `*Category:* ${item.categoryLabel.en}\n` +
+        `*Notes:* ${item.notes.en}\n\n` +
         `Could you please confirm availability to take my order? Thank you!`;
     return `https://wa.me/${this.phonePrimary}?text=${encodeURIComponent(msg)}`;
   }

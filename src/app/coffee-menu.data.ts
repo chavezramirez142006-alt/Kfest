@@ -224,7 +224,7 @@ export const COFFEE_MENU: CoffeeMenuItem[] = [
       en: 'Clean cup, mild caramel notes, dried fruits, and pleasant subtle acidity.'
     },
     icon: 'fa-solid fa-mug-saucer',
-    badge: { es: '⭐ Clásico Favorito', en: '⭐ Classic Favorite' }
+    badge: { es: 'Clásico Favorito', en: 'Classic Favorite' }
   },
   {
     id: 'capuchino',
@@ -244,7 +244,7 @@ export const COFFEE_MENU: CoffeeMenuItem[] = [
       en: 'Natural milk sweetness, highland panela hints, and velvety smooth texture.'
     },
     icon: 'fa-solid fa-mug-hot',
-    badge: { es: '⭐ El Más Pedido', en: '⭐ Best Seller' },
+    badge: { es: 'El Más Pedido', en: 'Best Seller' },
     allowsMilk: true
   },
   {
@@ -352,7 +352,7 @@ export const COFFEE_MENU: CoffeeMenuItem[] = [
     },
     icon: 'fa-solid fa-filter',
     img: 'images/barista/dripper_artesanal_mupeco.png',
-    badge: { es: '⭐ Identidad Kfest', en: '⭐ Kfest Heritage' }
+    badge: { es: 'Identidad Kfest', en: 'Kfest Heritage' }
   },
   {
     id: 'v60',
@@ -434,7 +434,7 @@ export const COFFEE_MENU: CoffeeMenuItem[] = [
       en: 'Side-by-side interactive table tasting: compare Geisha, Bourbon and Catuai varietals.'
     },
     icon: 'fa-solid fa-wand-magic-sparkles',
-    badge: { es: '⭐ Experiencia Top', en: '⭐ Top Experience' }
+    badge: { es: 'Experiencia Top', en: 'Top Experience' }
   },
 
   // --- ICED / CAFÉS HELADOS (Menú pág. 3) ---
@@ -518,7 +518,7 @@ export const COFFEE_MENU: CoffeeMenuItem[] = [
       en: 'Sweet caramel ribbons, roasted toffee, and flawless coffee harmony.'
     },
     icon: 'fa-solid fa-jar-wheat',
-    badge: { es: '⭐ Favorito Helado', en: '⭐ Iced Favorite' },
+    badge: { es: 'Favorito Helado', en: 'Iced Favorite' },
     allowsMilk: true
   },
   {
@@ -603,7 +603,7 @@ export const COFFEE_MENU: CoffeeMenuItem[] = [
       en: 'Sparkling citrus contrast meets smooth cold brew, delightfully layered and thirst-quenching.'
     },
     icon: 'fa-solid fa-lemon',
-    badge: { es: '⭐ Creación Estrella', en: '⭐ Star Creation' }
+    badge: { es: 'Creación Estrella', en: 'Star Creation' }
   },
   {
     id: 'cold_brew_maracuya',
@@ -623,7 +623,7 @@ export const COFFEE_MENU: CoffeeMenuItem[] = [
       en: 'Exotic tropical acidity balanced with deep chocolate undertones of cold brew.'
     },
     icon: 'fa-solid fa-sun',
-    badge: { es: '⭐ 100% Selva Central', en: '⭐ Rainforest Pure' }
+    badge: { es: '100% Selva Central', en: 'Rainforest Pure' }
   },
 
   // --- FRAPPES (Menú pág. 3) ---
@@ -665,7 +665,7 @@ export const COFFEE_MENU: CoffeeMenuItem[] = [
       en: 'Sweet buttery toffee, smooth icy texture, and balanced espresso punch.'
     },
     icon: 'fa-solid fa-blender',
-    badge: { es: '⭐ Dulce Favorito', en: '⭐ Sweet Favorite' }
+    badge: { es: 'Dulce Favorito', en: 'Sweet Favorite' }
   },
   {
     id: 'frappe_algarrobina',
@@ -725,7 +725,7 @@ export const COFFEE_MENU: CoffeeMenuItem[] = [
       en: 'Crunchy, rich, quintessential harmony between dark cookie crumble and coffee.'
     },
     icon: 'fa-solid fa-blender',
-    badge: { es: '⭐ El Más Pedido', en: '⭐ Number One Treat' }
+    badge: { es: 'El Más Pedido', en: 'Number One Treat' }
   },
   {
     id: 'frappe_fresa',
@@ -787,7 +787,7 @@ export const COFFEE_MENU: CoffeeMenuItem[] = [
       en: 'Peru’s national cocktail reborn with highland espresso: aromatic, citrusy, and vibrant.'
     },
     icon: 'fa-solid fa-martini-glass-citrus',
-    badge: { es: '⭐ Coctel Insignia', en: '⭐ Signature Cocktail' }
+    badge: { es: 'Coctel Insignia', en: 'Signature Cocktail' }
   },
   {
     id: 'baileys_affogato',
@@ -890,7 +890,7 @@ export const COFFEE_MENU: CoffeeMenuItem[] = [
     },
     icon: 'fa-solid fa-crown',
     img: 'images/products/4_paquetes_virtudes.png',
-    badge: { es: '🏆 Variedad Reina Geisha', en: '🏆 Queen Geisha' },
+    badge: { es: 'Variedad Reina Geisha', en: 'Queen Geisha' },
     isPack: true
   },
   {
@@ -1179,3 +1179,4 @@ export const QUIZ_FOOD_OPTIONS: QuizOption[] = [
     icon: 'fa-solid fa-cake-candles'
   }
 ];
+
