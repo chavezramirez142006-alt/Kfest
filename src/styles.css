@@ -65,6 +65,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 85px;
   font-family: var(--ff-sans);
   background: var(--bg0);
   color: var(--text0);
@@ -162,4 +163,45 @@ img {
   width: 60%;
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--gold-bdr-hi), transparent);
+}
+
+/* =====================================================
+   MODO CLARO CÁLIDO (COLOR CREMA ARTESANAL / PERGAMINO)
+   Color crema cálido, elegante y tostado — NO blanco puro
+   ===================================================== */
+body.light-theme {
+  --bg0: #f6f1e8; /* Crema artesanal suave */
+  --bg0-rgb: 246, 241, 232;
+  --bg1: #ece4d4; /* Crema tostado pergamino */
+  --bg2: #fbf8f2; /* Crema seda para tarjetas */
+  --bg3: #e2d7c3; /* Crema café con leche */
+  --bg4: #d6c9b3;
+
+  /* Tipografía en café tostado oscuro */
+  --text0: #2b180d; /* Café tostado profundo */
+  --text1: #4a3322; /* Tono café con cuerpo */
+  --text2: #7a614d; /* Canela y avellana tostada */
+  --text3: #9e8773;
+
+  /* Oro cálido tostado */
+  --gold: #a67324;
+  --gold-lt: #c48e3a;
+  --gold-dk: #754f15;
+  --gold-grad: linear-gradient(135deg, #d49f48 0%, #a67324 55%, #754f15 100%);
+  --gold-grad-rev: linear-gradient(135deg, #754f15 0%, #a67324 55%, #d49f48 100%);
+  --gold-bdr: rgba(166, 115, 36, 0.32);
+  --gold-bdr-hi: rgba(166, 115, 36, 0.6);
+  --gold-glow: 0 0 32px rgba(166, 115, 36, 0.22);
+  --gold-glow-lg: 0 0 50px rgba(166, 115, 36, 0.3);
+
+  /* Bordes suaves de café */
+  --bdr: rgba(74, 51, 34, 0.12);
+  --bdr-light: rgba(74, 51, 34, 0.18);
+  --glass-bg: rgba(246, 241, 232, 0.88);
+  --glass-bdr: rgba(166, 115, 36, 0.25);
+  --glass-shd: 0 12px 32px rgba(74, 51, 34, 0.08), 0 0 0 1px rgba(166, 115, 36, 0.15) inset;
+}
+
+body.light-theme .section-brown {
+  background: linear-gradient(180deg, #ece4d4 0%, #e2d7c3 100%);
 }
