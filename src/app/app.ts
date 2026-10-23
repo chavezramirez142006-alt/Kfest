@@ -309,7 +309,9 @@ export class App {
         const saved = localStorage.getItem('kfest_theme');
         if (saved === 'light') {
           this.isLightMode = true;
+
           if (typeof document !== 'undefined') {
+            document.documentElement.classList.add('light-theme');
             document.body.classList.add('light-theme');
           }
         }
@@ -320,11 +322,15 @@ export class App {
   toggleTheme(): void {
     this.isLightMode = !this.isLightMode;
     if (typeof document !== 'undefined') {
-      if (this.isLightMode) {
-        document.body.classList.add('light-theme');
-      } else {
-        document.body.classList.remove('light-theme');
-      }
+       document.documentElement.classList.toggle(
+      'light-theme',
+      this.isLightMode
+    );
+
+    document.body.classList.toggle(
+      'light-theme',
+      this.isLightMode
+    );
       try {
         localStorage.setItem('kfest_theme', this.isLightMode ? 'light' : 'dark');
       } catch (e) {}
