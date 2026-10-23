@@ -1,4 +1,5 @@
-import { Component, HostListener } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, HostListener, Inject, OnDestroy, PLATFORM_ID, ViewChild } from '@angular/core';
 import {
   CoffeeCategoryKey,
   CoffeeMenuItem,
@@ -296,14 +297,18 @@ const EVENT_NAMES: Record<Language, Record<EventType, string>> = {
   templateUrl: './app.html',
   styleUrls: ['./app.css']
 })
-export class App {
+export class App implements AfterViewInit, OnDestroy {
   language: Language = 'es';
   mobileMenuOpen = false;
   activeSection: string = 'inicio';
   isScrolled: boolean = false;
   isLightMode: boolean = false;
+  @ViewChild('instagramFrame') private instagramFrame?: ElementRef<HTMLIFrameElement>;
+  private instagramRefreshTimer?: ReturnType<typeof setInterval>;
 
-  constructor() {
+  constructor(
+    @Inject(PLATFORM_ID) private readonly platformId: object
+  ) {
     if (typeof window !== 'undefined') {
       try {
         const saved = localStorage.getItem('kfest_theme');
@@ -315,25 +320,40 @@ export class App {
             document.body.classList.add('light-theme');
           }
         }
-      } catch (e) {}
+      } catch (e) { }
+    }
+  }
+
+  ngAfterViewInit(): void {
+    if (isPlatformBrowser(this.platformId) && this.instagramFrame) {
+      const iframe = this.instagramFrame.nativeElement;
+      this.instagramRefreshTimer = setInterval(() => {
+        iframe.src = `https://www.instagram.com/kfest.peru/embed?refresh=${Date.now()}`;
+      }, 5 * 60 * 1000);
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.instagramRefreshTimer) {
+      clearInterval(this.instagramRefreshTimer);
     }
   }
 
   toggleTheme(): void {
     this.isLightMode = !this.isLightMode;
     if (typeof document !== 'undefined') {
-       document.documentElement.classList.toggle(
-      'light-theme',
-      this.isLightMode
-    );
+      document.documentElement.classList.toggle(
+        'light-theme',
+        this.isLightMode
+      );
 
-    document.body.classList.toggle(
-      'light-theme',
-      this.isLightMode
-    );
+      document.body.classList.toggle(
+        'light-theme',
+        this.isLightMode
+      );
       try {
         localStorage.setItem('kfest_theme', this.isLightMode ? 'light' : 'dark');
-      } catch (e) {}
+      } catch (e) { }
     }
   }
 
@@ -341,7 +361,7 @@ export class App {
     'inicio',
     'herencia',
     'proceso',
-    'equipo',
+    'instagram',
     'coleccion',
     'quiz',
     'cata',
@@ -915,25 +935,25 @@ export class App {
 
     const message = isEs
       ? `☕ *¡Hola Kfest! Hice el test "Encuentra tu Café Ideal" en su web.*\n\n` +
-        `Mi café de preferencia es:\n` +
-        `👉 *${coffee.name.es}* (${coffee.price})\n` +
-        `📌 *Categoría:* ${coffee.categoryLabel.es}\n` +
-        `✨ *Notas sensoriales:* ${coffee.notes.es}\n\n` +
-        `*Detalles de mi preferencia:*` +
-        (prepName ? `\n• Preparación / Leche: ${prepName}` : '') +
-        (foodName ? `\n• Acompañamiento: ${foodName}` : '') +
-        `\n• *Total estimado:* ${totalPrice}\n\n` +
-        `¿Me podrían confirmar disponibilidad para preparar / tomar mi pedido? ¡Muchas gracias!`
+      `Mi café de preferencia es:\n` +
+      `👉 *${coffee.name.es}* (${coffee.price})\n` +
+      `📌 *Categoría:* ${coffee.categoryLabel.es}\n` +
+      `✨ *Notas sensoriales:* ${coffee.notes.es}\n\n` +
+      `*Detalles de mi preferencia:*` +
+      (prepName ? `\n• Preparación / Leche: ${prepName}` : '') +
+      (foodName ? `\n• Acompañamiento: ${foodName}` : '') +
+      `\n• *Total estimado:* ${totalPrice}\n\n` +
+      `¿Me podrían confirmar disponibilidad para preparar / tomar mi pedido? ¡Muchas gracias!`
       : `☕ *Hello Kfest! I completed the "Find your Ideal Coffee" test on your website.*\n\n` +
-        `My selected coffee match is:\n` +
-        `👉 *${coffee.name.en}* (${coffee.price})\n` +
-        `📌 *Category:* ${coffee.categoryLabel.en}\n` +
-        `✨ *Tasting notes:* ${coffee.notes.en}\n\n` +
-        `*Order details:*` +
-        (prepName ? `\n• Preparation / Milk: ${prepName}` : '') +
-        (foodName ? `\n• Pairing: ${foodName}` : '') +
-        `\n• *Estimated Total:* ${totalPrice}\n\n` +
-        `Could you please confirm availability to take my order? Thank you!`;
+      `My selected coffee match is:\n` +
+      `👉 *${coffee.name.en}* (${coffee.price})\n` +
+      `📌 *Category:* ${coffee.categoryLabel.en}\n` +
+      `✨ *Tasting notes:* ${coffee.notes.en}\n\n` +
+      `*Order details:*` +
+      (prepName ? `\n• Preparation / Milk: ${prepName}` : '') +
+      (foodName ? `\n• Pairing: ${foodName}` : '') +
+      `\n• *Estimated Total:* ${totalPrice}\n\n` +
+      `Could you please confirm availability to take my order? Thank you!`;
 
     return `https://wa.me/${this.phonePrimary}?text=${encodeURIComponent(message)}`;
   }
