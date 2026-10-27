@@ -46,11 +46,6 @@
           <i class="fa-solid fa-truck-fast nav-item-icon"></i>
           <span>KFESTCAR</span>
         </a>
-        <a href="#testimonios" class="nav-link" [class.active]="activeSection === 'testimonios'"
-          (click)="scrollToSection('testimonios', $event)">
-          <i class="fa-solid fa-star nav-item-icon"></i>
-          <span>{{ language === 'es' ? 'RESEÑAS' : 'REVIEWS' }}</span>
-        </a>
         <a href="#faq" class="nav-link" [class.active]="activeSection === 'faq'"
           (click)="scrollToSection('faq', $event)">
           <i class="fa-solid fa-circle-question nav-item-icon"></i>
@@ -74,14 +69,12 @@
             aria-label="English">EN</button>
         </div>
 
-        <button type="button" class="fav-header-btn" (click)="goToFavorites()"
-          [attr.aria-label]="language === 'es' ? 'Ver mis cafés favoritos' : 'View my favorite coffees'"
-          [title]="language === 'es' ? 'Mis Favoritos' : 'My Favorites'">
-          <i class="fa-solid fa-heart"></i>
-          @if (favoritesCount > 0) {
-          <span class="fav-badge-bubble">{{ favoritesCount }}</span>
-          }
-        </button>
+        <a href="https://www.instagram.com/kfest.peru/" target="_blank" rel="noopener noreferrer"
+          class="ig-header-btn"
+          [attr.aria-label]="language === 'es' ? 'Seguir a @kfest.peru en Instagram' : 'Follow @kfest.peru on Instagram'"
+          [title]="language === 'es' ? 'Instagram @kfest.peru' : 'Instagram @kfest.peru'">
+          <i class="fa-brands fa-instagram"></i>
+        </a>
 
         <button class="theme-toggle-btn" (click)="toggleTheme()"
           [attr.aria-label]="isLightMode ? (language === 'es' ? 'Cambiar a modo oscuro' : 'Switch to dark mode') : (language === 'es' ? 'Cambiar a modo crema' : 'Switch to cream mode')"
@@ -325,38 +318,21 @@
 
           <blockquote class="heritage-quote">
             {{ language === 'es'
-            ? '«Cuando mis abuelos venían a visitarnos nos traían los frutos que da el Fundo Santa Teresita: plátanos de
-            seda, palta, pituca y café.»'
-            : '"When my grandparents came to visit, they brought us the fruits from Santa Teresita Farm: silk bananas,
-            avocado, pituca, and coffee."' }}
+            ? '«Mis abuelos nos traían del Fundo Santa Teresita los frutos de su tierra: plátanos de seda, palta y el mejor café de altura.»'
+            : '"My grandparents brought us the purest gifts from Santa Teresita Farm: silk bananas, avocado, and the finest high-altitude coffee."' }}
           </blockquote>
 
           <p class="heritage-body">
             {{ language === 'es'
-            ? 'Ellos partieron, y aquellos frutos dejaron de llegar a nuestra mesa. Guiada por la memoria, un buen día
-            retorné a las laderas bendecidas de Chanchamayo, Junín. Me reencontré con la chacra ancestral: las plantas
-            florecían cargadas de cerezas rojas vivas.'
-            : 'They passed away, and those fruits stopped reaching our table. Guided by memory, one day I returned to
-            the blessed slopes of Chanchamayo, Junín. I reconnected with the ancestral farm: the plants were flourishing
-            with vibrant red cherries.' }}
-          </p>
-
-          <p class="heritage-body">
-            {{ language === 'es'
-            ? 'Tras analizarlas minuciosamente con catadores certificados Q-Grader, comprobamos que alcanzaban la
-            distinción de café de especialidad. Con tan solo 10 gramos de esta noble cosecha se obtiene una extracción
-            sublime: limpia, dulce y fragante.'
-            : 'After meticulous analysis with certified Q-Graders, we confirmed specialty coffee distinction. With just
-            10 grams of this noble harvest, a sublime extraction is obtained: clean, sweet, and fragrant.' }}
+            ? 'Guiada por su memoria retorné a las laderas bendecidas de Chanchamayo, reencontrándome con cafetos florecientes a 1,600 msnm. Catadores certificados Q-Grader confirmaron su distinción de especialidad: con solo 10 gramos de esta noble cosecha se obtiene una taza limpia, dulce y profundamente fragante.'
+            : 'Guided by memory, I returned to the blessed slopes of Chanchamayo to find thriving coffee trees at 1,600 masl. Certified Q-Graders confirmed its specialty grade: just 10 grams yields a clean, sweet, and deeply fragrant cup.' }}
           </p>
 
           <p class="heritage-closing">
             <strong>
               {{ language === 'es'
-              ? '¿Cómo no compartir esta bendición? Sé que mis abuelos sonríen desde la eternidad viendo llegar su
-              café... de la chacra a tu taza.'
-              : 'How could we not share this blessing? I know my grandparents smile from eternity seeing their coffee
-              arrive... from the farm to your cup.' }}
+              ? 'Hoy honramos su legado llevando esta bendición directamente de nuestra chacra a tu taza.'
+              : 'Today we honor their legacy, bringing this blessing directly from our farm to your cup.' }}
             </strong>
           </p>
 
@@ -440,6 +416,7 @@
             src="https://www.instagram.com/kfest.peru/embed"
             title="Últimas publicaciones de Kfest en Instagram"
             loading="lazy"
+            scrolling="no"
             referrerpolicy="strict-origin-when-cross-origin"
             allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
             allowtransparency="true">
@@ -1428,79 +1405,6 @@
 </section>
 
 
-<!-- ========================= RESEÑAS & TESTIMONIOS (FEATURE E) ========================= -->
-<section id="testimonios" class="section-dark sec-pad test-section">
-  <div class="container">
-
-    <div class="test-header">
-      <div class="test-badge">
-        <i class="fa-solid fa-star text-gold"></i>
-        <span>{{ language === 'es' ? 'EXPERIENCIAS DE CATA & CLIENTES REALES' : 'TASTING EXPERIENCES & VERIFIED PATRONS'
-          }}</span>
-      </div>
-      <h2 class="sec-title">
-        {{ language === 'es' ? 'La Voz de Quienes' : 'Voices of Those Who' }}
-        <em class="gold-script">{{ language === 'es' ? 'Disfrutan Kfest' : 'Savor Kfest' }}</em>
-      </h2>
-      <p class="sec-sub">
-        {{ language === 'es'
-        ? 'Calificación 4.9 / 5.0 basada en más de 1,200 despachos artesanales a hogares, baristas y restaurantes de
-        todo el Perú.'
-        : '4.9 / 5.0 score based on 1,200+ artisan dispatches to homes, baristas, and culinary venues across Peru.' }}
-      </p>
-    </div>
-
-    <!-- Interactive Testimonial Slider Card -->
-    <div class="test-slider-card">
-      <div class="test-card-inner">
-        <div class="test-card-top">
-          <div class="stars-row">
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-          </div>
-          <span class="test-pill">{{ currentTestimonial.badge[language] }}</span>
-        </div>
-
-        <blockquote class="test-quote">
-          «{{ currentTestimonial.quote[language] }}»
-        </blockquote>
-
-        <div class="test-author-row">
-          <div class="author-meta">
-            <strong class="author-name">{{ currentTestimonial.name }}</strong>
-            <span class="author-role">{{ currentTestimonial.role[language] }}</span>
-            <span class="author-city"><i class="fa-solid fa-location-dot"></i> {{ currentTestimonial.city }}</span>
-          </div>
-          <div class="author-favorite">
-            <small>{{ language === 'es' ? 'FAVORITO' : 'TOP PICK' }}</small>
-            <span>{{ currentTestimonial.highlight[language] }}</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Slider Controls -->
-      <div class="test-controls">
-        <button class="test-btn-nav" (click)="prevTestimonial()" aria-label="Testimonio anterior">
-          <i class="fa-solid fa-arrow-left"></i>
-        </button>
-        <div class="test-dots">
-          @for (item of testimonialsList; track $index) {
-          <button class="test-dot" [class.active]="$index === activeTestimonialIndex" (click)="setTestimonial($index)"
-            [attr.aria-label]="'Ver reseña ' + ($index + 1)"></button>
-          }
-        </div>
-        <button class="test-btn-nav" (click)="nextTestimonial()" aria-label="Siguiente testimonio">
-          <i class="fa-solid fa-arrow-right"></i>
-        </button>
-      </div>
-    </div>
-
-  </div>
-</section>
-
 
 <!-- ========================= PREGUNTAS FRECUENTES (FEATURE D) ========================= -->
 <section id="faq" class="section-brown sec-pad faq-section">
@@ -1665,8 +1569,6 @@
         Profiles' }}</a>
       <a href="#calculadora" (click)="scrollToSection('calculadora', $event)">BARISTA LAB</a>
       <a href="#catering" (click)="scrollToSection('catering', $event)">KFESTCAR</a>
-      <a href="#testimonios" (click)="scrollToSection('testimonios', $event)">{{ language === 'es' ? 'Reseñas &
-        Testimonios' : 'Customer Reviews' }}</a>
       <a href="#faq" (click)="scrollToSection('faq', $event)">{{ language === 'es' ? 'Preguntas Frecuentes' : 'FAQ'
         }}</a>
       <a href="#contacto" (click)="scrollToSection('contacto', $event)">{{ language === 'es' ? 'Contacto & Despachos' :

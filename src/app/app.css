@@ -2281,11 +2281,12 @@
     opacity: 0.55;
   }
   .fav-header-btn,
+  .ig-header-btn,
   .theme-toggle-btn {
     width: 32px !important;
     height: 32px !important;
     min-width: 32px !important;
-    font-size: 0.82rem !important;
+    font-size: 0.90rem !important;
     flex-shrink: 0 !important;
   }
   .mobile-toggle {
@@ -4438,7 +4439,9 @@ body.light-theme .footer-logo,
 }
 
 body.light-theme .fav-header-btn,
-.light-theme .fav-header-btn {
+.light-theme .fav-header-btn,
+body.light-theme .ig-header-btn,
+.light-theme .ig-header-btn {
   background: #ffffff !important;
   border: 1px solid rgba(166, 115, 36, 0.35) !important;
   color: #8C5713 !important;
@@ -4450,6 +4453,14 @@ body.light-theme .fav-header-btn:hover,
   background: #F4EBE3 !important;
   border-color: #8C5713 !important;
   color: #5C370B !important;
+}
+
+body.light-theme .ig-header-btn:hover,
+.light-theme .ig-header-btn:hover {
+  background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%) !important;
+  border-color: #e1306c !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 16px rgba(225, 48, 108, 0.35) !important;
 }
 
 body.light-theme .theme-toggle-btn,
@@ -5088,8 +5099,31 @@ body.light-theme .footer-bar {
 }
 
 /* =====================================================
-   HEADER FAVORITES BUTTON & BADGE
+   HEADER FAVORITES & INSTAGRAM BUTTONS
    ===================================================== */
+.ig-header-btn {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--gold-bdr);
+  background: rgba(22, 17, 13, 0.6);
+  backdrop-filter: blur(8px);
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  text-decoration: none;
+  transition: var(--ease);
+}
+.ig-header-btn:hover {
+  border-color: #e1306c;
+  background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(225, 48, 108, 0.4);
+}
 .fav-header-btn {
   position: relative;
   width: 40px;
@@ -5772,7 +5806,8 @@ body.light-theme .footer-bar {
 /* =====================================================
    LIGHT THEME ADAPTATIONS
    ===================================================== */
-body.light-theme .fav-header-btn {
+body.light-theme .fav-header-btn,
+body.light-theme .ig-header-btn {
   background: rgba(251, 248, 242, 0.9);
   border-color: var(--gold-bdr);
   color: var(--gold);
@@ -7385,12 +7420,13 @@ body.light-theme .carta-tab-btn.active i,
 
 .instagram-frame {
   width: min(100%, 540px);
-  min-height: 680px;
+  height: 518px;
+  max-height: 518px;
   margin: 0 auto;
   overflow: hidden;
   border: 1.5px solid var(--gold-bdr);
   border-radius: var(--r-lg, 16px);
-  background: var(--bg2);
+  background: #ffffff;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(197, 160, 89, 0.12);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -7403,8 +7439,9 @@ body.light-theme .carta-tab-btn.active i,
 .instagram-frame iframe {
   display: block;
   width: 100%;
-  height: 700px;
+  height: 518px;
   border: 0;
+  overflow: hidden;
 }
 
 .instagram-link {
@@ -7465,14 +7502,26 @@ body.light-theme .instagram-link:hover,
 
 @media (max-width: 600px) {
   .instagram-frame {
-    min-height: 580px;
+    width: min(100%, 450px);
+    height: 440px;
+    max-height: 440px;
     border-radius: 12px;
   }
   .instagram-frame iframe {
-    height: 600px;
+    height: 440px;
   }
   .instagram-section {
     padding: 50px 0;
+  }
+}
+
+@media (max-width: 420px) {
+  .instagram-frame {
+    height: 380px;
+    max-height: 380px;
+  }
+  .instagram-frame iframe {
+    height: 380px;
   }
 }
 

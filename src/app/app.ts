@@ -511,7 +511,6 @@ export class App implements AfterViewInit, OnDestroy {
   private readonly sectionNavMap: { id: string; nav: string }[] = [
     { id: 'contacto', nav: 'contacto' },
     { id: 'faq', nav: 'faq' },
-    { id: 'testimonios', nav: 'testimonios' },
     { id: 'catering', nav: 'catering' },
     { id: 'calculadora', nav: 'calculadora' },
     { id: 'cata', nav: 'cata' },
