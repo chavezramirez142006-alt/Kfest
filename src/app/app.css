@@ -7337,6 +7337,145 @@ body.light-theme .carta-tab-btn.active i,
 
 
 
+/* ============================================================
+   INSTAGRAM FEED OFICIAL KFEST
+   ============================================================ */
+.instagram-section {
+  position: relative;
+  background: var(--bg1);
+  padding: 80px 0;
+}
+
+.instagram-header {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 38px;
+}
+
+.instagram-header .eyebrow-line {
+  color: var(--gold);
+  font-size: 0.76rem;
+  letter-spacing: 0.16em;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.instagram-header .sec-title {
+  font-family: var(--font-serif, 'Cinzel', serif);
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  font-weight: 700;
+  color: var(--text0);
+  margin-bottom: 14px;
+}
+
+.instagram-header .sec-title .gold-script {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  color: var(--gold);
+}
+
+.instagram-header .sec-sub {
+  color: var(--text2);
+  font-size: 0.96rem;
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.instagram-frame {
+  width: min(100%, 540px);
+  min-height: 680px;
+  margin: 0 auto;
+  overflow: hidden;
+  border: 1.5px solid var(--gold-bdr);
+  border-radius: var(--r-lg, 16px);
+  background: var(--bg2);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(197, 160, 89, 0.12);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.instagram-frame:hover {
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75), 0 0 40px rgba(197, 160, 89, 0.22);
+  transform: translateY(-2px);
+}
+
+.instagram-frame iframe {
+  display: block;
+  width: 100%;
+  height: 700px;
+  border: 0;
+}
+
+.instagram-link {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 26px auto 0;
+  padding: 10px 24px;
+  border-radius: 999px;
+  background: rgba(197, 160, 89, 0.12);
+  border: 1px solid var(--gold-bdr);
+  color: var(--gold);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+.instagram-link:hover {
+  background: linear-gradient(135deg, #c5a059 0%, #997420 100%);
+  color: #120c08;
+  border-color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(197, 160, 89, 0.4);
+}
+
+/* Light Theme Instagram Feed */
+body.light-theme .instagram-section,
+.light-theme .instagram-section {
+  background: var(--bg0) !important;
+}
+
+body.light-theme .instagram-frame,
+.light-theme .instagram-frame {
+  background: #ffffff !important;
+  border-color: rgba(166, 115, 36, 0.32) !important;
+  box-shadow: 0 16px 40px rgba(74, 51, 34, 0.12) !important;
+}
+
+body.light-theme .instagram-link,
+.light-theme .instagram-link {
+  background: #ffffff !important;
+  border-color: rgba(166, 115, 36, 0.38) !important;
+  color: #8C5713 !important;
+  box-shadow: 0 4px 14px rgba(74, 51, 34, 0.08) !important;
+}
+
+body.light-theme .instagram-link:hover,
+.light-theme .instagram-link:hover {
+  background: linear-gradient(135deg, #a67324 0%, #754f15 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 20px rgba(166, 115, 36, 0.3) !important;
+}
+
+@media (max-width: 600px) {
+  .instagram-frame {
+    min-height: 580px;
+    border-radius: 12px;
+  }
+  .instagram-frame iframe {
+    height: 600px;
+  }
+  .instagram-section {
+    padding: 50px 0;
+  }
+}
+
 /* ==========================================================================
    CATÁLOGO DIGITAL INTERACTIVO (ESTILO LUVARIA FLIPBOOK)
    ========================================================================== */

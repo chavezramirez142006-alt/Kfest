@@ -1,4 +1,5 @@
-import { Component, HostListener, ViewEncapsulation } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, HostListener, Inject, OnDestroy, PLATFORM_ID, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
   CoffeeCategoryKey,
   CoffeeMenuItem,
@@ -297,12 +298,14 @@ const EVENT_NAMES: Record<Language, Record<EventType, string>> = {
   styleUrls: ['./app.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class App {
+export class App implements AfterViewInit, OnDestroy {
   language: Language = 'es';
   mobileMenuOpen = false;
   activeSection: string = 'inicio';
   isScrolled: boolean = false;
   isLightMode: boolean = false;
+  @ViewChild('instagramFrame') private instagramFrame?: ElementRef<HTMLIFrameElement>;
+  private instagramRefreshTimer?: any;
 
   // ─── BUSCADOR INSTANTÁNEO, NOTAS DE CATA Y FAVORITOS ───
   searchQuery: string = '';
@@ -450,7 +453,9 @@ export class App {
     { id: 'virtudes', label: { es: 'Línea Virtudes', en: 'Virtues Line' }, icon: 'fa-solid fa-seedling' }
   ];
 
-  constructor() {
+  constructor(
+    @Inject(PLATFORM_ID) private readonly platformId: object
+  ) {
     if (typeof window !== 'undefined') {
       try {
         const saved = localStorage.getItem('kfest_theme');
@@ -471,6 +476,21 @@ export class App {
           }
         }
       } catch (e) {}
+    }
+  }
+
+  ngAfterViewInit(): void {
+    if (isPlatformBrowser(this.platformId) && this.instagramFrame) {
+      const iframe = this.instagramFrame.nativeElement;
+      this.instagramRefreshTimer = setInterval(() => {
+        iframe.src = `https://www.instagram.com/kfest.peru/embed?refresh=${Date.now()}`;
+      }, 5 * 60 * 1000);
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.instagramRefreshTimer) {
+      clearInterval(this.instagramRefreshTimer);
     }
   }
 
@@ -498,6 +518,7 @@ export class App {
     { id: 'quiz', nav: 'quiz' },
     { id: 'carta', nav: 'carta' },
     { id: 'proceso', nav: 'herencia' },
+    { id: 'instagram', nav: 'herencia' },
     { id: 'herencia', nav: 'herencia' },
     { id: 'inicio', nav: 'inicio' }
   ];
