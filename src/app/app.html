@@ -69,8 +69,7 @@
             aria-label="English">EN</button>
         </div>
 
-        <a href="https://www.instagram.com/kfest.peru/" target="_blank" rel="noopener noreferrer"
-          class="ig-header-btn"
+        <a href="https://www.instagram.com/kfest.peru/" target="_blank" rel="noopener noreferrer" class="ig-header-btn"
           [attr.aria-label]="language === 'es' ? 'Seguir a @kfest.peru en Instagram' : 'Follow @kfest.peru on Instagram'"
           [title]="language === 'es' ? 'Instagram @kfest.peru' : 'Instagram @kfest.peru'">
           <i class="fa-brands fa-instagram"></i>
@@ -318,14 +317,20 @@
 
           <blockquote class="heritage-quote">
             {{ language === 'es'
-            ? '«Mis abuelos nos traían del Fundo Santa Teresita los frutos de su tierra: plátanos de seda, palta y el mejor café de altura.»'
-            : '"My grandparents brought us the purest gifts from Santa Teresita Farm: silk bananas, avocado, and the finest high-altitude coffee."' }}
+            ? '«Mis abuelos nos traían del Fundo Santa Teresita los frutos de su tierra: plátanos de seda, palta y el
+            mejor café de altura.»'
+            : '"My grandparents brought us the purest gifts from Santa Teresita Farm: silk bananas, avocado, and the
+            finest high-altitude coffee."' }}
           </blockquote>
 
           <p class="heritage-body">
             {{ language === 'es'
-            ? 'Guiada por su memoria retorné a las laderas bendecidas de Chanchamayo, reencontrándome con cafetos florecientes a 1,600 msnm. Catadores certificados Q-Grader confirmaron su distinción de especialidad: con solo 10 gramos de esta noble cosecha se obtiene una taza limpia, dulce y profundamente fragante.'
-            : 'Guided by memory, I returned to the blessed slopes of Chanchamayo to find thriving coffee trees at 1,600 masl. Certified Q-Graders confirmed its specialty grade: just 10 grams yields a clean, sweet, and deeply fragrant cup.' }}
+            ? 'Guiada por su memoria retorné a las laderas bendecidas de Chanchamayo, reencontrándome con cafetos
+            florecientes a 1,600 msnm. Catadores certificados Q-Grader confirmaron su distinción de especialidad: con
+            solo 10 gramos de esta noble cosecha se obtiene una taza limpia, dulce y profundamente fragante.'
+            : 'Guided by memory, I returned to the blessed slopes of Chanchamayo to find thriving coffee trees at 1,600
+            masl. Certified Q-Graders confirmed its specialty grade: just 10 grams yields a clean, sweet, and deeply
+            fragrant cup.' }}
           </p>
 
           <p class="heritage-closing">
@@ -343,7 +348,7 @@
             </div>
             <div class="stat-box">
               <strong class="stat-num">10 <small>g</small></strong>
-              <span>{{ language === 'es' ? 'EXTRACCIÓN SUBLIME' : 'SUBLIME EXTRACTION' }}</span>
+              <span>{{ language === 'es' ? 'EXTRACCIÓN' : 'EXTRACTION' }}</span>
             </div>
             <div class="stat-box">
               <strong class="stat-num">3<small>+</small></strong>
@@ -398,7 +403,8 @@
     <section id="instagram" class="section-dark sec-pad instagram-section">
       <div class="container">
         <div class="instagram-header">
-          <p class="eyebrow-line">─── {{ language === 'es' ? 'DESDE KFEST, EN INSTAGRAM' : 'FROM KFEST ON INSTAGRAM' }}</p>
+          <p class="eyebrow-line">─── {{ language === 'es' ? 'DESDE KFEST, EN INSTAGRAM' : 'FROM KFEST ON INSTAGRAM' }}
+          </p>
           <h2 class="sec-title">
             {{ language === 'es' ? 'Lo último de' : 'Latest from' }}
             <em class="gold-script">Instagram</em>
@@ -411,15 +417,10 @@
         </div>
 
         <div class="instagram-frame">
-          <iframe
-            #instagramFrame
-            src="https://www.instagram.com/kfest.peru/embed"
-            title="Últimas publicaciones de Kfest en Instagram"
-            loading="lazy"
-            scrolling="no"
+          <iframe #instagramFrame src="https://www.instagram.com/kfest.peru/embed"
+            title="Últimas publicaciones de Kfest en Instagram" loading="lazy" scrolling="no"
             referrerpolicy="strict-origin-when-cross-origin"
-            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-            allowtransparency="true">
+            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowtransparency="true">
           </iframe>
         </div>
         <a class="instagram-link" href="https://www.instagram.com/kfest.peru/" target="_blank"
