@@ -422,34 +422,141 @@
     <section id="instagram" class="section-dark sec-pad instagram-section">
       <div class="container">
         <div class="instagram-header">
-          <p class="eyebrow-line">─── {{ language === 'es' ? 'DESDE KFEST, EN INSTAGRAM' : 'FROM KFEST ON INSTAGRAM' }}</p>
+          <p class="eyebrow-line">─── {{ language === 'es' ? 'COMUNIDAD KFEST EN REDES' : 'KFEST SOCIAL COMMUNITY' }}</p>
           <h2 class="sec-title">
-            {{ language === 'es' ? 'Lo último de' : 'Latest from' }}
-            <em class="gold-script">Instagram</em>
+            {{ language === 'es' ? 'Historias en' : 'Stories on' }}
+            <em class="gold-script">@kfest.peru</em>
           </h2>
           <p class="sec-sub">
             {{ language === 'es'
-            ? 'Descubre nuestras últimas publicaciones y acompáñanos en el día a día de Kfest.'
-            : 'See our latest posts and follow the day-to-day moments at Kfest.' }}
+            ? 'Acompáñanos día a día en el Fundo Santa Teresita: cosechas selectivas de altura, microlotes recién tostados y el arte del barismo en Chanchamayo.'
+            : 'Join us daily at Fundo Santa Teresita: high-altitude selective harvests, freshly roasted microlots, and the art of barista craft in Chanchamayo.' }}
           </p>
         </div>
 
-        <div class="instagram-frame">
-          <iframe
-            #instagramFrame
-            src="https://www.instagram.com/kfest.peru/embed"
-            title="Últimas publicaciones de Kfest en Instagram"
-            loading="lazy"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowtransparency="true">
-          </iframe>
+        <!-- Perfil Oficial Bar -->
+        <div class="ig-profile-card">
+          <div class="ig-profile-left">
+            <div class="ig-avatar-wrap">
+              <img [src]="isLightMode ? 'images/logo_marron.png' : 'images/Logo_Oficial.png'" alt="Kfest Logo" class="ig-avatar-img" />
+              <span class="ig-verified-badge" title="Cuenta Oficial"><i class="fa-solid fa-check"></i></span>
+            </div>
+            <div class="ig-profile-info">
+              <div class="ig-name-row">
+                <h3 class="ig-username">kfest.peru</h3>
+                <span class="ig-badge-pill"><i class="fa-brands fa-instagram"></i> Oficial</span>
+              </div>
+              <p class="ig-bio-line">Café de Especialidad · Fundo Santa Teresita, Chanchamayo (1,600 msnm)</p>
+            </div>
+          </div>
+          <a href="https://www.instagram.com/kfest.peru/" target="_blank" rel="noopener noreferrer" class="btn btn-primary ig-follow-btn">
+            <i class="fa-brands fa-instagram"></i>
+            <span>{{ language === 'es' ? 'Seguir Cuenta' : 'Follow Us' }}</span>
+          </a>
         </div>
 
-        <a class="instagram-link" href="https://www.instagram.com/kfest.peru/" target="_blank"
-          rel="noopener noreferrer">
-          <i class="fa-brands fa-instagram"></i>
-          {{ language === 'es' ? 'Ver perfil de @kfest.peru' : 'Visit @kfest.peru' }}
-        </a>
+        <!-- Grid de Publicaciones Nativas (0 iframes, 0 errores, carga instantánea) -->
+        <div class="ig-posts-grid">
+
+          <a href="https://www.instagram.com/kfest.peru/" target="_blank" rel="noopener noreferrer" class="ig-post-card">
+            <div class="ig-post-img-box">
+              <img src="images/process/02_cosecha_selectiva.jpg" alt="Cosecha Selectiva Fundo Santa Teresita" loading="lazy" />
+              <div class="ig-post-badge"><i class="fa-solid fa-camera"></i></div>
+              <div class="ig-post-overlay">
+                <i class="fa-brands fa-instagram ig-hover-icon"></i>
+                <div class="ig-post-stats">
+                  <span><i class="fa-solid fa-heart"></i> 184</span>
+                  <span><i class="fa-solid fa-comment"></i> 26</span>
+                </div>
+                <p class="ig-post-caption">{{ language === 'es' ? 'Cosecha selectiva grano a grano a 1,600 msnm 🍒' : 'Selective hand-picked harvest at 1,600 masl 🍒' }}</p>
+              </div>
+            </div>
+          </a>
+
+          <a href="https://www.instagram.com/kfest.peru/" target="_blank" rel="noopener noreferrer" class="ig-post-card">
+            <div class="ig-post-img-box">
+              <img src="images/team/teresa_chavez.jpg" alt="Doña Teresa Chávez - Kfest" loading="lazy" />
+              <div class="ig-post-badge reel"><i class="fa-solid fa-clapperboard"></i> REEL</div>
+              <div class="ig-post-overlay">
+                <i class="fa-brands fa-instagram ig-hover-icon"></i>
+                <div class="ig-post-stats">
+                  <span><i class="fa-solid fa-heart"></i> 342</span>
+                  <span><i class="fa-solid fa-comment"></i> 48</span>
+                </div>
+                <p class="ig-post-caption">{{ language === 'es' ? 'El legado vivo de Doña Teresa en la Selva Central ☕' : 'Doña Teresa’s living heritage in Central Jungle ☕' }}</p>
+              </div>
+            </div>
+          </a>
+
+          <a href="https://www.instagram.com/kfest.peru/" target="_blank" rel="noopener noreferrer" class="ig-post-card">
+            <div class="ig-post-img-box">
+              <img src="images/process/08_secado_sol.jpg" alt="Secado al sol en camas africanas" loading="lazy" />
+              <div class="ig-post-badge"><i class="fa-solid fa-camera"></i></div>
+              <div class="ig-post-overlay">
+                <i class="fa-brands fa-instagram ig-hover-icon"></i>
+                <div class="ig-post-stats">
+                  <span><i class="fa-solid fa-heart"></i> 215</span>
+                  <span><i class="fa-solid fa-comment"></i> 19</span>
+                </div>
+                <p class="ig-post-caption">{{ language === 'es' ? 'Secado solar artesanal para concentrar azúcares naturales ☀️' : 'Artisan sun drying concentrating natural sugars ☀️' }}</p>
+              </div>
+            </div>
+          </a>
+
+          <a href="https://www.instagram.com/kfest.peru/" target="_blank" rel="noopener noreferrer" class="ig-post-card">
+            <div class="ig-post-img-box">
+              <img src="images/process/13_tostado_especialidad.jpg" alt="Tostado artesanal de café" loading="lazy" />
+              <div class="ig-post-badge reel"><i class="fa-solid fa-clapperboard"></i> REEL</div>
+              <div class="ig-post-overlay">
+                <i class="fa-brands fa-instagram ig-hover-icon"></i>
+                <div class="ig-post-stats">
+                  <span><i class="fa-solid fa-heart"></i> 298</span>
+                  <span><i class="fa-solid fa-comment"></i> 37</span>
+                </div>
+                <p class="ig-post-caption">{{ language === 'es' ? 'Curva de tueste medio: notas vivas a panela y cacao puro ✨' : 'Medium roast curve: vibrant panela and pure cacao notes ✨' }}</p>
+              </div>
+            </div>
+          </a>
+
+          <a href="https://www.instagram.com/kfest.peru/" target="_blank" rel="noopener noreferrer" class="ig-post-card">
+            <div class="ig-post-img-box">
+              <img src="images/team/equipo_fundo.jpg" alt="Equipo de Tueste & Baristas Kfest" loading="lazy" />
+              <div class="ig-post-badge"><i class="fa-solid fa-camera"></i></div>
+              <div class="ig-post-overlay">
+                <i class="fa-brands fa-instagram ig-hover-icon"></i>
+                <div class="ig-post-stats">
+                  <span><i class="fa-solid fa-heart"></i> 176</span>
+                  <span><i class="fa-solid fa-comment"></i> 22</span>
+                </div>
+                <p class="ig-post-caption">{{ language === 'es' ? 'Maestros tostadores y baristas cuidando cada detalle 👨‍🌾' : 'Master roasters and baristas perfecting every detail 👨‍🌾' }}</p>
+              </div>
+            </div>
+          </a>
+
+          <a href="https://www.instagram.com/kfest.peru/" target="_blank" rel="noopener noreferrer" class="ig-post-card">
+            <div class="ig-post-img-box">
+              <img src="images/process/17_taza_servida.jpg" alt="Taza de café servida" loading="lazy" />
+              <div class="ig-post-badge reel"><i class="fa-solid fa-clapperboard"></i> REEL</div>
+              <div class="ig-post-overlay">
+                <i class="fa-brands fa-instagram ig-hover-icon"></i>
+                <div class="ig-post-stats">
+                  <span><i class="fa-solid fa-heart"></i> 412</span>
+                  <span><i class="fa-solid fa-comment"></i> 64</span>
+                </div>
+                <p class="ig-post-caption">{{ language === 'es' ? 'De nuestra chacra a tu taza. Sabor y origen que inspiran ☕💛' : 'From our farm to your cup. Flavor and origin that inspire ☕💛' }}</p>
+              </div>
+            </div>
+          </a>
+
+        </div>
+
+        <div class="ig-bottom-action">
+          <a class="instagram-link" href="https://www.instagram.com/kfest.peru/" target="_blank"
+            rel="noopener noreferrer">
+            <i class="fa-brands fa-instagram"></i>
+            {{ language === 'es' ? 'Ver más publicaciones en @kfest.peru' : 'View more posts on @kfest.peru' }}
+          </a>
+        </div>
       </div>
     </section>
 
