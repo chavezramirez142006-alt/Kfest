@@ -315,6 +315,117 @@ export class App {
   toastVisible: boolean = false;
   private toastTimer: any = null;
 
+  // ─── CATÁLOGO DIGITAL INTERACTIVO (FLIPBOOK / VISOR KFEST) ───
+  catalogViewMode: 'flipbook' | 'sheets' = 'flipbook';
+  currentCatalogPage: number = 1;
+  readonly totalCatalogPages: number = 7;
+  readonly catalogPageList: number[] = [1, 2, 3, 4, 5, 6, 7];
+  isCatalogFsOpen: boolean = false;
+
+  readonly catalogPageTitles: Record<number, { es: string; en: string }> = {
+    1: { es: 'Portada Oficial Kfest', en: 'Official Kfest Cover' },
+    2: { es: 'Bebidas Calientes, Combos, Desayunos & Filtrados', en: 'Warm Drinks, Combos, Breakfast & Pour Over' },
+    3: { es: 'Frappés, Cold Brew, Iced & Shakes', en: 'Frappes, Cold Brew, Iced & Shakes' },
+    4: { es: 'Panadería, Postres & Bar Kfest', en: 'Bakery, Desserts & Kfest Bar' },
+    5: { es: 'Línea Virtudes: Respeto, Fortaleza, Fe, Amor', en: 'Virtues Line: Respect, Strength, Faith, Love' },
+    6: { es: 'Línea Virtudes: Paciencia, Resiliencia, Tolerancia, Cold Brew', en: 'Virtues Line: Patience, Resilience, Tolerance, Cold Brew' },
+    7: { es: 'Contraportada Oficial Kfest', en: 'Official Back Cover' }
+  };
+
+  nextCatalogPage(): void {
+    this.currentCatalogPage = this.currentCatalogPage < this.totalCatalogPages ? this.currentCatalogPage + 1 : 1;
+    this.scrollThumbIntoView(this.currentCatalogPage);
+  }
+
+  prevCatalogPage(): void {
+    this.currentCatalogPage = this.currentCatalogPage > 1 ? this.currentCatalogPage - 1 : this.totalCatalogPages;
+    this.scrollThumbIntoView(this.currentCatalogPage);
+  }
+
+  setCatalogPage(page: number): void {
+    if (page >= 1 && page <= this.totalCatalogPages) {
+      this.currentCatalogPage = page;
+      this.scrollThumbIntoView(page);
+    }
+  }
+
+  openCatalogFs(): void {
+    this.isCatalogFsOpen = true;
+    if (typeof document !== 'undefined') {
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  closeCatalogFs(): void {
+    this.isCatalogFsOpen = false;
+    if (typeof document !== 'undefined') {
+      document.body.style.overflow = '';
+    }
+  }
+
+  private catalogTouchStartX: number = 0;
+  private catalogTouchStartY: number = 0;
+
+  onCatalogTouchStart(event: TouchEvent): void {
+    if (event.touches.length === 1) {
+      this.catalogTouchStartX = event.touches[0].clientX;
+      this.catalogTouchStartY = event.touches[0].clientY;
+    }
+  }
+
+  onCatalogTouchEnd(event: TouchEvent): void {
+    if (event.changedTouches.length === 1) {
+      const deltaX = event.changedTouches[0].clientX - this.catalogTouchStartX;
+      const deltaY = event.changedTouches[0].clientY - this.catalogTouchStartY;
+      if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY)) {
+        if (deltaX < 0) {
+          this.nextCatalogPage();
+        } else {
+          this.prevCatalogPage();
+        }
+      }
+    }
+  }
+
+  private scrollThumbIntoView(page: number): void {
+    if (typeof document !== 'undefined') {
+      const rail = document.getElementById('catalog-thumbnails-rail');
+      const thumb = document.querySelector(`.catalog-thumb-item[data-page="${page}"]`) as HTMLElement;
+      if (rail && thumb) {
+        const railCenter = rail.clientWidth / 2;
+        const thumbCenter = thumb.offsetLeft + thumb.clientWidth / 2;
+        rail.scrollTo({
+          left: thumbCenter - railCenter,
+          behavior: 'smooth'
+        });
+      }
+    }
+  }
+
+  getCatalogWhatsAppLink(page: number): string {
+    const isEs = this.language === 'es';
+    const title = this.catalogPageTitles[page] ? (isEs ? this.catalogPageTitles[page].es : this.catalogPageTitles[page].en) : `Página ${page}`;
+    const text = isEs
+      ? `*¡Hola Kfest Café!* Estoy viendo el *Catálogo Digital Oficial* (*Página ${page} de ${this.totalCatalogPages}* - _${title}_) y deseo realizar un pedido o consulta. ¿Tienen atención disponible? ¡Muchas gracias!`
+      : `*Hello Kfest Café!* I am browsing the *Official Digital Menu* (*Page ${page} of ${this.totalCatalogPages}* - _${title}_) and would like to place an order or inquiry. Thank you!`;
+    return `https://wa.me/${this.phonePrimary}?text=${encodeURIComponent(text)}`;
+  }
+
+  // Estado de vista de la Carta Oficial (Páginas del PDF)
+  activeCartaTab: 'all' | 'pag2' | 'pag3' | 'pag4' | 'virtudes' | 'pdf_viewer' = 'all';
+
+  setCartaTab(tab: 'all' | 'pag2' | 'pag3' | 'pag4' | 'virtudes' | 'pdf_viewer'): void {
+    this.activeCartaTab = tab;
+  }
+
+  orderItemFromMenu(name: string, price: string, category: string): string {
+    const isEs = this.language === 'es';
+    const text = isEs
+      ? `*¡Hola Kfest!* Deseo pedir de la Carta Oficial:\n\n*${name}* (${price})\n*Sección:* ${category}\n\n¿Tienen disponibilidad en barra para prepararlo? ¡Muchas gracias!`
+      : `*Hello Kfest!* I would like to order from the Official Menu:\n\n*${name}* (${price})\n*Section:* ${category}\n\nCould you please take my order? Thank you!`;
+    return `https://wa.me/${this.phonePrimary}?text=${encodeURIComponent(text)}`;
+  }
+
   readonly sensoryNotesFilters = [
     { id: 'todos', label: { es: 'Todos los Cafés', en: 'All Coffees' }, icon: 'fa-solid fa-mug-hot' },
     { id: 'chocolate', label: { es: 'Chocolate & Cacao', en: 'Chocolate & Cacao' }, icon: 'fa-solid fa-cookie-bite', keywords: ['chocolate', 'cacao', 'amargo'] },
@@ -327,14 +438,16 @@ export class App {
   ];
 
   readonly catalogCategories = [
-    { id: 'todos', label: { es: 'Todas las Categorías', en: 'All Categories' }, icon: 'fa-solid fa-border-all' },
-    { id: 'calientes', label: { es: 'Bebidas Calientes', en: 'Warm Classics' }, icon: 'fa-solid fa-mug-hot' },
-    { id: 'iced', label: { es: 'Cafés Helados (Iced)', en: 'Iced Coffee' }, icon: 'fa-solid fa-snowflake' },
-    { id: 'cold_brew', label: { es: 'Cold Brew de Autor', en: 'Signature Cold Brew' }, icon: 'fa-solid fa-glass-water' },
-    { id: 'frappes', label: { es: 'Frappés & Golosos', en: 'Frappes & Treats' }, icon: 'fa-solid fa-blender' },
-    { id: 'filtrados', label: { es: 'Filtrados de Especialidad', en: 'Specialty Pour Over' }, icon: 'fa-solid fa-filter' },
-    { id: 'bar_kfest', label: { es: 'Bar Kfest (Coctelería)', en: 'Kfest Bar Cocktails' }, icon: 'fa-solid fa-martini-glass-citrus' },
-    { id: 'virtudes', label: { es: 'Línea Virtudes (Bolsa)', en: 'Virtues Coffee Bags' }, icon: 'fa-solid fa-seedling' }
+    { id: 'todos', label: { es: 'Toda la Carta', en: 'Full Menu' }, icon: 'fa-solid fa-utensils' },
+    { id: 'calientes', label: { es: 'Bebidas Calientes', en: 'Warm Drinks' }, icon: 'fa-solid fa-mug-hot' },
+    { id: 'desayunos_combos', label: { es: 'Desayunos & Combos', en: 'Breakfast & Combos' }, icon: 'fa-solid fa-sun' },
+    { id: 'filtrados', label: { es: 'Filtrados', en: 'Pour Over' }, icon: 'fa-solid fa-filter' },
+    { id: 'iced', label: { es: 'Cafés Helados', en: 'Iced Coffee' }, icon: 'fa-solid fa-snowflake' },
+    { id: 'frappes', label: { es: 'Frappés & Shakes', en: 'Frappes & Shakes' }, icon: 'fa-solid fa-blender' },
+    { id: 'cold_brew', label: { es: 'Cold Brew', en: 'Cold Brew' }, icon: 'fa-solid fa-glass-water' },
+    { id: 'panaderia_postres', label: { es: 'Panadería & Postres', en: 'Bakery & Sweets' }, icon: 'fa-solid fa-bread-slice' },
+    { id: 'bar_kfest', label: { es: 'Bar Kfest', en: 'Coffee Bar' }, icon: 'fa-solid fa-martini-glass-citrus' },
+    { id: 'virtudes', label: { es: 'Línea Virtudes', en: 'Virtues Line' }, icon: 'fa-solid fa-seedling' }
   ];
 
   constructor() {
@@ -375,34 +488,52 @@ export class App {
     }
   }
 
-  private readonly sectionIds: string[] = [
-    'inicio',
-    'herencia',
-    'proceso',
-    'coleccion',
-    'quiz',
-    'cata',
-    'calculadora',
-    'catering',
-    'testimonios',
-    'faq',
-    'contacto'
+  private readonly sectionNavMap: { id: string; nav: string }[] = [
+    { id: 'contacto', nav: 'contacto' },
+    { id: 'faq', nav: 'faq' },
+    { id: 'testimonios', nav: 'testimonios' },
+    { id: 'catering', nav: 'catering' },
+    { id: 'calculadora', nav: 'calculadora' },
+    { id: 'cata', nav: 'cata' },
+    { id: 'quiz', nav: 'quiz' },
+    { id: 'carta', nav: 'carta' },
+    { id: 'proceso', nav: 'herencia' },
+    { id: 'herencia', nav: 'herencia' },
+    { id: 'inicio', nav: 'inicio' }
   ];
+
+  @HostListener('window:keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent): void {
+    if (this.isCatalogFsOpen) {
+      if (event.key === 'Escape') this.closeCatalogFs();
+      if (event.key === 'ArrowLeft') this.prevCatalogPage();
+      if (event.key === 'ArrowRight') this.nextCatalogPage();
+    } else {
+      // Also allow keyboard navigation when hovering or near catalog
+      if (event.key === 'ArrowLeft' && this.activeSection === 'carta') this.prevCatalogPage();
+      if (event.key === 'ArrowRight' && this.activeSection === 'carta') this.nextCatalogPage();
+    }
+  }
 
   @HostListener('window:scroll', [])
   onWindowScroll(): void {
     if (typeof window === 'undefined') return;
     const scrollPos = window.scrollY || document.documentElement.scrollTop || 0;
-    this.isScrolled = scrollPos > 30;
+    const nextScrolled = scrollPos > 20;
+    if (this.isScrolled !== nextScrolled) {
+      this.isScrolled = nextScrolled;
+    }
 
-    const navOffset = 120;
-    for (let i = this.sectionIds.length - 1; i >= 0; i--) {
-      const id = this.sectionIds[i];
-      const el = document.getElementById(id);
+    const navOffset = 140;
+    for (const section of this.sectionNavMap) {
+      const el = document.getElementById(section.id);
       if (el) {
-        const top = el.offsetTop - navOffset;
-        if (scrollPos >= top) {
-          this.activeSection = id;
+        const rect = el.getBoundingClientRect();
+        const absoluteTop = rect.top + scrollPos - navOffset;
+        if (scrollPos >= absoluteTop) {
+          if (this.activeSection !== section.nav) {
+            this.activeSection = section.nav;
+          }
           break;
         }
       }
@@ -413,10 +544,11 @@ export class App {
     if (event) {
       event.preventDefault();
     }
-    this.activeSection = sectionId;
+    const targetId = sectionId === 'coleccion' ? 'carta' : sectionId;
+    this.activeSection = targetId === 'proceso' ? 'herencia' : targetId;
     this.closeMobileMenu();
     if (typeof document !== 'undefined' && typeof window !== 'undefined') {
-      const el = document.getElementById(sectionId);
+      const el = document.getElementById(targetId);
       if (el) {
         const navHeight = 72;
         const targetY = el.getBoundingClientRect().top + window.scrollY - navHeight;
@@ -798,10 +930,12 @@ export class App {
 
     const defaultCoffees: Record<CoffeeCategoryKey, string> = {
       calientes: 'capuchino',
+      desayunos_combos: 'desayuno_parisino',
       iced: 'caramel_latte',
       cold_brew: 'cold_brew_maracuya',
       frappes: 'frappe_oreo',
       filtrados: 'mupeco',
+      panaderia_postres: 'croissant_pollo',
       bar_kfest: 'coffee_sour',
       virtudes: 'virtud_resiliencia'
     };
@@ -1153,7 +1287,7 @@ export class App {
 
   goToFavorites(): void {
     this.onlyFavoritesFilter = true;
-    this.scrollToSection('coleccion');
+    this.scrollToSection('carta');
   }
 
   getFilteredCatalog(): CoffeeMenuItem[] {

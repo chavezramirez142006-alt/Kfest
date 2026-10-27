@@ -1,3 +1,5 @@
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+
 /* =====================================================
    KFEST — LUXURY GLOBAL DESIGN SYSTEM
    Fuentes: Playfair Display · Cormorant Garamond · Inter
@@ -65,29 +67,41 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 85px;
+  scroll-padding-top: 70px;
   font-family: var(--ff-sans);
   background: var(--bg0);
   color: var(--text0);
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  max-width: 100%;
+  width: 100%;
 }
 
 html,
 body {
   min-height: 100%;
+  overflow-x: clip;
+  max-width: 100%;
+  width: 100%;
 }
 
 body {
   background: var(--bg0);
   color: var(--text0);
-  overflow-x: hidden;
   line-height: 1.65;
   background-image:
     radial-gradient(ellipse 80% 50% at 50% -20%, rgba(230, 202, 133, 0.08), transparent 70%),
     radial-gradient(circle at 100% 40%, rgba(184, 138, 68, 0.04), transparent 40%),
     radial-gradient(circle at 0% 80%, rgba(184, 138, 68, 0.04), transparent 40%);
+}
+
+.site {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+  position: relative;
 }
 
 /* Custom Luxury Scrollbar */
@@ -225,3 +239,44 @@ body.light-theme .section-brown,
 .light-theme .section-brown {
   background: linear-gradient(180deg, #ece4d4 0%, #f6f1e8 100%) !important;
 }
+
+/* Light Theme Navbar & Controls (Global Overrides) */
+body.light-theme .navbar,
+.light-theme .navbar,
+.light-theme.site .navbar {
+  background: rgba(250, 246, 240, 0.96) !important;
+  border-bottom: 1px solid rgba(166, 115, 36, 0.28) !important;
+  box-shadow: 0 4px 20px rgba(74, 51, 34, 0.08) !important;
+}
+
+body.light-theme .navbar.nav-scrolled,
+.light-theme .navbar.nav-scrolled,
+.light-theme.site .navbar.nav-scrolled {
+  background: rgba(250, 246, 240, 0.98) !important;
+  box-shadow: 0 8px 30px rgba(74, 51, 34, 0.14), 0 1px 0 rgba(166, 115, 36, 0.25) !important;
+}
+
+body.light-theme .nav-link,
+.light-theme .nav-link,
+.light-theme.site .nav-link {
+  color: #382417 !important;
+  font-weight: 600 !important;
+}
+
+body.light-theme .nav-link:hover,
+.light-theme .nav-link:hover,
+.light-theme.site .nav-link:hover {
+  color: #A67324 !important;
+}
+
+body.light-theme .nav-link.active,
+.light-theme .nav-link.active,
+.light-theme.site .nav-link.active {
+  color: #8C5713 !important;
+  font-weight: 700 !important;
+}
+
+body.light-theme .brand-logo-img,
+.light-theme .brand-logo-img {
+  filter: drop-shadow(0 1px 3px rgba(74, 51, 34, 0.15)) !important;
+}
