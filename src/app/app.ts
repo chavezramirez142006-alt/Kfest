@@ -548,7 +548,7 @@ export class App implements AfterViewInit, OnDestroy {
               ? 'Cuatro bolsas de 250g con molienda calibrada para cafetera V60 o Chemex. El suministro mensual perfecto al mejor precio.'
               : 'Four 250g bags custom ground for V60 or Chemex. Your ultimate monthly brew supply at the best value.',
             price: 'S/ 100.00',
-            img: 'images/products/prod_22.png',
+            img: 'images/products/4_paquetes_virtudes.png',
             action: 'prod_1kg' as WhatsAppAction,
             isFeatured: false
           }
@@ -587,7 +587,7 @@ export class App implements AfterViewInit, OnDestroy {
               ? 'Pack familiar de 1kg en 4 bolsas independientes con molienda gruesa. Rendimiento supremo para desayunos en familia.'
               : 'Family 1kg pack across 4 independent coarse-ground bags. Perfect for family gatherings.',
             price: 'S/ 100.00',
-            img: 'images/products/prod_23.png',
+            img: 'images/products/4_paquetes_virtudes.png',
             action: 'prod_1kg' as WhatsAppAction,
             isFeatured: false
           }
@@ -677,7 +677,7 @@ export class App implements AfterViewInit, OnDestroy {
               ? 'Edición de lujo con 4 paquetes de 250g seleccionados de los mejores lotes de altura, empacados con válvula y presentación de regalo.'
               : 'Deluxe estate gift pack featuring four 250g bags from our best high-elevation microlots with aroma valves.',
             price: 'S/ 110.00',
-            img: 'images/products/prod_21.png',
+            img: 'images/products/4_paquetes_virtudes.png',
             action: 'prod_edicion' as WhatsAppAction,
             isFeatured: false
           }
@@ -717,7 +717,7 @@ export class App implements AfterViewInit, OnDestroy {
               ? 'Pack maestro de 1 kg en grano distribuido en 4 bolsas individuales. Máxima frescura por semanas para verdaderos amantes del café.'
               : 'Master 1kg whole bean pack across 4 individual bags. Weeks of peak freshness for true coffee aficionados.',
             price: 'S/ 100.00',
-            img: 'images/products/prod_24.png',
+            img: 'images/products/4_paquetes_virtudes.png',
             action: 'prod_1kg' as WhatsAppAction,
             isFeatured: false
           }
